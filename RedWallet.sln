@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedWallet.WebMVC", "RedWallet.WebMVC\RedWallet.WebMVC.csproj", "{6354E763-DF5C-44AD-9845-CEFB2B240401}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedWallet.Data", "RedWallet.Data\RedWallet.Data.csproj", "{F456ABA0-90A3-4318-8B15-1B81BB6B4A79}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedWallet.Services", "RedWallet.Services\RedWallet.Services.csproj", "{416FC3F9-08F3-4F17-BEF4-687E806A1989}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedWallet.Models", "RedWallet.Models\RedWallet.Models.csproj", "{9C3D012D-0646-4BCF-A22C-FF2883DF16A4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6354E763-DF5C-44AD-9845-CEFB2B240401}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6354E763-DF5C-44AD-9845-CEFB2B240401}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6354E763-DF5C-44AD-9845-CEFB2B240401}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6354E763-DF5C-44AD-9845-CEFB2B240401}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F456ABA0-90A3-4318-8B15-1B81BB6B4A79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F456ABA0-90A3-4318-8B15-1B81BB6B4A79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F456ABA0-90A3-4318-8B15-1B81BB6B4A79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F456ABA0-90A3-4318-8B15-1B81BB6B4A79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{416FC3F9-08F3-4F17-BEF4-687E806A1989}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{416FC3F9-08F3-4F17-BEF4-687E806A1989}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{416FC3F9-08F3-4F17-BEF4-687E806A1989}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{416FC3F9-08F3-4F17-BEF4-687E806A1989}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C3D012D-0646-4BCF-A22C-FF2883DF16A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C3D012D-0646-4BCF-A22C-FF2883DF16A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C3D012D-0646-4BCF-A22C-FF2883DF16A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C3D012D-0646-4BCF-A22C-FF2883DF16A4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1FA28F75-16CB-42FF-9436-4D79C0357954}
+	EndGlobalSection
+EndGlobal
