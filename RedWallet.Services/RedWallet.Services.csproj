@@ -92,19 +92,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BitcoinServices.cs" />
+    <Compile Include="BitcoinService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReceiveServices.cs" />
-    <Compile Include="SendServices.cs" />
+    <Compile Include="ReceiveService.cs" />
+    <Compile Include="SendService.cs" />
+    <Compile Include="WalletService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RedWallet.Data\RedWallet.Data.csproj">
+      <Project>{F456ABA0-90A3-4318-8B15-1B81BB6B4A79}</Project>
+      <Name>RedWallet.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RedWallet.Models\RedWallet.Models.csproj">
       <Project>{9C3D012D-0646-4BCF-A22C-FF2883DF16A4}</Project>
       <Name>RedWallet.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RedWallet.Utilities\RedWallet.Utilities.csproj">
+      <Project>{07f04e1c-0ce7-41ce-b8e1-e6fbe3d9e9cf}</Project>
+      <Name>RedWallet.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

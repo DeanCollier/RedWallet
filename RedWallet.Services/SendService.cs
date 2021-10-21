@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RedWallet.Services
 {
-    class ReceiveServices
+    class SendService
     {
     }
 }

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedWallet.Services", "RedWa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedWallet.Models", "RedWallet.Models\RedWallet.Models.csproj", "{9C3D012D-0646-4BCF-A22C-FF2883DF16A4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedWallet.Utilities", "RedWallet.Utilities\RedWallet.Utilities.csproj", "{07F04E1C-0CE7-41CE-B8E1-E6FBE3D9E9CF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{9C3D012D-0646-4BCF-A22C-FF2883DF16A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C3D012D-0646-4BCF-A22C-FF2883DF16A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C3D012D-0646-4BCF-A22C-FF2883DF16A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07F04E1C-0CE7-41CE-B8E1-E6FBE3D9E9CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07F04E1C-0CE7-41CE-B8E1-E6FBE3D9E9CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07F04E1C-0CE7-41CE-B8E1-E6FBE3D9E9CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07F04E1C-0CE7-41CE-B8E1-E6FBE3D9E9CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

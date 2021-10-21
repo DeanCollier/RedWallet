@@ -102,5 +102,11 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RedWallet.Models\RedWallet.Models.csproj">
+      <Project>{9C3D012D-0646-4BCF-A22C-FF2883DF16A4}</Project>
+      <Name>RedWallet.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

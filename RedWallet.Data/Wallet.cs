@@ -16,9 +16,9 @@ namespace RedWallet.Data
         [Required]
         public string WalletName { get; set; }
         [Required]
-        [MinLength(8), MaxLength(200)]
-        public string Password { get; set; }
+        public string PassphraseHash { get; set; }
         [Required]
         public string PrivateKey { get; set; }
+
     }
 }
