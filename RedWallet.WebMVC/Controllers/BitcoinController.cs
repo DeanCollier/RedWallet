@@ -1,4 +1,5 @@
-﻿using RedWallet.WebMVC.Functions;
+﻿using RedWallet.Models.WalletModels;
+using RedWallet.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace RedWallet.WebMVC.Controllers
         {
             var _bitcoin = new Bitcoin();
             var wallet = await _bitcoin.CreateWallet();
-            return View();
+            return View(wallet);
         }
     }
 }
