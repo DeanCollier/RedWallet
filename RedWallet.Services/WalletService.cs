@@ -24,7 +24,7 @@ namespace RedWallet.Services
         {
             var entity = new Wallet
             {
-                UserId = _userId,
+                UserId = _userId.ToString(),
                 WalletName = model.WalletName,
                 PassphraseHash = model.Passphrase.ToSHA256(), // RedWalletUtil
                 PrivateKey = detail.PrivateKey,
@@ -44,7 +44,7 @@ namespace RedWallet.Services
             {
                 var query = context
                     .Wallets
-                    .Where(w => w.UserId == _userId)
+                    .Where(w => w.UserId == _userId.ToString())
                     .Select(w => new WalletListItem
                     {
                         WalletName = w.WalletName
