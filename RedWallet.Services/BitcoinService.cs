@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace RedWallet.Services
 {
-    public class Bitcoin
+    public class BitcoinService
     {
-        private readonly Guid? _userId;
-        public Network Network { get; set; }
-        public string RPCHost { get; set; }
-        public string RPCCredentials { get; set; }
+        private readonly Guid _userId;
+        private readonly Network Network;
+        private readonly string RPCHost;
+        private readonly string RPCCredentials;
 
-        public Bitcoin(Network network, string rpcHost, string rpcCredentials, Guid? userId)
+        public BitcoinService(Network network, string rpcHost, string rpcCredentials, Guid userId)
         {
             Network = network;
             RPCHost = rpcHost;
@@ -24,26 +24,22 @@ namespace RedWallet.Services
             _userId = userId;
         }
 
+        public static readonly int walletUnlockTime = 20;
 
-        // bitcoin core regtest
-        // network credentials
-        public static Network network = Network.RegTest;
-        public static readonly string rpcHost = "127.0.0.1:18444";
-        public static readonly string rpcCredentials = "user:password";
-        //public static readonly string walletPassPhrase = "lightningbbobb";
-        //public static readonly int walletUnlockTime = 600;
-
-        public async Task<WalletDetail> CreateWallet()
+        public async Task<WalletDetail> CreateWallet(WalletCreate model)
         {
             try
             {
                 // connect to client
-                RPCClient rpcClient = new RPCClient(rpcCredentials, rpcHost, network);
-                //
-                rpcClient.CreateWallet("new_wallet", new CreateWalletOptions { Passphrase = "newnew"});
-                //await rpcClient.WalletPassphraseAsync(walletPassPhrase, walletUnlockTime);
+                RPCClient rpcClient = new RPCClient(RPCCredentials, RPCHost, Network);
+                // create wallet with passphrase
+                await rpcClient.CreateWalletAsync(model.WalletName, new CreateWalletOptions { Passphrase = model.Passphrase});
+                // unlock for 'walletUnlockTime' seconds
+                await rpcClient.WalletPassphraseAsync(model.Passphrase, walletUnlockTime);
+                // get public address
                 string walletAddress = rpcClient.GetNewAddress().ToString();
-                BitcoinAddress btcWallet = BitcoinAddress.Create(walletAddress, network);
+                BitcoinAddress btcWallet = BitcoinAddress.Create(walletAddress, Network);
+                // get private key for Wallet entity
                 var privateKey = rpcClient.DumpPrivKey(btcWallet);
 
                 var newWallet = new WalletDetail()

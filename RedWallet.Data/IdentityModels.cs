@@ -33,8 +33,8 @@ namespace RedWallet.Data
         }
 
         public DbSet<Wallet> Wallets { get; set; }
-        public DbSet<Wallet> Receives { get; set; }
-        public DbSet<Wallet> Sends { get; set; }
+        public DbSet<Receive> Receives { get; set; }
+        public DbSet<Send> Sends { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
