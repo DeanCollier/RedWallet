@@ -1,10 +1,13 @@
 ﻿using NBitcoin;
+using NBitcoin.Protocol;
+using NBitcoin.Protocol.Behaviors;
 using NBitcoin.RPC;
 using RedWallet.Models.WalletModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RedWallet.Services
@@ -26,15 +29,23 @@ namespace RedWallet.Services
 
         public static readonly int walletUnlockTime = 20;
 
-        public async Task<WalletDetail> CreateWallet(WalletCreate model)
+        public async Task<WalletDetail> CreateAddress(WalletCreate model)
         {
-            try
+            var key = new Key();
+            return new WalletDetail
             {
-                // connect to client
+                PublicKey = key.PubKey,
+                PrivateKey = key
+            };
+
+
+                /*// connect to client
                 RPCClient rpcClient = new RPCClient(RPCCredentials, RPCHost, Network);
                 // create wallet with passphrase
-                await rpcClient.CreateWalletAsync(model.WalletName, new CreateWalletOptions { Passphrase = model.Passphrase});
+                await rpcClient.CreateWalletAsync(model.WalletName, new CreateWalletOptions { Passphrase = model.Passphrase });
+                //await rpcClient.LoadWalletAsync(model.WalletName);
                 // unlock for 'walletUnlockTime' seconds
+                //rpcClient.GetWallet(model.WalletName);
                 await rpcClient.WalletPassphraseAsync(model.Passphrase, walletUnlockTime);
                 // get public address
                 string walletAddress = rpcClient.GetNewAddress().ToString();
@@ -49,11 +60,11 @@ namespace RedWallet.Services
                 };
 
                 return newWallet;
-            }
+            
             catch (Exception ex)
             {
                 throw new Exception(ex.ToString());
-            }
+            }*/
         }
     }
 }

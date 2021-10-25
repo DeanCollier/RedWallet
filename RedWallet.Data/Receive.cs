@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace RedWallet.Data
 {
-    public class Receive
+    public class Request
     {
         [Key]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Required, ForeignKey(nameof(Wallet))]
-        public Guid WalletId { get; set; }
-        public virtual WalletDetail Wallet { get; set; }
+        public int WalletId { get; set; }
+        public virtual Wallet Wallet { get; set; }
 
-        [Required]
+        [Required, Display(Name = "Payment Request Hash")]
         [MinLength(1)]
         public string BTCPaymentRequest { get; set; }
 

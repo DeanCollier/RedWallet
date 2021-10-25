@@ -12,13 +12,13 @@ namespace RedWallet.Data
     public class Send
     {
         [Key]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Required, ForeignKey(nameof(Wallet))]
-        public Guid WalletId { get; set; }
-        public virtual WalletDetail Wallet { get; set; }
+        public int WalletId { get; set; }
+        public virtual Wallet Wallet { get; set; }
 
-        [Required]
+        [Required, Display(Name = "Transaction Hash")]
         [MinLength(1)]
         public string BTCTransaction { get; set; }
 

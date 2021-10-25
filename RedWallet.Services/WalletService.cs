@@ -1,4 +1,5 @@
-﻿using RedWallet.Data;
+﻿using NBitcoin;
+using RedWallet.Data;
 using RedWallet.Models.WalletModels;
 using RedWallet.Utilities;
 using System;
@@ -14,20 +15,26 @@ namespace RedWallet.Services
     {
         private readonly Guid _userId;
 
+
         public WalletService(Guid userId)
         {
             _userId = userId;
         }
 
         // CREATE 
-        public async Task<bool> CreateWalletAsync(WalletCreate model, WalletDetail detail)
+        public async Task<bool> CreateWalletAsync(WalletCreate model)
         {
+            var seedMnemonic = new Mnemonic(Wordlist.English, WordCount.TwentyFour);
+            var privateKey = seedMnemonic.DeriveExtKey(model.Passphrase);
+            var bitcoinPrivateKey = privateKey.GetWif(Network.RegTest);
+            //var bitcoinEncryptedPrivateKey = bitcoinPrivateKey.Encrypt(model.Passphrase);
+
             var entity = new Wallet
             {
                 UserId = _userId.ToString(),
                 WalletName = model.WalletName,
                 PassphraseHash = model.Passphrase.ToSHA256(), // RedWalletUtil
-                PrivateKey = detail.PrivateKey,
+                PrivateKey = bitcoinPrivateKey
             };
 
             using (var context = new ApplicationDbContext())

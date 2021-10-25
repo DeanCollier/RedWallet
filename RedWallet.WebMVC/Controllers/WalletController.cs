@@ -53,21 +53,18 @@ namespace RedWallet.WebMVC.Controllers
                 return View(model);
             }
             
-            var btcService = CreateBitcoinService();
-            var newWalletDetail = await btcService.CreateWallet(model);
+            //var btcService = CreateBitcoinService();
+            //var newWalletDetail = await btcService.CreateAddress(model);
             var walletService = CreateWalletService();
 
-            if (newWalletDetail.Address != null)
+            if (await walletService.CreateWalletAsync(model))
             {
-                if (await walletService.CreateWalletAsync(model, newWalletDetail))
-                {
-                    TempData["SaveResult"] = "Your wallet was created.";
-                    return RedirectToAction("Index");
-                }
-                ModelState.AddModelError("", "Note could not be created.");
-                return View(model);
+                TempData["SaveResult"] = "Your wallet was created.";
+                return RedirectToAction("Index");
             }
+            ModelState.AddModelError("", "Note could not be created.");
             return View(model);
+
         }
     }
 }
