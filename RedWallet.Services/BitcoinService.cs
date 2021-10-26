@@ -29,9 +29,9 @@ namespace RedWallet.Services
 
         public static readonly int walletUnlockTime = 20;
 
-        public async Task<WalletDetail> CreateAddress(WalletCreate model)
+        /*public async Task<WalletDetail> CreateAddress(WalletCreate model)
         {
-            var key = new Key();
+            var key = new ExtKey();
             return new WalletDetail
             {
                 PublicKey = key.PubKey,
@@ -39,32 +39,33 @@ namespace RedWallet.Services
             };
 
 
-                /*// connect to client
-                RPCClient rpcClient = new RPCClient(RPCCredentials, RPCHost, Network);
-                // create wallet with passphrase
-                await rpcClient.CreateWalletAsync(model.WalletName, new CreateWalletOptions { Passphrase = model.Passphrase });
-                //await rpcClient.LoadWalletAsync(model.WalletName);
-                // unlock for 'walletUnlockTime' seconds
-                //rpcClient.GetWallet(model.WalletName);
-                await rpcClient.WalletPassphraseAsync(model.Passphrase, walletUnlockTime);
-                // get public address
-                string walletAddress = rpcClient.GetNewAddress().ToString();
-                BitcoinAddress btcWallet = BitcoinAddress.Create(walletAddress, Network);
-                // get private key for Wallet entity
-                var privateKey = rpcClient.DumpPrivKey(btcWallet);
+            // connect to client
+            RPCClient rpcClient = new RPCClient(RPCCredentials, RPCHost, Network);
+            // create wallet with passphrase
+            await rpcClient.CreateWalletAsync(model.WalletName, new CreateWalletOptions { Passphrase = model.Passphrase });
+            //await rpcClient.LoadWalletAsync(model.WalletName);
+            // unlock for 'walletUnlockTime' seconds
+            //rpcClient.GetWallet(model.WalletName);
+            await rpcClient.WalletPassphraseAsync(model.Passphrase, walletUnlockTime);
+            // get public address
+            string walletAddress = rpcClient.GetNewAddress().ToString();
+            BitcoinAddress btcWallet = BitcoinAddress.Create(walletAddress, Network);
+            // get private key for Wallet entity
+            var privateKey = rpcClient.DumpPrivKey(btcWallet);
 
-                var newWallet = new WalletDetail()
-                {
-                    Address = walletAddress.ToString(),
-                    PrivateKey = privateKey.ToString()
-                };
+            var newWallet = new WalletDetail()
+            {
+                Address = walletAddress.ToString(),
+                PrivateKey = privateKey.ToString()
+            };
 
-                return newWallet;
-            
+            return newWallet;
+
+
             catch (Exception ex)
             {
                 throw new Exception(ex.ToString());
-            }*/
-        }
+            }
+        }*/
     }
 }

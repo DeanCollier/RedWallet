@@ -22,12 +22,12 @@ namespace RedWallet.Services
         }
 
         // CREATE 
-        public async Task<bool> CreateWalletAsync(WalletCreate model)
+        public async Task<string[]> CreateWalletAsync(WalletCreate model)
         {
+            RandomUtils.AddEntropy(model.EntropyInput);
             var seedMnemonic = new Mnemonic(Wordlist.English, WordCount.TwentyFour);
             var privateKey = seedMnemonic.DeriveExtKey(model.Passphrase);
             var bitcoinPrivateKey = privateKey.GetWif(Network.RegTest);
-            //var bitcoinEncryptedPrivateKey = bitcoinPrivateKey.Encrypt(model.Passphrase);
 
             var entity = new Wallet
             {
@@ -40,8 +40,10 @@ namespace RedWallet.Services
             using (var context = new ApplicationDbContext())
             {
                 context.Wallets.Add(entity);
-                return await context.SaveChangesAsync() == 1;
+                await context.SaveChangesAsync();
             }
+
+            return new string[] { model.Passphrase, seedMnemonic.ToString(), entity.Id.ToString() };
         }
 
         // READ
@@ -54,10 +56,45 @@ namespace RedWallet.Services
                     .Where(w => w.UserId == _userId.ToString())
                     .Select(w => new WalletListItem
                     {
+                        Id = w.Id,
                         WalletName = w.WalletName
                     });
 
                 return await query.ToArrayAsync();
+            }
+        }
+        
+        // READ
+        public async Task<WalletDetail> GetWalletByIdAsync(int id)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var entity = context
+                    .Wallets
+                    .Single(w => w.UserId == _userId.ToString() && w.Id == id);
+
+                var model = new WalletDetail
+                {
+                    WalletName = entity.WalletName,
+                    PastPaymentRequests = new List<Request>(), // just empty for now
+                    OutgoingPayments = new List<Send>()  // just empty for now
+                };
+
+                return model;
+            }
+        }
+
+        public async Task<bool> DeleteWalletAsync(int id)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var entity = context
+                    .Wallets
+                    .Single(w => w.UserId == _userId.ToString() && w.Id == id);
+
+                var isDeleted = context.Wallets.Remove(entity);
+                return await context.SaveChangesAsync() >= 1; // other db sends and requests may also be deleted
+
             }
         }
     }

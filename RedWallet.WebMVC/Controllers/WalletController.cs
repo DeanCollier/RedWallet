@@ -37,6 +37,7 @@ namespace RedWallet.WebMVC.Controllers
             return View(model);
         }
 
+        
         // GET: Wallet Create
         // Wallet/Create
         public async Task<ActionResult> Create()
@@ -56,15 +57,55 @@ namespace RedWallet.WebMVC.Controllers
             //var btcService = CreateBitcoinService();
             //var newWalletDetail = await btcService.CreateAddress(model);
             var walletService = CreateWalletService();
+            var newWallet = await walletService.CreateWalletAsync(model);
 
-            if (await walletService.CreateWalletAsync(model))
+            if (!(string.IsNullOrEmpty(newWallet[0])) && !(string.IsNullOrEmpty(newWallet[1])) && !(string.IsNullOrEmpty(newWallet[2]))) // passphrase & mnemonic
             {
                 TempData["SaveResult"] = "Your wallet was created.";
-                return RedirectToAction("Index");
+                TempData["Mnemonic"] = newWallet[1];
+                var id = int.Parse(newWallet[2]);
+                return RedirectToAction($"Details/{id}"); // return detail data { routeValues: int.Parse(newWallet[2])}
             }
-            ModelState.AddModelError("", "Note could not be created.");
+            ModelState.AddModelError("", "Wallet could not be created.");
             return View(model);
 
+        }
+
+        // GET: Wallet Detail
+        // Wallet/Detail/{id}
+        public async Task<ActionResult> Details(int id)
+        {
+            var service = CreateWalletService();
+            var model = await service.GetWalletByIdAsync(id);
+
+            return View(model);
+        }
+
+        // EDIT
+
+
+        // GET: Delete Wallet
+        // Wallet/Delete/{id}
+        public async Task<ActionResult> Delete(int id)
+        {
+            var service = CreateWalletService();
+            var model = await service.GetWalletByIdAsync(id);
+
+            return View(model);
+        }
+        // POST: Delete Wallet
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Delete(int id, WalletDetail model)
+        {
+            var service = CreateWalletService();
+
+            if (await service.DeleteWalletAsync(id))
+            {
+                TempData["SaveResult"] = "Your wallet was deleted";
+                return RedirectToAction("Index");
+            }
+            return View(model);
         }
     }
 }

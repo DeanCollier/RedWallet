@@ -105,5 +105,11 @@
     <Folder Include="ReceiveModels\" />
     <Folder Include="SendModels\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RedWallet.Data\RedWallet.Data.csproj">
+      <Project>{f456aba0-90a3-4318-8b15-1b81bb6b4a79}</Project>
+      <Name>RedWallet.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

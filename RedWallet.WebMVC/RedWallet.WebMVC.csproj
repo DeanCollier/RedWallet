@@ -272,6 +272,8 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Wallet\Index.cshtml" />
     <Content Include="Views\Wallet\Create.cshtml" />
+    <Content Include="Views\Wallet\Details.cshtml" />
+    <Content Include="Views\Wallet\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

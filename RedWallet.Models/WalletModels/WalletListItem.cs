@@ -8,6 +8,7 @@ namespace RedWallet.Models.WalletModels
 {
     public class WalletListItem
     {
+        public int Id { get; set; }
         public string WalletName { get; set; }
     }
 }

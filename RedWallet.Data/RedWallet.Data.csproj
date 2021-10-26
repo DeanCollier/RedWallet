@@ -103,19 +103,13 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Receive.cs" />
+    <Compile Include="Request.cs" />
     <Compile Include="Send.cs" />
     <Compile Include="Wallet.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RedWallet.Models\RedWallet.Models.csproj">
-      <Project>{9C3D012D-0646-4BCF-A22C-FF2883DF16A4}</Project>
-      <Name>RedWallet.Models</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202110252235583_newstuff.resx">
