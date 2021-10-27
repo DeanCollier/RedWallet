@@ -50,10 +50,7 @@ namespace RedWallet.Services
             return BitcoinEncryptedSecret.Create(encryptedSecret, Network).GetSecret(passphrase.ToSHA256());
         }
 
-        public async Task<ExtPubKey> GetNewPubKey(ExtKey privateKey)
-        {
-            return null;
-        }
+        
 
         /*public async Task<WalletDetail> CreateAddress(WalletCreate model)
         {
