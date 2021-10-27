@@ -101,6 +101,18 @@
     <Compile Include="Migrations\202110252338271_newstuff1.Designer.cs">
       <DependentUpon>202110252338271_newstuff1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110262210435_smallUpdates.cs" />
+    <Compile Include="Migrations\202110262210435_smallUpdates.Designer.cs">
+      <DependentUpon>202110262210435_smallUpdates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110270330007_encryptionUpdate.cs" />
+    <Compile Include="Migrations\202110270330007_encryptionUpdate.Designer.cs">
+      <DependentUpon>202110270330007_encryptionUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110270436311_encryptionUpdate2.cs" />
+    <Compile Include="Migrations\202110270436311_encryptionUpdate2.Designer.cs">
+      <DependentUpon>202110270436311_encryptionUpdate2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request.cs" />
@@ -117,6 +129,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202110252338271_newstuff1.resx">
       <DependentUpon>202110252338271_newstuff1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110262210435_smallUpdates.resx">
+      <DependentUpon>202110262210435_smallUpdates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110270330007_encryptionUpdate.resx">
+      <DependentUpon>202110270330007_encryptionUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110270436311_encryptionUpdate2.resx">
+      <DependentUpon>202110270436311_encryptionUpdate2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

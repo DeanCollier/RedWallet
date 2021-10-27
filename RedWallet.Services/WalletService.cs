@@ -1,5 +1,6 @@
 ﻿using NBitcoin;
 using RedWallet.Data;
+using RedWallet.Models.BitcoinModels;
 using RedWallet.Models.WalletModels;
 using RedWallet.Utilities;
 using System;
@@ -22,28 +23,22 @@ namespace RedWallet.Services
         }
 
         // CREATE 
-        public async Task<string[]> CreateWalletAsync(WalletCreate model)
+        public async Task<string[]> CreateWalletAsync(WalletCreate model, KeyDetail keyDetail)
         {
-            RandomUtils.AddEntropy(model.EntropyInput);
-            var seedMnemonic = new Mnemonic(Wordlist.English, WordCount.TwentyFour);
-            var privateKey = seedMnemonic.DeriveExtKey(model.Passphrase);
-            var bitcoinPrivateKey = privateKey.GetWif(Network.RegTest);
-
             var entity = new Wallet
             {
                 UserId = _userId.ToString(),
                 WalletName = model.WalletName,
-                PassphraseHash = model.Passphrase.ToSHA256(), // RedWalletUtil
-                PrivateKey = bitcoinPrivateKey
+                EncryptedSecret = keyDetail.EncryptedSecret
             };
-
+            
             using (var context = new ApplicationDbContext())
             {
                 context.Wallets.Add(entity);
                 await context.SaveChangesAsync();
             }
 
-            return new string[] { model.Passphrase, seedMnemonic.ToString(), entity.Id.ToString() };
+            return new string[] { keyDetail.Passphrase, keyDetail.MnemonicSeedPhrase, entity.Id.ToString() };
         }
 
         // READ
@@ -56,7 +51,7 @@ namespace RedWallet.Services
                     .Where(w => w.UserId == _userId.ToString())
                     .Select(w => new WalletListItem
                     {
-                        Id = w.Id,
+                        WalletId = w.Id,
                         WalletName = w.WalletName
                     });
 
@@ -75,6 +70,7 @@ namespace RedWallet.Services
 
                 var model = new WalletDetail
                 {
+                    WalletId = entity.Id,
                     WalletName = entity.WalletName,
                     PastPaymentRequests = new List<Request>(), // just empty for now
                     OutgoingPayments = new List<Send>()  // just empty for now
@@ -84,6 +80,25 @@ namespace RedWallet.Services
             }
         }
 
+        // UPDATE
+        public async Task<bool> UpdateWalletById(WalletEdit model)
+        {
+            if (model.NewWalletName == null)
+            {
+                return true; // nothing to update, confirm to controller that everything is fine
+            }
+            using (var context = new ApplicationDbContext())
+            {
+                var entity = context
+                    .Wallets
+                    .Single(w => w.UserId == _userId.ToString() && w.Id == model.WalletId);
+
+                entity.WalletName = model.NewWalletName;
+                return await context.SaveChangesAsync() == 1;
+            }
+        }
+
+        // DELETE
         public async Task<bool> DeleteWalletAsync(int id)
         {
             using (var context = new ApplicationDbContext())
@@ -92,7 +107,7 @@ namespace RedWallet.Services
                     .Wallets
                     .Single(w => w.UserId == _userId.ToString() && w.Id == id);
 
-                var isDeleted = context.Wallets.Remove(entity);
+                context.Wallets.Remove(entity);
                 return await context.SaveChangesAsync() >= 1; // other db sends and requests may also be deleted
 
             }

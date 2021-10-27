@@ -274,6 +274,7 @@
     <Content Include="Views\Wallet\Create.cshtml" />
     <Content Include="Views\Wallet\Details.cshtml" />
     <Content Include="Views\Wallet\Delete.cshtml" />
+    <Content Include="Views\Wallet\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

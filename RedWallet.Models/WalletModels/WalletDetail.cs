@@ -12,12 +12,15 @@ namespace RedWallet.Models.WalletModels
     public class WalletDetail
     {
         [Required]
-        public int Id { get; set; }
+        public int WalletId { get; set; }
+
         [Required, Display(Name = "Wallet Name")]
         public string WalletName { get; set; }
+
         [Display(Name = "Past Payment Requests")]
         public IEnumerable<Request> PastPaymentRequests { get; set; }
-        [Display(Name = "Outgoing Payments")]
+
+        [Display(Name = "Sent Payments")]
         public IEnumerable<Send> OutgoingPayments { get; set; }
     }
 }

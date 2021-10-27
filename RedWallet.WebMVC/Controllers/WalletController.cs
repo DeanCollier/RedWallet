@@ -54,21 +54,22 @@ namespace RedWallet.WebMVC.Controllers
                 return View(model);
             }
             
-            //var btcService = CreateBitcoinService();
-            //var newWalletDetail = await btcService.CreateAddress(model);
+            var btcService = CreateBitcoinService();
+            var newKeyDetail = await btcService.GetNewBitcoinKey(model);
+
             var walletService = CreateWalletService();
-            var newWallet = await walletService.CreateWalletAsync(model);
+            var newWallet = await walletService.CreateWalletAsync(model, newKeyDetail);
 
             if (!(string.IsNullOrEmpty(newWallet[0])) && !(string.IsNullOrEmpty(newWallet[1])) && !(string.IsNullOrEmpty(newWallet[2]))) // passphrase & mnemonic
             {
                 TempData["SaveResult"] = "Your wallet was created.";
+                TempData["Passphrase"] = newWallet[0]; 
                 TempData["Mnemonic"] = newWallet[1];
                 var id = int.Parse(newWallet[2]);
-                return RedirectToAction($"Details/{id}"); // return detail data { routeValues: int.Parse(newWallet[2])}
+                return RedirectToAction($"Details/{id}"); 
             }
             ModelState.AddModelError("", "Wallet could not be created.");
             return View(model);
-
         }
 
         // GET: Wallet Detail
@@ -81,8 +82,44 @@ namespace RedWallet.WebMVC.Controllers
             return View(model);
         }
 
-        // EDIT
+        // EDIT: Edit Wallet
+        // Wallet/Edit/{id}
+        public async Task<ActionResult> Edit(int id)
+        {
+            var service = CreateWalletService();
+            var detail = await service.GetWalletByIdAsync(id);
+            var model = new WalletEdit
+            {
+                WalletId = detail.WalletId,
+                NewWalletName = detail.WalletName
+            };
 
+            return View(model);
+        }
+        // POST: Update Wallet
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(int id, WalletEdit model)
+        {
+            if (model.WalletId != id)
+            {
+                ModelState.AddModelError("", "Id Mismatch");
+                return View(model);
+            }
+            if (ModelState.IsValid)
+            {
+                var service = CreateWalletService();
+
+                if (await service.UpdateWalletById(model))
+                {
+                    TempData["SaveResult"] = "Your wallet name has been updated.";
+                    return RedirectToAction("Index");
+                }
+                ModelState.AddModelError("", "Your wallet name could not be changed.");
+                return View(model);
+            }
+            return View(model);
+        }
 
         // GET: Delete Wallet
         // Wallet/Delete/{id}
@@ -96,7 +133,8 @@ namespace RedWallet.WebMVC.Controllers
         // POST: Delete Wallet
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(int id, WalletDetail model)
+        [ActionName("Delete")]
+        public async Task<ActionResult> DeleteWallet(int id)
         {
             var service = CreateWalletService();
 
@@ -105,7 +143,8 @@ namespace RedWallet.WebMVC.Controllers
                 TempData["SaveResult"] = "Your wallet was deleted";
                 return RedirectToAction("Index");
             }
-            return View(model);
+            ModelState.AddModelError("", "Your wallet could not be deleted.");
+            return View();
         }
     }
 }

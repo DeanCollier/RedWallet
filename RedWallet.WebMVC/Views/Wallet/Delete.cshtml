@@ -17,6 +17,7 @@
 <div>
     <h4>WalletDetail</h4>
     <hr />
+    @Html.HiddenFor(model => model.WalletId)
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.WalletName)
@@ -28,7 +29,8 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">

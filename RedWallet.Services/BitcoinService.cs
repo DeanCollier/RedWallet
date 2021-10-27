@@ -2,7 +2,9 @@
 using NBitcoin.Protocol;
 using NBitcoin.Protocol.Behaviors;
 using NBitcoin.RPC;
+using RedWallet.Models.BitcoinModels;
 using RedWallet.Models.WalletModels;
+using RedWallet.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +29,31 @@ namespace RedWallet.Services
             _userId = userId;
         }
 
-        public static readonly int walletUnlockTime = 20;
+        public async Task<KeyDetail> GetNewBitcoinKey(WalletCreate model)
+        {
+            RandomUtils.AddEntropy(model.EntropyInput); // adding random entropy
+            var seedMnemonic = new Mnemonic(Wordlist.English, WordCount.TwentyFour); // random 24 work mnemonic
+            var extendedKey = seedMnemonic.DeriveExtKey(); // derive extended key from mnemonic
+            var bitcoinSecret= extendedKey.PrivateKey.GetWif(Network); // get WIF, base58
+            var encryptedSecret = bitcoinSecret.Encrypt(model.Passphrase.ToSHA256()); // encrypt with passphrase hash
+
+            return new KeyDetail
+            {
+                Passphrase = model.Passphrase,
+                MnemonicSeedPhrase = seedMnemonic.ToString(),
+                EncryptedSecret = encryptedSecret.ToString()
+            };
+        }
+
+        public BitcoinSecret GetBitcoinSecret(string encryptedSecret, string passphrase)
+        {
+            return BitcoinEncryptedSecret.Create(encryptedSecret, Network).GetSecret(passphrase.ToSHA256());
+        }
+
+        public async Task<ExtPubKey> GetNewPubKey(ExtKey privateKey)
+        {
+            return null;
+        }
 
         /*public async Task<WalletDetail> CreateAddress(WalletCreate model)
         {

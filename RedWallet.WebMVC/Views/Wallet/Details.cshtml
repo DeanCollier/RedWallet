@@ -28,10 +28,16 @@
         @if (TempData.ContainsKey("Mnemonic"))
         {
             <dt>
-                Mnemonic Phrase
+                Mnemonic Seed Phrase
             </dt>
             <dd>
                 @TempData["Mnemonic"]
+            </dd>
+            <dt>
+                Passphrase
+            </dt>
+            <dd>
+                @TempData["Passphrase"]
             </dd>
         }
     </dl>
@@ -39,13 +45,13 @@
 @if (TempData.ContainsKey("Mnemonic"))
 {
 <p>
-    @Html.ActionLink("I Have Backed Up My Seed and Password", "Index")
+    @Html.ActionLink("I Have Backed Up My Seed and Passphrase", "Index")
 </p>
 }
 else
 {
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.WalletId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
 }
