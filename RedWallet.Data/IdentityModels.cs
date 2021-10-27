@@ -32,6 +32,10 @@ namespace RedWallet.Data
             return new ApplicationDbContext();
         }
 
+        public DbSet<Wallet> Wallets { get; set; }
+        public DbSet<Request> Requests { get; set; }
+        public DbSet<Send> Sends { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -62,3 +66,13 @@ namespace RedWallet.Data
     }
 
 }
+
+
+
+
+
+
+
+
+
+
