@@ -36,6 +36,7 @@ namespace RedWallet.Services
             var extendedKey = seedMnemonic.DeriveExtKey(); // derive extended key from mnemonic
             var bitcoinSecret= extendedKey.PrivateKey.GetWif(Network); // get WIF, base58
             var encryptedSecret = bitcoinSecret.Encrypt(model.Passphrase.ToSHA256()); // encrypt with passphrase hash
+            bitcoinSecret.GetAddress(ScriptPubKeyType.SegwitP2SH)
 
             return new KeyDetail
             {
@@ -49,6 +50,8 @@ namespace RedWallet.Services
         {
             return BitcoinEncryptedSecret.Create(encryptedSecret, Network).GetSecret(passphrase.ToSHA256());
         }
+
+        NBitcoin.PayToPubkeyHashTemplate
 
         
 

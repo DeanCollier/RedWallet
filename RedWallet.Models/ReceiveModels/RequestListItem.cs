@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RedWallet.Services
+namespace RedWallet.Models.ReceiveModels
 {
-    class ReceiveService
+    class RequestListItem
     {
     }
 }

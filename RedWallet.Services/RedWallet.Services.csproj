@@ -97,7 +97,7 @@
   <ItemGroup>
     <Compile Include="BitcoinService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReceiveService.cs" />
+    <Compile Include="RequestService.cs" />
     <Compile Include="SendService.cs" />
     <Compile Include="WalletService.cs" />
   </ItemGroup>
