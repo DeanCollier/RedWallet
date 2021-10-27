@@ -285,11 +285,12 @@
     <Content Include="Views\Wallet\Details.cshtml" />
     <Content Include="Views\Wallet\Delete.cshtml" />
     <Content Include="Views\Wallet\Edit.cshtml" />
+    <Content Include="Views\Request\Create.cshtml" />
+    <Content Include="Views\Request\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Functions\" />
-    <Folder Include="Views\Request\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

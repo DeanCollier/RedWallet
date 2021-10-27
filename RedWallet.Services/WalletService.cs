@@ -80,6 +80,19 @@ namespace RedWallet.Services
             }
         }
 
+        // READ
+        public async Task<string> GetWalletEncryptedSecret(int id)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var entity = context
+                    .Wallets
+                    .Single(w => w.UserId == _userId.ToString() && w.Id == id);
+
+                return entity.EncryptedSecret;
+            }
+        }
+
         // UPDATE
         public async Task<bool> UpdateWalletById(WalletEdit model)
         {

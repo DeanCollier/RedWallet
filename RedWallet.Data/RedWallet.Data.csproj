@@ -116,6 +116,10 @@
     <Compile Include="Migrations\202110270436311_encryptionUpdate2.Designer.cs">
       <DependentUpon>202110270436311_encryptionUpdate2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110272144591_requests2.cs" />
+    <Compile Include="Migrations\202110272144591_requests2.designer.cs">
+      <DependentUpon>202110272144591_requests2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request.cs" />
@@ -141,6 +145,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202110270436311_encryptionUpdate2.resx">
       <DependentUpon>202110270436311_encryptionUpdate2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110272144591_requests2.resx">
+      <DependentUpon>202110272144591_requests2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -13,10 +13,6 @@ namespace RedWallet.Data
         [Key]
         public int Id { get; set; }
 
-        [Required, ForeignKey(nameof(User))]
-        public string UserId { get; set; }
-        public virtual ApplicationUser User { get; set; }
-
         [Required, ForeignKey(nameof(Wallet))]
         public int WalletId { get; set; }
         public virtual Wallet Wallet { get; set; }
