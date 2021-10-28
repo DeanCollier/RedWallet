@@ -1,27 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RedWallet.Data
+namespace RedWallet.Models.RequestModels
 {
-    public class Request
+    public class RequestDetail
     {
-        [Key]
+        [Required]
         public int Id { get; set; }
 
-        [Required, ForeignKey(nameof(Wallet))]
+        [Required]
         public int WalletId { get; set; }
-        public virtual Wallet Wallet { get; set; }
+
+        [Required]
+        public string WalletName { get; set; }
 
         [Required, Display(Name = "Address")]
-        [MinLength(1)]
         public string RequestAddress { get; set; }
 
+        [Required]
         public DateTimeOffset Created { get; set; }
-        
     }
 }

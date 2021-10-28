@@ -17,9 +17,9 @@ namespace RedWallet.Data
         public int WalletId { get; set; }
         public virtual Wallet Wallet { get; set; }
 
-        [Required, Display(Name = "Transaction Hash")]
+        [Required, Display(Name = "Transaction")]
         [MinLength(1)]
-        public string BTCTransaction { get; set; }
+        public string TransactionHash { get; set; }
 
         public DateTimeOffset Created { get; set; }
     }

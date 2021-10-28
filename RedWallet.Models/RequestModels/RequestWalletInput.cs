@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RedWallet.Services
+namespace RedWallet.Models.RequestModels
 {
-    class ReceiveService
+    public class RequestWalletInput
     {
+        public int WalletId { get; set; }
     }
 }

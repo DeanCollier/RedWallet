@@ -1,0 +1,41 @@
+﻿@model RedWallet.Models.RequestModels.RequestDetail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>RequestDetail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.WalletName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WalletName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RequestAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RequestAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Created)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Created)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
