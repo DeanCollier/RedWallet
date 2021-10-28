@@ -35,6 +35,9 @@ namespace RedWallet.Services
             var seedMnemonic = new Mnemonic(Wordlist.English, WordCount.TwentyFour); // random 24 work mnemonic
             var extendedKey = seedMnemonic.DeriveExtKey(); // derive extended key from mnemonic
             var bitcoinSecret= extendedKey.PrivateKey.GetWif(Network); // get WIF, base58
+
+            var testString = bitcoinSecret.ToString();
+            
             var encryptedSecret = bitcoinSecret.Encrypt(model.Passphrase.ToSHA256()); // encrypt with passphrase hash
             //bitcoinSecret.PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH, Network);
 
@@ -48,10 +51,18 @@ namespace RedWallet.Services
 
         public BitcoinAddress GetNewBitcoinAddress(string encryptedSecret, string passphrase)
         {
-            var secret = GetBitcoinSecret(encryptedSecret, passphrase);
-            var address = secret.PubKey.Hash.GetAddress(Network);
+            try
+            {
+                var secret = GetBitcoinSecret(encryptedSecret, passphrase);
+                var address = secret.PubKey.Hash.GetAddress(Network);
 
-            return address;
+                return address;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Invalid Password");
+            }
+
         }
         public BitcoinSecret GetBitcoinSecret(string encryptedSecret, string passphrase)
         {

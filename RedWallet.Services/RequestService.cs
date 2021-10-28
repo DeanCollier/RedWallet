@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RedWallet.Models.ReceiveModels;
 using System.Data.Entity;
+using RedWallet.Models.RequestModels;
 
 namespace RedWallet.Services
 {
@@ -34,7 +34,7 @@ namespace RedWallet.Services
                 await context.SaveChangesAsync();
             }
 
-            return await GetWalletRequestByIdAsync(entity.WalletId, entity.Id);
+            return await GetWalletRequestByIdAsync(entity.Id);
         }
 
         // READ
@@ -56,13 +56,13 @@ namespace RedWallet.Services
         }
 
         // READ
-        public async Task<RequestDetail> GetWalletRequestByIdAsync(int walletId, int requestId)
+        public async Task<RequestDetail> GetWalletRequestByIdAsync(int Id)
         {
             using (var context = new ApplicationDbContext())
             {
-                var entity = context
+                var entity = await context
                     .Requests
-                    .Single(r => r.Wallet.UserId == _userId.ToString() && r.WalletId == walletId && r.Id == requestId);
+                    .SingleAsync(r => r.Wallet.UserId == _userId.ToString() && r.Id == Id);
 
                 var model = new RequestDetail
                 {
@@ -84,9 +84,9 @@ namespace RedWallet.Services
         {
             using (var context = new ApplicationDbContext())
             {
-                var entity = context
+                var entity = await context
                     .Requests
-                    .Single(r => r.UserId == _userId.ToString() && r.Id == id);
+                    .SingleAsync(r => r.Wallet.UserId == _userId.ToString() && r.Id == id);
 
                 context.Requests.Remove(entity);
                 return await context.SaveChangesAsync() == 1; 

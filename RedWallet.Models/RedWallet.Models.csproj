@@ -97,9 +97,10 @@
   <ItemGroup>
     <Compile Include="BitcoinModels\KeyDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReceiveModels\RequestCreate.cs" />
-    <Compile Include="ReceiveModels\RequestDetail.cs" />
-    <Compile Include="ReceiveModels\RequestListItem.cs" />
+    <Compile Include="RequestModels\RequestCreate.cs" />
+    <Compile Include="RequestModels\RequestDetail.cs" />
+    <Compile Include="RequestModels\RequestListItem.cs" />
+    <Compile Include="RequestModels\RequestWalletInput.cs" />
     <Compile Include="WalletModels\WalletCreate.cs" />
     <Compile Include="WalletModels\WalletDetail.cs" />
     <Compile Include="WalletModels\WalletEdit.cs" />

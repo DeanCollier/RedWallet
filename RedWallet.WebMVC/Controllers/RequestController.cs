@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using NBitcoin;
-using RedWallet.Models.ReceiveModels;
+using RedWallet.Models.RequestModels;
 using RedWallet.Services;
 using System;
 using System.Collections.Generic;
@@ -35,6 +35,9 @@ namespace RedWallet.WebMVC.Controllers
             return service;
         }
 
+        // Wallet Details => display wallet name and ask for passphrase => create new request with wallet id and passphrase
+
+
         // GET: Request
         public async Task<ActionResult> Index(int walletId)
         {
@@ -44,10 +47,19 @@ namespace RedWallet.WebMVC.Controllers
         }
 
         // GET: Request Create
-        // Wallet/{id}/Request/Create
-        public async Task<ActionResult> Create()
+        // Request/Create
+        public async Task<ActionResult> Create(int id)
         {
-            return View();
+            var service = CreateWalletService();
+            var detail = await service.GetWalletByIdAsync(id);
+            var model = new RequestCreate
+            {
+                WalletId = detail.WalletId,
+                WalletName = detail.WalletName,
+                Passphrase = ""
+            };
+
+            return View(model);
         }
         // POST: Create Request
         [HttpPost]
@@ -63,20 +75,26 @@ namespace RedWallet.WebMVC.Controllers
             var btcService = CreateBitcoinService();
             var requestService = CreateRequestService();
 
-            var walletEncryptedSecret = await walletService.GetWalletEncryptedSecret(model.WalletId);
+            var walletEncryptedSecret = await walletService.GetWalletEncryptedSecretAsync(model.WalletId);
             var requestAddress = btcService.GetNewBitcoinAddress(walletEncryptedSecret, model.Passphrase);
             
             if (requestAddress != null)
             {
-                var detail = requestService.CreateRequestAsync(model.WalletId, requestAddress.ToString());
+                var detail = await requestService.CreateRequestAsync(model.WalletId, requestAddress.ToString());
                 return RedirectToAction($"Details/{detail.Id}");
             }
             ModelState.AddModelError("", "Something went wrong.");
             return View(model);
+        }
 
+        // GET: Request Details
+        // Request/Details/{id}
+        public async Task<ActionResult> Details(int id)
+        {
+            var requestService = CreateRequestService();
+            var model = await requestService.GetWalletRequestByIdAsync(id);
 
-
-
+            return View(model);
         }
     }
 }

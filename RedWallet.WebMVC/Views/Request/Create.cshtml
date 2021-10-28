@@ -1,4 +1,4 @@
-﻿@model RedWallet.Models.ReceiveModels.RequestCreate
+﻿@model RedWallet.Models.RequestModels.RequestCreate
 
 @{
     ViewBag.Title = "Create";
@@ -6,23 +6,23 @@
 
 <h2>Create</h2>
 
+<dt>
+    @Html.DisplayNameFor(model => model.WalletName)
+</dt>
+<dd>
+    @Html.DisplayFor(model => model.WalletName)
+</dd>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>RequestCreate</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <dt>
-            @Html.DisplayNameFor(model => model.WalletName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.WalletName)
-        </dd>
-
+        @Html.HiddenFor(model => model.WalletId)
+        @Html.HiddenFor(model => model.WalletName)
         <div class="form-group">
             @Html.LabelFor(model => model.Passphrase, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

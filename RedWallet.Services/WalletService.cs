@@ -16,7 +16,6 @@ namespace RedWallet.Services
     {
         private readonly Guid _userId;
 
-
         public WalletService(Guid userId)
         {
             _userId = userId;
@@ -64,9 +63,9 @@ namespace RedWallet.Services
         {
             using (var context = new ApplicationDbContext())
             {
-                var entity = context
+                var entity = await context
                     .Wallets
-                    .Single(w => w.UserId == _userId.ToString() && w.Id == id);
+                    .SingleAsync(w => w.UserId == _userId.ToString() && w.Id == id);
 
                 var model = new WalletDetail
                 {
@@ -81,13 +80,13 @@ namespace RedWallet.Services
         }
 
         // READ
-        public async Task<string> GetWalletEncryptedSecret(int id)
+        public async Task<string> GetWalletEncryptedSecretAsync(int id)
         {
             using (var context = new ApplicationDbContext())
             {
-                var entity = context
+                var entity = await context
                     .Wallets
-                    .Single(w => w.UserId == _userId.ToString() && w.Id == id);
+                    .SingleAsync(w => w.UserId == _userId.ToString() && w.Id == id);
 
                 return entity.EncryptedSecret;
             }
