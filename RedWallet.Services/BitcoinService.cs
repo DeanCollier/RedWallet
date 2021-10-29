@@ -64,13 +64,20 @@ namespace RedWallet.Services
             }
 
         }
+        
         public BitcoinSecret GetBitcoinSecret(string encryptedSecret, string passphrase)
         {
             return BitcoinEncryptedSecret.Create(encryptedSecret, Network).GetSecret(passphrase.ToSHA256());
         }
 
-        
+        public BitcoinSecret GenerateChildKey(BitcoinSecret bitcoinSecret)
+        {
+            // figure out how to derive new key pair for a new request, feeding in the parent key
+            return null;
+        }
 
+
+        
         
 
         
