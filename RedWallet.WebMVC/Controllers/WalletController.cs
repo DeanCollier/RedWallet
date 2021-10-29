@@ -144,7 +144,7 @@ namespace RedWallet.WebMVC.Controllers
                 return RedirectToAction("Index");
             }
             ModelState.AddModelError("", "Your wallet could not be deleted.");
-            return View();
+            return View(id);
         }
     }
 }
