@@ -1,0 +1,59 @@
+﻿@model RedWallet.Models.WalletModels.WalletDetail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+@if (TempData.ContainsKey("Mnemonic"))
+{
+    <div class="alert alert-warning fade in" role="alert">
+        <button type="button" class="close" data-dismiss="alert">
+            <span>&times;</span>
+        </button>
+        "ATTENTION: YOUR SEED PHRASE WILL NOT BE SAVED. BE SURE TO WRITE THE SEED PHRASE AND YOUR PASSWORD DOWN AND STORE THEM SOMEWHERE SAFE FOR WALLET RECOVERY"
+    </div>
+}
+<div>
+    <h4>WalletDetail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.WalletName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WalletName)
+        </dd>
+        @if (TempData.ContainsKey("Mnemonic"))
+        {
+            <dt>
+                Mnemonic Seed Phrase
+            </dt>
+            <dd>
+                @TempData["Mnemonic"]
+            </dd>
+            <dt>
+                Passphrase
+            </dt>
+            <dd>
+                @TempData["Passphrase"]
+            </dd>
+        }
+    </dl>
+</div>
+@if (TempData.ContainsKey("Mnemonic"))
+{
+<p>
+    @Html.ActionLink("I Have Backed Up My Seed and Passphrase", "Index")
+</p>
+}
+else
+{
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.WalletId }) |
+    @Html.ActionLink("Back to List", "Index") |
+    @Html.ActionLink("Receive", "Create", "Request", new { id = Model.WalletId }, new { })
+</p>
+}
+
