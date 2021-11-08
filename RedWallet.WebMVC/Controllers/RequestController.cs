@@ -96,5 +96,33 @@ namespace RedWallet.WebMVC.Controllers
 
             return View(model);
         }
+
+        // UPDATE: No Update for Requets
+
+        // GET: Delete Request
+        // Request/Delete/{id}
+        public async Task<ActionResult> Delete(int id)
+        {
+            var requestService = CreateRequestService();
+            var model = await requestService.GetWalletRequestByIdAsync(id);
+
+            return View(model);
+        }
+        // POST: Delete Request
+        public async Task<ActionResult> DeleteRequest(int id)
+        {
+            var requestService = CreateRequestService();
+            var tempDetail = await requestService.GetWalletRequestByIdAsync(id);
+            var walletId = tempDetail.WalletId;
+            if (await requestService.DeleteRequestAsync(id))
+            {
+                TempData["DeleteResult"] = "Request data deleted";
+                return RedirectToAction("Index", walletId);
+            }
+            TempData["DeleteResult"] = "Something went wrong, request data NOT deleted.";
+            return View(id);
+
+
+        }
     }
 }

@@ -1,0 +1,48 @@
+﻿@model RedWallet.Models.RequestModels.RequestDetail
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>RequestDetail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.WalletName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WalletName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RequestAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RequestAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Created)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Created)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index", new { id = Model.WalletId })
+        </div>
+    }
+</div>

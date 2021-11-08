@@ -5,12 +5,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9C3D012D-0646-4BCF-A22C-FF2883DF16A4}</ProjectGuid>
+    <ProjectGuid>{AAF45683-F72B-43E7-8224-0DC120C4B952}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RedWallet.Models</RootNamespace>
     <AssemblyName>RedWallet.Models</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
@@ -115,7 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RedWallet.Data\RedWallet.Data.csproj">
-      <Project>{f456aba0-90a3-4318-8b15-1b81bb6b4a79}</Project>
+      <Project>{4A8232CC-2065-44D6-8A9A-E9353818A6BD}</Project>
       <Name>RedWallet.Data</Name>
     </ProjectReference>
   </ItemGroup>

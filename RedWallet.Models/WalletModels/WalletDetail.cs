@@ -1,5 +1,4 @@
-﻿using NBitcoin;
-using RedWallet.Data;
+﻿using RedWallet.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

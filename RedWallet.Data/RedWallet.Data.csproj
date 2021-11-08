@@ -5,12 +5,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F456ABA0-90A3-4318-8B15-1B81BB6B4A79}</ProjectGuid>
+    <ProjectGuid>{4A8232CC-2065-44D6-8A9A-E9353818A6BD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RedWallet.Data</RootNamespace>
     <AssemblyName>RedWallet.Data</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
@@ -116,9 +116,9 @@
     <Compile Include="Migrations\202110270436311_encryptionUpdate2.Designer.cs">
       <DependentUpon>202110270436311_encryptionUpdate2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202110272144591_requests2.cs" />
-    <Compile Include="Migrations\202110272144591_requests2.designer.cs">
-      <DependentUpon>202110272144591_requests2.cs</DependentUpon>
+    <Compile Include="Migrations\202110291357563_updateRequest.cs" />
+    <Compile Include="Migrations\202110291357563_updateRequest.designer.cs">
+      <DependentUpon>202110291357563_updateRequest.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -146,8 +146,8 @@
     <EmbeddedResource Include="Migrations\202110270436311_encryptionUpdate2.resx">
       <DependentUpon>202110270436311_encryptionUpdate2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202110272144591_requests2.resx">
-      <DependentUpon>202110272144591_requests2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202110291357563_updateRequest.resx">
+      <DependentUpon>202110291357563_updateRequest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
