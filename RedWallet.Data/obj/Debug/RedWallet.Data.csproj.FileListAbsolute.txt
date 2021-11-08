@@ -1,5 +1,3 @@
-C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.csproj.AssemblyReference.cache
-C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.csproj.CoreCompileInputs.cache
 C:\RED_WALLET\RedWallet\RedWallet.Data\bin\Debug\RedWallet.Data.dll.config
 C:\RED_WALLET\RedWallet\RedWallet.Data\bin\Debug\RedWallet.Data.dll
 C:\RED_WALLET\RedWallet\RedWallet.Data\bin\Debug\RedWallet.Data.pdb
@@ -11,6 +9,8 @@ C:\RED_WALLET\RedWallet\RedWallet.Data\bin\Debug\EntityFramework.xml
 C:\RED_WALLET\RedWallet\RedWallet.Data\bin\Debug\EntityFramework.SqlServer.xml
 C:\RED_WALLET\RedWallet\RedWallet.Data\bin\Debug\Microsoft.AspNet.Identity.Core.xml
 C:\RED_WALLET\RedWallet\RedWallet.Data\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.csproj.AssemblyReference.cache
+C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.csproj.CoreCompileInputs.cache
 C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.csproj.CopyComplete
 C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.dll
 C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.pdb

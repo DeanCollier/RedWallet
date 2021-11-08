@@ -122,3 +122,4 @@ C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\RedWallet.Data.dll.config
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\RedWallet.Utilities.pdb
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\obj\Debug\RedWallet.WebMVC.dll
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\obj\Debug\RedWallet.WebMVC.pdb
+C:\RED_WALLET\RedWallet\RedWallet.WebMVC\obj\Debug\RedWallet.WebMVC.csproj.CopyComplete
