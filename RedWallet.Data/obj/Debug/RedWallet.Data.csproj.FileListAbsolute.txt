@@ -11,7 +11,6 @@ C:\RED_WALLET\RedWallet\RedWallet.Data\bin\Debug\Microsoft.AspNet.Identity.Core.
 C:\RED_WALLET\RedWallet\RedWallet.Data\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.xml
 C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.csproj.AssemblyReference.cache
 C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.csproj.CoreCompileInputs.cache
-C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.csproj.CopyComplete
 C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.dll
 C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.pdb
 C:\RED_WALLET\RedWallet\RedWallet.Data\bin\Debug\Microsoft.Extensions.Logging.Abstractions.dll
