@@ -17,3 +17,9 @@ C:\RED_WALLET\RedWallet\RedWallet.Models\obj\Debug\RedWallet.Models.csproj.CoreC
 C:\RED_WALLET\RedWallet\RedWallet.Models\obj\Debug\RedWallet.Models.csproj.CopyComplete
 C:\RED_WALLET\RedWallet\RedWallet.Models\obj\Debug\RedWallet.Models.dll
 C:\RED_WALLET\RedWallet\RedWallet.Models\obj\Debug\RedWallet.Models.pdb
+C:\RED_WALLET\RedWallet\RedWallet.Models\bin\Debug\Microsoft.Extensions.Logging.Abstractions.dll
+C:\RED_WALLET\RedWallet\RedWallet.Models\bin\Debug\Newtonsoft.Json.dll
+C:\RED_WALLET\RedWallet\RedWallet.Models\bin\Debug\System.Buffers.dll
+C:\RED_WALLET\RedWallet\RedWallet.Models\bin\Debug\Microsoft.Extensions.Logging.Abstractions.xml
+C:\RED_WALLET\RedWallet\RedWallet.Models\bin\Debug\Newtonsoft.Json.xml
+C:\RED_WALLET\RedWallet\RedWallet.Models\bin\Debug\System.Buffers.xml
