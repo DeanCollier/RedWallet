@@ -47,6 +47,7 @@ namespace RedWallet.Services
                     .Where(r => r.Wallet.UserId == _userId.ToString() && r.WalletId == walletId)
                     .Select(r => new RequestListItem
                     {
+                        RequestId = r.Id,
                         WalletName = r.Wallet.WalletName,
                         RequestAddress = r.RequestAddress
                     });

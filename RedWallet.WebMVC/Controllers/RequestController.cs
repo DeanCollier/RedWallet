@@ -39,10 +39,11 @@ namespace RedWallet.WebMVC.Controllers
 
 
         // GET: Request
-        public async Task<ActionResult> Index(int walletId)
+        public async Task<ActionResult> Index(int id)
         {
+            int walletId = id;
             var requestService = CreateRequestService();
-            var model = requestService.GetWalletRequestsAsync(walletId);
+            var model = await requestService.GetWalletRequestsAsync(walletId);
             return View(model);
         }
 
@@ -109,6 +110,9 @@ namespace RedWallet.WebMVC.Controllers
             return View(model);
         }
         // POST: Delete Request
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("Delete")]
         public async Task<ActionResult> DeleteRequest(int id)
         {
             var requestService = CreateRequestService();
@@ -117,9 +121,9 @@ namespace RedWallet.WebMVC.Controllers
             if (await requestService.DeleteRequestAsync(id))
             {
                 TempData["DeleteResult"] = "Request data deleted";
-                return RedirectToAction("Index", walletId);
+                return RedirectToAction($"Index/{walletId}");
             }
-            TempData["DeleteResult"] = "Something went wrong, request data NOT deleted.";
+            ModelState.AddModelError("", "Something went wrong.");
             return View(id);
 
 
