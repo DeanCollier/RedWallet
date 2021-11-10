@@ -31,6 +31,7 @@ namespace RedWallet.WebMVC.Controllers
         {
             var walletIdentity = new WalletIdentity { WalletId = walletId, UserId = User.Identity.GetUserId() };
             var model = await _req.GetWalletRequestsAsync(walletIdentity);
+            ViewData["WalletId"] = walletId;
             return View(model);
         }
 

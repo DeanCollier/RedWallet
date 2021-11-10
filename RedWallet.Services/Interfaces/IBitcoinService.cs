@@ -7,9 +7,9 @@ namespace RedWallet.Services.Interfaces
 {
     public interface IBitcoinService
     {
-        Network Network { get; set; }
+        /*Network Network { get; set; }
         string RPCHost { get; set; }
-        string RPCCredentials { get; set; }
+        string RPCCredentials { get; set; }*/
 
         string BuildTransaction(string encryptedSecret, string walletPassword, double sendAmount, string recipientAddress);
         BitcoinSecret GenerateChildKey(BitcoinSecret bitcoinSecret);

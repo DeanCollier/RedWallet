@@ -21,7 +21,6 @@ namespace RedWallet.Models.WalletModels
         [MinLength(8), Display(Name = "Entropy Input", Description = "Enter random letters for enhanced security.")]
         public string EntropyInput { get; set; }
 
-        [Required]
         public string UserId { get; set; }
 
     }

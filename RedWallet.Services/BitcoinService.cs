@@ -17,9 +17,9 @@ namespace RedWallet.Services
 {
     public class BitcoinService : IBitcoinService
     {
-        public Network Network { get; set; }
-        public string RPCHost { get; set; }
-        public string RPCCredentials { get; set; }
+        private Network Network { get; set; }
+        private string RPCHost { get; set; }
+        private string RPCCredentials { get; set; }
 
         public BitcoinService()
         {

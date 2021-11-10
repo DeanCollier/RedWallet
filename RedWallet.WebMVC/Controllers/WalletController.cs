@@ -42,15 +42,13 @@ namespace RedWallet.WebMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(WalletCreate model)
         {
-            model.UserId = User.Identity.GetUserId();
-
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            
-            var newKeyDetail = await _btc.GetNewBitcoinKey(model);
 
+            model.UserId = User.Identity.GetUserId();
+            var newKeyDetail = await _btc.GetNewBitcoinKey(model);
             var newWallet = await _wallet.CreateWalletAsync(model, newKeyDetail);
 
             if (!(string.IsNullOrEmpty(newWallet[0])) && !(string.IsNullOrEmpty(newWallet[1])) && !(string.IsNullOrEmpty(newWallet[2]))) // passphrase & mnemonic
@@ -100,10 +98,9 @@ namespace RedWallet.WebMVC.Controllers
                 ModelState.AddModelError("", "Id Mismatch");
                 return View(model);
             }
-            model.UserId = User.Identity.GetUserId();
-
             if (ModelState.IsValid)
             {
+                model.UserId = User.Identity.GetUserId();
                 if (await _wallet.UpdateWalletById(model))
                 {
                     TempData["SaveResult"] = "Your wallet name has been updated.";
