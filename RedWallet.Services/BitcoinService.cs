@@ -76,11 +76,23 @@ namespace RedWallet.Services
             return null;
         }
 
+        public bool IsValidWallet(string recipientAddress)
+        {
+            return true;
+        }
 
-        
-        
+        public string BuildTransaction(string encryptedSecret, string walletPassword, double sendAmount, string recipientAddress)
+        {
+            string transaction = "ThisIsAFakeTransactionString";
+            var transactionHash = transaction.ToSHA256();
+            return transactionHash;
+        }
 
-        
+
+
+
+
+
 
         /*public async Task<WalletDetail> CreateAddress(WalletCreate model)
         {

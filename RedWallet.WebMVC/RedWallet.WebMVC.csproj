@@ -207,6 +207,7 @@
     <Compile Include="Controllers\RequestController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SendController.cs" />
     <Compile Include="Controllers\WalletController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -291,6 +292,9 @@
     <Content Include="Views\Wallet\Delete.cshtml" />
     <Content Include="Views\Wallet\Edit.cshtml" />
     <Content Include="Views\Wallet\Index.cshtml" />
+    <Content Include="Views\Send\Index.cshtml" />
+    <Content Include="Views\Send\Create.cshtml" />
+    <Content Include="Views\Send\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -39,20 +39,19 @@ namespace RedWallet.WebMVC.Controllers
 
 
         // GET: Request
-        public async Task<ActionResult> Index(int id)
+        public async Task<ActionResult> Index(int walletId)
         {
-            int walletId = id;
             var requestService = CreateRequestService();
             var model = await requestService.GetWalletRequestsAsync(walletId);
             return View(model);
         }
 
         // GET: Request Create
-        // Request/Create
-        public async Task<ActionResult> Create(int id)
+        // Wallet/{walletId}/Request/Create
+        public async Task<ActionResult> Create(int walletId)
         {
-            var service = CreateWalletService();
-            var detail = await service.GetWalletByIdAsync(id);
+            var requestService = CreateWalletService();
+            var detail = await requestService.GetWalletByIdAsync(walletId);
             var model = new RequestCreate
             {
                 WalletId = detail.WalletId,
@@ -82,31 +81,29 @@ namespace RedWallet.WebMVC.Controllers
             if (requestAddress != null)
             {
                 var detail = await requestService.CreateRequestAsync(model.WalletId, requestAddress.ToString());
-                return RedirectToAction($"Details/{detail.Id}");
+                return Redirect($"/Wallet/{detail.WalletId}/request/{detail.Id}/details");
             }
             ModelState.AddModelError("", "Something went wrong.");
             return View(model);
         }
 
         // GET: Request Details
-        // Request/Details/{id}
+        // Wallet/{walletId}/Request/{id}/Details
         public async Task<ActionResult> Details(int id)
         {
             var requestService = CreateRequestService();
             var model = await requestService.GetWalletRequestByIdAsync(id);
-
             return View(model);
         }
 
         // UPDATE: No Update for Requets
 
-        // GET: Delete Request
+        // GET: Delete Request (for db management)
         // Request/Delete/{id}
         public async Task<ActionResult> Delete(int id)
         {
             var requestService = CreateRequestService();
             var model = await requestService.GetWalletRequestByIdAsync(id);
-
             return View(model);
         }
         // POST: Delete Request
@@ -116,8 +113,8 @@ namespace RedWallet.WebMVC.Controllers
         public async Task<ActionResult> DeleteRequest(int id)
         {
             var requestService = CreateRequestService();
-            var tempDetail = await requestService.GetWalletRequestByIdAsync(id);
-            var walletId = tempDetail.WalletId;
+            var walletId = (await requestService.GetWalletRequestByIdAsync(id)).WalletId;
+
             if (await requestService.DeleteRequestAsync(id))
             {
                 TempData["DeleteResult"] = "Request data deleted";

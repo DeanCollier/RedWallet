@@ -78,7 +78,7 @@ namespace RedWallet.Services
             }
         }
 
-        // UPDATE -- NONE
+        // UPDATE -- not needed, there are no properties to change - NICK
 
         // DELETE -- only for DB purposes, don't really need
         public async Task<bool> DeleteRequestAsync(int id)

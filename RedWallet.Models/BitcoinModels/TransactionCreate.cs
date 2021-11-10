@@ -11,11 +11,20 @@ namespace RedWallet.Models.BitcoinModels
     {
         [Required]
         public int WalletId { get; set; }
-        
+
+        [Required]
+        public string WalletName { get; set; }
+
+        [Required]
+        public double Balance { get; set; }
+
         [Required]
         public double SendAmount { get; set; }
         
         [Required]
         public string RecipientAddress { get; set; }
+
+        [Required]
+        public string WalletPassword { get; set; }
     }
 }

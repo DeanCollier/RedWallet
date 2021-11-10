@@ -18,3 +18,4 @@ namespace RedWallet.Models.RequestModels
         public string RequestAddress { get; set; }
     }
 }
+
