@@ -5,16 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RedWallet.Models.WalletModels
+namespace RedWallet.Models.SendModels
 {
-    public class WalletEdit
+    public class SendIdentity
     {
         [Required]
-        public int WalletId { get; set; }
-
-        [Required, Display(Name = "New Wallet Name")]
-        public string NewWalletName { get; set; }
-
+        public int SendId { get; set; }
         [Required]
         public string UserId { get; set; }
     }

@@ -2,6 +2,7 @@
 using RedWallet.Data;
 using RedWallet.Models.BitcoinModels;
 using RedWallet.Models.WalletModels;
+using RedWallet.Services.Interfaces;
 using RedWallet.Utilities;
 using System;
 using System.Collections.Generic;
@@ -12,25 +13,18 @@ using System.Threading.Tasks;
 
 namespace RedWallet.Services
 {
-    public class WalletService
+    public class WalletService : IWalletService
     {
-        private readonly Guid _userId;
-
-        public WalletService(Guid userId)
-        {
-            _userId = userId;
-        }
-
         // CREATE 
         public async Task<string[]> CreateWalletAsync(WalletCreate model, KeyDetail keyDetail)
         {
             var entity = new Wallet
             {
-                UserId = _userId.ToString(),
+                UserId = model.UserId,
                 WalletName = model.WalletName,
                 EncryptedSecret = keyDetail.EncryptedSecret
             };
-            
+
             using (var context = new ApplicationDbContext())
             {
                 context.Wallets.Add(entity);
@@ -41,13 +35,13 @@ namespace RedWallet.Services
         }
 
         // READ
-        public async Task<IEnumerable<WalletListItem>> GetWalletsAsync()
+        public async Task<IEnumerable<WalletListItem>> GetWalletsAsync(string userId)
         {
             using (var context = new ApplicationDbContext())
             {
                 var query = context
                     .Wallets
-                    .Where(w => w.UserId == _userId.ToString())
+                    .Where(w => w.UserId == userId)
                     .Select(w => new WalletListItem
                     {
                         WalletId = w.Id,
@@ -57,17 +51,17 @@ namespace RedWallet.Services
                 return await query.ToArrayAsync();
             }
         }
-        
+
         // READ
-        public async Task<WalletDetail> GetWalletByIdAsync(int id)
+        public async Task<WalletDetail> GetWalletByIdAsync(WalletIdentity model)
         {
             using (var context = new ApplicationDbContext())
             {
                 var entity = await context
                     .Wallets
-                    .SingleAsync(w => w.UserId == _userId.ToString() && w.Id == id);
+                    .SingleAsync(w => w.UserId == model.UserId && w.Id == model.WalletId);
 
-                var model = new WalletDetail
+                var detail = new WalletDetail
                 {
                     WalletId = entity.Id,
                     WalletName = entity.WalletName,
@@ -75,18 +69,18 @@ namespace RedWallet.Services
                     OutgoingPayments = new List<Send>()  // just empty for now
                 };
 
-                return model;
+                return detail;
             }
         }
 
         // READ
-        public async Task<string> GetWalletEncryptedSecretAsync(int id)
+        public async Task<string> GetWalletEncryptedSecretAsync(WalletIdentity model)
         {
             using (var context = new ApplicationDbContext())
             {
                 var entity = await context
                     .Wallets
-                    .SingleAsync(w => w.UserId == _userId.ToString() && w.Id == id);
+                    .SingleAsync(w => w.UserId == model.UserId && w.Id == model.WalletId);
 
                 return entity.EncryptedSecret;
             }
@@ -103,7 +97,7 @@ namespace RedWallet.Services
             {
                 var entity = context
                     .Wallets
-                    .Single(w => w.UserId == _userId.ToString() && w.Id == model.WalletId);
+                    .Single(w => w.UserId == model.UserId && w.Id == model.WalletId);
 
                 entity.WalletName = model.NewWalletName;
                 return await context.SaveChangesAsync() == 1;
@@ -111,13 +105,13 @@ namespace RedWallet.Services
         }
 
         // DELETE
-        public async Task<bool> DeleteWalletAsync(int id)
+        public async Task<bool> DeleteWalletAsync(WalletIdentity model)
         {
             using (var context = new ApplicationDbContext())
             {
                 var entity = context
                     .Wallets
-                    .Single(w => w.UserId == _userId.ToString() && w.Id == id);
+                    .Single(w => w.UserId == model.UserId && w.Id == model.WalletId);
 
                 context.Wallets.Remove(entity);
                 return await context.SaveChangesAsync() >= 1; // other db sends and requests may also be deleted

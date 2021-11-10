@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNet.Identity;
 using NBitcoin;
 using RedWallet.Models.RequestModels;
+using RedWallet.Models.WalletModels;
 using RedWallet.Services;
+using RedWallet.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,36 +15,22 @@ namespace RedWallet.WebMVC.Controllers
 {
     public class RequestController : Controller
     {
-        private BitcoinService CreateBitcoinService()
-        {
-            var userId = Guid.Parse(User.Identity.GetUserId());
-            Network network = Network.RegTest;
-            var rpcHost = "127.0.0.1:18444";
-            var rpcCredentials = "lightningbbobb:ViresEnNumeris";
-            var service = new BitcoinService(network, rpcHost, rpcCredentials, userId);
-            return service;
-        }
-        private WalletService CreateWalletService()
-        {
-            var userId = Guid.Parse(User.Identity.GetUserId());
-            var service = new WalletService(userId);
-            return service;
-        }
-        private RequestService CreateRequestService()
-        {
-            var userId = Guid.Parse(User.Identity.GetUserId());
-            var service = new RequestService(userId);
-            return service;
-        }
+        private readonly IBitcoinService _btc;
+        private readonly IWalletService _wallet;
+        private readonly IRequestService _req;
 
-        // Wallet Details => display wallet name and ask for passphrase => create new request with wallet id and passphrase
-
+        public RequestController(IBitcoinService btc, IWalletService wallet, IRequestService req)
+        {
+            _btc = btc;
+            _wallet = wallet;
+            _req = req;
+        }
 
         // GET: Request
         public async Task<ActionResult> Index(int walletId)
         {
-            var requestService = CreateRequestService();
-            var model = await requestService.GetWalletRequestsAsync(walletId);
+            var walletIdentity = new WalletIdentity { WalletId = walletId, UserId = User.Identity.GetUserId() };
+            var model = await _req.GetWalletRequestsAsync(walletIdentity);
             return View(model);
         }
 
@@ -50,8 +38,8 @@ namespace RedWallet.WebMVC.Controllers
         // Wallet/{walletId}/Request/Create
         public async Task<ActionResult> Create(int walletId)
         {
-            var requestService = CreateWalletService();
-            var detail = await requestService.GetWalletByIdAsync(walletId);
+            var walletIdentity = new WalletIdentity { WalletId = walletId, UserId = User.Identity.GetUserId() };
+            var detail = await _wallet.GetWalletByIdAsync(walletIdentity);
             var model = new RequestCreate
             {
                 WalletId = detail.WalletId,
@@ -71,16 +59,13 @@ namespace RedWallet.WebMVC.Controllers
                 return View(model);
             }
 
-            var walletService = CreateWalletService();
-            var btcService = CreateBitcoinService();
-            var requestService = CreateRequestService();
-
-            var walletEncryptedSecret = await walletService.GetWalletEncryptedSecretAsync(model.WalletId);
-            var requestAddress = btcService.GetNewBitcoinAddress(walletEncryptedSecret, model.Passphrase);
+            var walletIdentity = new WalletIdentity { WalletId = model.WalletId, UserId = User.Identity.GetUserId() };
+            var walletEncryptedSecret = await _wallet.GetWalletEncryptedSecretAsync(walletIdentity);
+            var requestAddress = _btc.GetNewBitcoinAddress(walletEncryptedSecret, model.Passphrase);
             
             if (requestAddress != null)
             {
-                var detail = await requestService.CreateRequestAsync(model.WalletId, requestAddress.ToString());
+                var detail = await _req.CreateRequestAsync(walletIdentity, requestAddress.ToString());
                 return Redirect($"/Wallet/{detail.WalletId}/request/{detail.Id}/details");
             }
             ModelState.AddModelError("", "Something went wrong.");
@@ -91,8 +76,8 @@ namespace RedWallet.WebMVC.Controllers
         // Wallet/{walletId}/Request/{id}/Details
         public async Task<ActionResult> Details(int id)
         {
-            var requestService = CreateRequestService();
-            var model = await requestService.GetWalletRequestByIdAsync(id);
+            var requestIdentity = new RequestIdentity { RequestId = id, UserId = User.Identity.GetUserId() };
+            var model = await _req.GetWalletRequestByIdAsync(requestIdentity);
             return View(model);
         }
 
@@ -102,8 +87,8 @@ namespace RedWallet.WebMVC.Controllers
         // Request/Delete/{id}
         public async Task<ActionResult> Delete(int id)
         {
-            var requestService = CreateRequestService();
-            var model = await requestService.GetWalletRequestByIdAsync(id);
+            var requestIdentity = new RequestIdentity { RequestId = id, UserId = User.Identity.GetUserId() };
+            var model = await _req.GetWalletRequestByIdAsync(requestIdentity);
             return View(model);
         }
         // POST: Delete Request
@@ -112,10 +97,10 @@ namespace RedWallet.WebMVC.Controllers
         [ActionName("Delete")]
         public async Task<ActionResult> DeleteRequest(int id)
         {
-            var requestService = CreateRequestService();
-            var walletId = (await requestService.GetWalletRequestByIdAsync(id)).WalletId;
+            var requestIdentity = new RequestIdentity { RequestId = id, UserId = User.Identity.GetUserId() };
+            var walletId = (await _req.GetWalletRequestByIdAsync(requestIdentity)).WalletId;
 
-            if (await requestService.DeleteRequestAsync(id))
+            if (await _req.DeleteRequestAsync(requestIdentity))
             {
                 TempData["DeleteResult"] = "Request data deleted";
                 return RedirectToAction($"Index/{walletId}");

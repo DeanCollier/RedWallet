@@ -6,24 +6,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using RedWallet.Models.RequestModels;
+using RedWallet.Services.Interfaces;
+using RedWallet.Models.WalletModels;
 
 namespace RedWallet.Services
 {
-    public class RequestService
+    public class RequestService : IRequestService
     {
-        private readonly Guid _userId;
-
-        public RequestService(Guid userId)
-        {
-            _userId = userId;
-        }
-
         // CREATE 
-        public async Task<RequestDetail> CreateRequestAsync(int walletId, string requestAddress)
+        public async Task<RequestDetail> CreateRequestAsync(WalletIdentity model, string requestAddress)
         {
             var entity = new Request
             {
-                WalletId = walletId,
+                WalletId = model.WalletId,
                 RequestAddress = requestAddress,
                 Created = DateTimeOffset.Now,
             };
@@ -34,17 +29,18 @@ namespace RedWallet.Services
                 await context.SaveChangesAsync();
             }
 
-            return await GetWalletRequestByIdAsync(entity.Id);
+            var requestIdentity = new RequestIdentity { RequestId = entity.Id, UserId = model.UserId };
+            return await GetWalletRequestByIdAsync(requestIdentity);
         }
 
         // READ
-        public async Task<IEnumerable<RequestListItem>> GetWalletRequestsAsync(int walletId)
+        public async Task<IEnumerable<RequestListItem>> GetWalletRequestsAsync(WalletIdentity model)
         {
             using (var context = new ApplicationDbContext())
             {
                 var query = context
                     .Requests
-                    .Where(r => r.Wallet.UserId == _userId.ToString() && r.WalletId == walletId)
+                    .Where(r => r.Wallet.UserId == model.UserId && r.WalletId == model.WalletId)
                     .Select(r => new RequestListItem
                     {
                         RequestId = r.Id,
@@ -57,15 +53,15 @@ namespace RedWallet.Services
         }
 
         // READ
-        public async Task<RequestDetail> GetWalletRequestByIdAsync(int Id)
+        public async Task<RequestDetail> GetWalletRequestByIdAsync(RequestIdentity model)
         {
             using (var context = new ApplicationDbContext())
             {
                 var entity = await context
                     .Requests
-                    .SingleAsync(r => r.Wallet.UserId == _userId.ToString() && r.Id == Id);
+                    .SingleAsync(r => r.Wallet.UserId == model.UserId && r.Id == model.RequestId);
 
-                var model = new RequestDetail
+                var detail = new RequestDetail
                 {
                     Id = entity.Id,
                     WalletId = entity.WalletId,
@@ -74,23 +70,23 @@ namespace RedWallet.Services
                     Created = entity.Created
                 };
 
-                return model;
+                return detail;
             }
         }
 
         // UPDATE -- not needed, there are no properties to change - NICK
 
         // DELETE -- only for DB purposes, don't really need
-        public async Task<bool> DeleteRequestAsync(int id)
+        public async Task<bool> DeleteRequestAsync(RequestIdentity model)
         {
             using (var context = new ApplicationDbContext())
             {
                 var entity = await context
                     .Requests
-                    .SingleAsync(r => r.Wallet.UserId == _userId.ToString() && r.Id == id);
+                    .SingleAsync(r => r.Wallet.UserId == model.UserId && r.Id == model.RequestId);
 
                 context.Requests.Remove(entity);
-                return await context.SaveChangesAsync() == 1; 
+                return await context.SaveChangesAsync() == 1;
 
             }
         }

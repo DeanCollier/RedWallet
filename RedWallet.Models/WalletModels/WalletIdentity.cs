@@ -7,14 +7,10 @@ using System.Threading.Tasks;
 
 namespace RedWallet.Models.WalletModels
 {
-    public class WalletEdit
+    public class WalletIdentity
     {
         [Required]
         public int WalletId { get; set; }
-
-        [Required, Display(Name = "New Wallet Name")]
-        public string NewWalletName { get; set; }
-
         [Required]
         public string UserId { get; set; }
     }
