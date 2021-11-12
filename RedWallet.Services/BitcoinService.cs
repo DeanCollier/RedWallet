@@ -23,7 +23,7 @@ namespace RedWallet.Services
 
         public BitcoinService()
         {
-            Network = Network.TestNet;
+            Network = Network.Main;
             RPCHost = "127.0.0.1:18444";
             RPCCredentials = "lightningbbobb:ViresEnNumeris";
         }
@@ -35,8 +35,6 @@ namespace RedWallet.Services
             var extendedKey = seedMnemonic.DeriveExtKey(); // derive extended key from mnemonic
             var bitcoinSecret = extendedKey.PrivateKey.GetWif(Network); // get WIF, base58
 
-            var testString = bitcoinSecret.ToString();
-
             var encryptedSecret = bitcoinSecret.Encrypt(model.Passphrase.ToSHA256()); // encrypt with passphrase hash
             //bitcoinSecret.PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH, Network);
 
@@ -44,22 +42,34 @@ namespace RedWallet.Services
             {
                 Passphrase = model.Passphrase,
                 MnemonicSeedPhrase = seedMnemonic.ToString(),
-                EncryptedSecret = encryptedSecret.ToString()
+                EncryptedSecret = encryptedSecret.ToString(),
+                Xpub = extendedKey.Neuter().ToString(Network),
+                XpubIteration = 0
             };
         }
 
-        public BitcoinAddress GetNewBitcoinAddress(string encryptedSecret, string passphrase)
+        // enter password and check
+        public bool CheckEcryptionPassword(string encryptedSecret, string passphrase)
         {
-            try
+            if (GetBitcoinSecret(encryptedSecret, passphrase).ToString() != null)
             {
-                var secret = GetBitcoinSecret(encryptedSecret, passphrase);
-                var address = secret.PubKey.Hash.GetAddress(Network);
-
-                return address;
+                return true;
             }
-            catch (Exception ex)
+            return false;
+        }
+
+        public BitcoinAddress GetNewBitcoinAddress(string encryptedSecret, string passphrase, string xpub, int xpubIteration)
+        {
+            if (CheckEcryptionPassword(encryptedSecret, passphrase)) // verify password
             {
-                throw new Exception("Invalid Password");
+                var extPubKey = ExtPubKey.Parse(xpub, Network);
+                var newAddress = extPubKey.Derive(0).Derive((uint)xpubIteration).PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH ,Network);
+
+                return newAddress;
+            }
+            else
+            {
+                return null;
             }
 
         }
@@ -67,12 +77,6 @@ namespace RedWallet.Services
         public BitcoinSecret GetBitcoinSecret(string encryptedSecret, string passphrase)
         {
             return BitcoinEncryptedSecret.Create(encryptedSecret, Network).GetSecret(passphrase.ToSHA256());
-        }
-
-        public BitcoinSecret GenerateChildKey(BitcoinSecret bitcoinSecret)
-        {
-            // figure out how to derive new key pair for a new request, feeding in the parent key
-            return null;
         }
 
         public bool IsValidWallet(string recipientAddress)

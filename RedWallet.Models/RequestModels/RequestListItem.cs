@@ -16,6 +16,10 @@ namespace RedWallet.Models.RequestModels
 
         [Required, Display(Name = "Address")]
         public string RequestAddress { get; set; }
+        
+        [Required]
+        [Display(Name = "Created Date")]
+        public DateTimeOffset Created { get; set; }
     }
 }
 

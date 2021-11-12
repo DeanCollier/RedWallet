@@ -61,12 +61,18 @@ namespace RedWallet.WebMVC.Controllers
             }
 
             var walletIdentity = new WalletIdentity { WalletId = model.WalletId, UserId = User.Identity.GetUserId() };
-            var walletEncryptedSecret = await _wallet.GetWalletEncryptedSecretAsync(walletIdentity);
-            var requestAddress = _btc.GetNewBitcoinAddress(walletEncryptedSecret, model.Passphrase);
+            var wallet = await _wallet.GetWalletByIdAsync(walletIdentity);
             
-            if (requestAddress != null)
+            var xpub = wallet.Xpub;
+            var xpubIteration = wallet.XpubIteration;
+            var walletEncryptedSecret = await _wallet.GetWalletEncryptedSecretAsync(walletIdentity);
+
+            var newAddress = _btc.GetNewBitcoinAddress(walletEncryptedSecret, model.Passphrase, xpub, xpubIteration);
+            
+            if (newAddress != null)
             {
-                var detail = await _req.CreateRequestAsync(walletIdentity, requestAddress.ToString());
+                var detail = await _req.CreateRequestAsync(walletIdentity, newAddress.ToString());
+                await _wallet.IterateWalletXpubAsync(walletIdentity);
                 return Redirect($"Details/{detail.RequestId}");
             }
             ModelState.AddModelError("", "Something went wrong.");

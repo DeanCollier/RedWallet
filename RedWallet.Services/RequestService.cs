@@ -40,12 +40,14 @@ namespace RedWallet.Services
             {
                 var query = context
                     .Requests
+                    .OrderByDescending(r => r.Created)
                     .Where(r => r.Wallet.UserId == model.UserId && r.WalletId == model.WalletId)
                     .Select(r => new RequestListItem
                     {
                         RequestId = r.Id,
                         WalletName = r.Wallet.WalletName,
-                        RequestAddress = r.RequestAddress
+                        RequestAddress = r.RequestAddress,
+                        Created = r.Created
                     });
 
                 return await query.ToArrayAsync();

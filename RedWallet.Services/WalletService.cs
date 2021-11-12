@@ -22,7 +22,9 @@ namespace RedWallet.Services
             {
                 UserId = model.UserId,
                 WalletName = model.WalletName,
-                EncryptedSecret = keyDetail.EncryptedSecret
+                EncryptedSecret = keyDetail.EncryptedSecret,
+                Xpub = keyDetail.Xpub,
+                XpubIteration = keyDetail.XpubIteration
             };
 
             using (var context = new ApplicationDbContext())
@@ -65,8 +67,9 @@ namespace RedWallet.Services
                 {
                     WalletId = entity.Id,
                     WalletName = entity.WalletName,
-                    PastPaymentRequests = new List<Request>(), // just empty for now
-                    OutgoingPayments = new List<Send>()  // just empty for now
+                    Xpub = entity.Xpub,
+                    XpubIteration = entity.XpubIteration
+
                 };
 
                 return detail;
@@ -85,9 +88,21 @@ namespace RedWallet.Services
                 return entity.EncryptedSecret;
             }
         }
+        // READ
+        public async Task<string> GetWalletXpubAsync(WalletIdentity model)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var entity = await context
+                    .Wallets
+                    .SingleAsync(w => w.UserId == model.UserId && w.Id == model.WalletId);
+
+                return entity.Xpub;
+            }
+        }
 
         // UPDATE
-        public async Task<bool> UpdateWalletById(WalletEdit model)
+        public async Task<bool> UpdateWalletByIdAsync(WalletEdit model)
         {
             if (model.NewWalletName == null)
             {
@@ -95,12 +110,25 @@ namespace RedWallet.Services
             }
             using (var context = new ApplicationDbContext())
             {
-                var entity = context
+                var entity = await context
                     .Wallets
-                    .Single(w => w.UserId == model.UserId && w.Id == model.WalletId);
+                    .SingleAsync(w => w.UserId == model.UserId && w.Id == model.WalletId);
 
                 entity.WalletName = model.NewWalletName;
                 return await context.SaveChangesAsync() == 1;
+            }
+        }
+
+        public async void IterateWalletXpubAsync(WalletIdentity model)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var entity = await context
+                    .Wallets
+                    .SingleAsync(w => w.UserId == model.UserId && w.Id == model.WalletId);
+
+                entity.XpubIteration++;
+                await context.SaveChangesAsync();
             }
         }
 

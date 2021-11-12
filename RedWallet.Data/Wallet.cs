@@ -22,6 +22,10 @@ namespace RedWallet.Data
     
         [Required]
         public string EncryptedSecret { get; set; }
+        [Required]
+        public string Xpub { get; set; }
+        [Required]
+        public int XpubIteration { get; set; }
 
     }
 }

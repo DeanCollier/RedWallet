@@ -101,7 +101,7 @@ namespace RedWallet.WebMVC.Controllers
             if (ModelState.IsValid)
             {
                 model.UserId = User.Identity.GetUserId();
-                if (await _wallet.UpdateWalletById(model))
+                if (await _wallet.UpdateWalletByIdAsync(model))
                 {
                     TempData["SaveResult"] = "Your wallet name has been updated.";
                     return RedirectToAction("Index");

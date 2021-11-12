@@ -12,9 +12,8 @@ namespace RedWallet.Services.Interfaces
         string RPCCredentials { get; set; }*/
 
         string BuildTransaction(string encryptedSecret, string walletPassword, double sendAmount, string recipientAddress);
-        BitcoinSecret GenerateChildKey(BitcoinSecret bitcoinSecret);
         BitcoinSecret GetBitcoinSecret(string encryptedSecret, string passphrase);
-        BitcoinAddress GetNewBitcoinAddress(string encryptedSecret, string passphrase);
+        BitcoinAddress GetNewBitcoinAddress(string encryptedSecret, string passphrase, string xpub, int xpubIteration);
         Task<KeyDetail> GetNewBitcoinKey(WalletCreate model);
         bool IsValidWallet(string recipientAddress);
     }

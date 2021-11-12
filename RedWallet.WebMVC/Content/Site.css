@@ -9,8 +9,8 @@
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 0;
+    padding-right: 5px;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -24,5 +24,55 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    max-width: 250px;
+}
+
+/*Sidebar*/
+#sidebar-wrapper{
+    z-index: 1;
+    position: absolute;
+    width: 0;
+    height: 100%;
+    overflow-y: hidden;
+    background: #000000;
+}
+
+/*Main content*/
+#page-content-wrapper{
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+}
+
+/*Change width of sidebar*/
+#wrapper.menuDisplayed #sidebar-wrapper{
+    width: 250px;
+}
+#wrapper.menuDisplayed #page-content-wrapper {
+    padding-left: 250px;
+}
+
+/*Sidebar style*/
+.sidebar-nav{
+    padding: 0;
+    list-style: none;
+}
+.sidebar-nav li{
+    text-indent: 20px;
+    line-height: 40px;
+}
+.sidebar-nav li a{
+    display: block;
+    text-decoration: none;
+    color: red;
+}
+.sidebar-nav li a:hover{
+    background: #808080;
+}
+.sidebar-nav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
 }

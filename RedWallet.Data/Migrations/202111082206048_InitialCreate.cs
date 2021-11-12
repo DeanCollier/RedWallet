@@ -1,9 +1,9 @@
-namespace RedWallet.Data.Migrations
+﻿namespace RedWallet.Data.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class newstuff : DbMigration
+    public partial class InitialCreate : DbMigration
     {
         public override void Up()
         {
@@ -13,7 +13,7 @@ namespace RedWallet.Data.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         WalletId = c.Int(nullable: false),
-                        BTCPaymentRequest = c.String(nullable: false),
+                        RequestAddress = c.String(nullable: false),
                         Created = c.DateTimeOffset(nullable: false, precision: 7),
                     })
                 .PrimaryKey(t => t.Id)
@@ -27,7 +27,7 @@ namespace RedWallet.Data.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         UserId = c.String(nullable: false, maxLength: 128),
                         WalletName = c.String(nullable: false),
-                        PassphraseHash = c.String(nullable: false),
+                        EncryptedSecret = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.ApplicationUser", t => t.UserId, cascadeDelete: true)
@@ -109,7 +109,7 @@ namespace RedWallet.Data.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         WalletId = c.Int(nullable: false),
-                        BTCTransaction = c.String(nullable: false),
+                        TransactionHash = c.String(nullable: false),
                         Created = c.DateTimeOffset(nullable: false, precision: 7),
                     })
                 .PrimaryKey(t => t.Id)
