@@ -1,0 +1,57 @@
+﻿@model RedWallet.Models.SendModels.SendDetail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SendDetail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SendId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SendId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WalletId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WalletId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WalletName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WalletName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Created)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Created)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TransactionHash)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TransactionHash)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index", new { walletId = Model.WalletId })
+</p>

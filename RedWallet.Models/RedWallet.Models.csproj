@@ -96,23 +96,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitcoinModels\KeyDetail.cs" />
+    <Compile Include="BitcoinModels\TransactionCreate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestModels\RequestCreate.cs" />
     <Compile Include="RequestModels\RequestDetail.cs" />
+    <Compile Include="RequestModels\RequestIdentity.cs" />
     <Compile Include="RequestModels\RequestListItem.cs" />
-    <Compile Include="RequestModels\RequestWalletInput.cs" />
+    <Compile Include="SendModels\SendCreate.cs" />
+    <Compile Include="SendModels\SendDetail.cs" />
+    <Compile Include="SendModels\SendIdentity.cs" />
+    <Compile Include="SendModels\SendListItem.cs" />
     <Compile Include="WalletModels\WalletCreate.cs" />
     <Compile Include="WalletModels\WalletDetail.cs" />
     <Compile Include="WalletModels\WalletEdit.cs" />
+    <Compile Include="WalletModels\WalletIdentity.cs" />
     <Compile Include="WalletModels\WalletListItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SendModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\RedWallet.Data\RedWallet.Data.csproj">
       <Project>{4A8232CC-2065-44D6-8A9A-E9353818A6BD}</Project>

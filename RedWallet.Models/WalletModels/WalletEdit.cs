@@ -14,5 +14,7 @@ namespace RedWallet.Models.WalletModels
 
         [Required, Display(Name = "New Wallet Name")]
         public string NewWalletName { get; set; }
+
+        public string UserId { get; set; }
     }
 }

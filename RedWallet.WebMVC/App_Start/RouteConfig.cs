@@ -18,6 +18,22 @@ namespace RedWallet.WebMVC
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Create",
+                url: "Wallet/{walletId}/{controller}/{action}");
+
+            routes.MapRoute(
+                name: "Details",
+                url: "Wallet/{walletId}/{controller}/{id}/{action}",
+                defaults: new { action = "Details" }
+            );
+
+            routes.MapRoute(
+                name: "Delete",
+                url: "Wallet/{walletId}/{controller}/{id}/{action}",
+                defaults: new { action = "Delete" }
+            );
         }
     }
 }

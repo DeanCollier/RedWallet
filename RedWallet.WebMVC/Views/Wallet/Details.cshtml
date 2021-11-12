@@ -53,7 +53,8 @@ else
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.WalletId }) |
     @Html.ActionLink("Back to List", "Index") |
-    @Html.ActionLink("Receive", "Create", "Request", new { id = Model.WalletId }, new { })
+    @Html.ActionLink("Receive", "Create", "Request", new { walletId = Model.WalletId }, new { })
+    @Html.Route()
 </p>
 }
 

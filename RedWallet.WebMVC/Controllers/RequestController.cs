@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNet.Identity;
 using NBitcoin;
 using RedWallet.Models.RequestModels;
+using RedWallet.Models.WalletModels;
 using RedWallet.Services;
+using RedWallet.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,45 +15,32 @@ namespace RedWallet.WebMVC.Controllers
 {
     public class RequestController : Controller
     {
-        private BitcoinService CreateBitcoinService()
-        {
-            var userId = Guid.Parse(User.Identity.GetUserId());
-            Network network = Network.RegTest;
-            var rpcHost = "127.0.0.1:18444";
-            var rpcCredentials = "lightningbbobb:ViresEnNumeris";
-            var service = new BitcoinService(network, rpcHost, rpcCredentials, userId);
-            return service;
-        }
-        private WalletService CreateWalletService()
-        {
-            var userId = Guid.Parse(User.Identity.GetUserId());
-            var service = new WalletService(userId);
-            return service;
-        }
-        private RequestService CreateRequestService()
-        {
-            var userId = Guid.Parse(User.Identity.GetUserId());
-            var service = new RequestService(userId);
-            return service;
-        }
+        private readonly IBitcoinService _btc;
+        private readonly IWalletService _wallet;
+        private readonly IRequestService _req;
 
-        // Wallet Details => display wallet name and ask for passphrase => create new request with wallet id and passphrase
-
+        public RequestController(IBitcoinService btc, IWalletService wallet, IRequestService req)
+        {
+            _btc = btc;
+            _wallet = wallet;
+            _req = req;
+        }
 
         // GET: Request
         public async Task<ActionResult> Index(int walletId)
         {
-            var requestService = CreateRequestService();
-            var model = requestService.GetWalletRequestsAsync(walletId);
+            var walletIdentity = new WalletIdentity { WalletId = walletId, UserId = User.Identity.GetUserId() };
+            var model = await _req.GetWalletRequestsAsync(walletIdentity);
+            ViewData["WalletId"] = walletId;
             return View(model);
         }
 
         // GET: Request Create
-        // Request/Create
-        public async Task<ActionResult> Create(int id)
+        // Wallet/{walletId}/Request/Create
+        public async Task<ActionResult> Create(int walletId)
         {
-            var service = CreateWalletService();
-            var detail = await service.GetWalletByIdAsync(id);
+            var walletIdentity = new WalletIdentity { WalletId = walletId, UserId = User.Identity.GetUserId() };
+            var detail = await _wallet.GetWalletByIdAsync(walletIdentity);
             var model = new RequestCreate
             {
                 WalletId = detail.WalletId,
@@ -71,55 +60,53 @@ namespace RedWallet.WebMVC.Controllers
                 return View(model);
             }
 
-            var walletService = CreateWalletService();
-            var btcService = CreateBitcoinService();
-            var requestService = CreateRequestService();
-
-            var walletEncryptedSecret = await walletService.GetWalletEncryptedSecretAsync(model.WalletId);
-            var requestAddress = btcService.GetNewBitcoinAddress(walletEncryptedSecret, model.Passphrase);
+            var walletIdentity = new WalletIdentity { WalletId = model.WalletId, UserId = User.Identity.GetUserId() };
+            var walletEncryptedSecret = await _wallet.GetWalletEncryptedSecretAsync(walletIdentity);
+            var requestAddress = _btc.GetNewBitcoinAddress(walletEncryptedSecret, model.Passphrase);
             
             if (requestAddress != null)
             {
-                var detail = await requestService.CreateRequestAsync(model.WalletId, requestAddress.ToString());
-                return RedirectToAction($"Details/{detail.Id}");
+                var detail = await _req.CreateRequestAsync(walletIdentity, requestAddress.ToString());
+                return Redirect($"Details/{detail.RequestId}");
             }
             ModelState.AddModelError("", "Something went wrong.");
             return View(model);
         }
 
         // GET: Request Details
-        // Request/Details/{id}
+        // Wallet/{walletId}/Request/{id}/Details
         public async Task<ActionResult> Details(int id)
         {
-            var requestService = CreateRequestService();
-            var model = await requestService.GetWalletRequestByIdAsync(id);
-
+            var requestIdentity = new RequestIdentity { RequestId = id, UserId = User.Identity.GetUserId() };
+            var model = await _req.GetWalletRequestByIdAsync(requestIdentity);
             return View(model);
         }
 
         // UPDATE: No Update for Requets
 
-        // GET: Delete Request
+        // GET: Delete Request (for db management)
         // Request/Delete/{id}
         public async Task<ActionResult> Delete(int id)
         {
-            var requestService = CreateRequestService();
-            var model = await requestService.GetWalletRequestByIdAsync(id);
-
+            var requestIdentity = new RequestIdentity { RequestId = id, UserId = User.Identity.GetUserId() };
+            var model = await _req.GetWalletRequestByIdAsync(requestIdentity);
             return View(model);
         }
         // POST: Delete Request
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("Delete")]
         public async Task<ActionResult> DeleteRequest(int id)
         {
-            var requestService = CreateRequestService();
-            var tempDetail = await requestService.GetWalletRequestByIdAsync(id);
-            var walletId = tempDetail.WalletId;
-            if (await requestService.DeleteRequestAsync(id))
+            var requestIdentity = new RequestIdentity { RequestId = id, UserId = User.Identity.GetUserId() };
+            var walletId = (await _req.GetWalletRequestByIdAsync(requestIdentity)).WalletId;
+
+            if (await _req.DeleteRequestAsync(requestIdentity))
             {
                 TempData["DeleteResult"] = "Request data deleted";
-                return RedirectToAction("Index", walletId);
+                return RedirectToAction($"Index", new { walletId = walletId });
             }
-            TempData["DeleteResult"] = "Something went wrong, request data NOT deleted.";
+            ModelState.AddModelError("", "Something went wrong.");
             return View(id);
 
 

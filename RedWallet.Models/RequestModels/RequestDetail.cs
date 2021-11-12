@@ -10,7 +10,7 @@ namespace RedWallet.Models.RequestModels
     public class RequestDetail
     {
         [Required]
-        public int Id { get; set; }
+        public int RequestId { get; set; }
 
         [Required]
         public int WalletId { get; set; }

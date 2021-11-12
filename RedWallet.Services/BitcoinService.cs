@@ -4,6 +4,7 @@ using NBitcoin.Protocol.Behaviors;
 using NBitcoin.RPC;
 using RedWallet.Models.BitcoinModels;
 using RedWallet.Models.WalletModels;
+using RedWallet.Services.Interfaces;
 using RedWallet.Utilities;
 using System;
 using System.Collections.Generic;
@@ -14,19 +15,17 @@ using System.Threading.Tasks;
 
 namespace RedWallet.Services
 {
-    public class BitcoinService
+    public class BitcoinService : IBitcoinService
     {
-        private readonly Guid _userId;
-        private readonly Network Network;
-        private readonly string RPCHost;
-        private readonly string RPCCredentials;
+        private Network Network { get; set; }
+        private string RPCHost { get; set; }
+        private string RPCCredentials { get; set; }
 
-        public BitcoinService(Network network, string rpcHost, string rpcCredentials, Guid userId)
+        public BitcoinService()
         {
-            Network = network;
-            RPCHost = rpcHost;
-            RPCCredentials = rpcCredentials;
-            _userId = userId;
+            Network = Network.TestNet;
+            RPCHost = "127.0.0.1:18444";
+            RPCCredentials = "lightningbbobb:ViresEnNumeris";
         }
 
         public async Task<KeyDetail> GetNewBitcoinKey(WalletCreate model)
@@ -34,10 +33,10 @@ namespace RedWallet.Services
             RandomUtils.AddEntropy(model.EntropyInput); // adding random entropy
             var seedMnemonic = new Mnemonic(Wordlist.English, WordCount.TwentyFour); // random 24 work mnemonic
             var extendedKey = seedMnemonic.DeriveExtKey(); // derive extended key from mnemonic
-            var bitcoinSecret= extendedKey.PrivateKey.GetWif(Network); // get WIF, base58
+            var bitcoinSecret = extendedKey.PrivateKey.GetWif(Network); // get WIF, base58
 
             var testString = bitcoinSecret.ToString();
-            
+
             var encryptedSecret = bitcoinSecret.Encrypt(model.Passphrase.ToSHA256()); // encrypt with passphrase hash
             //bitcoinSecret.PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH, Network);
 
@@ -64,7 +63,7 @@ namespace RedWallet.Services
             }
 
         }
-        
+
         public BitcoinSecret GetBitcoinSecret(string encryptedSecret, string passphrase)
         {
             return BitcoinEncryptedSecret.Create(encryptedSecret, Network).GetSecret(passphrase.ToSHA256());
@@ -76,11 +75,23 @@ namespace RedWallet.Services
             return null;
         }
 
+        public bool IsValidWallet(string recipientAddress)
+        {
+            return true;
+        }
 
-        
-        
+        public string BuildTransaction(string encryptedSecret, string walletPassword, double sendAmount, string recipientAddress)
+        {
+            string transaction = "ThisIsAFakeTransactionString";
+            var transactionHash = transaction.ToSHA256();
+            return transactionHash;
+        }
 
-        
+
+
+
+
+
 
         /*public async Task<WalletDetail> CreateAddress(WalletCreate model)
         {
