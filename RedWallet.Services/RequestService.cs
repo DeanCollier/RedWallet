@@ -63,7 +63,7 @@ namespace RedWallet.Services
 
                 var detail = new RequestDetail
                 {
-                    Id = entity.Id,
+                    RequestId = entity.Id,
                     WalletId = entity.WalletId,
                     WalletName = entity.Wallet.WalletName,
                     RequestAddress = entity.RequestAddress,

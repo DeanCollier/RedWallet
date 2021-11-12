@@ -72,7 +72,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index", new { walletId = Model.WalletId })
 </div>
 
 @section Scripts {

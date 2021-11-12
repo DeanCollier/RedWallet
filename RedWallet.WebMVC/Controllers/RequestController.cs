@@ -67,7 +67,7 @@ namespace RedWallet.WebMVC.Controllers
             if (requestAddress != null)
             {
                 var detail = await _req.CreateRequestAsync(walletIdentity, requestAddress.ToString());
-                return Redirect($"/Wallet/{detail.WalletId}/request/{detail.Id}/details");
+                return Redirect($"Details/{detail.RequestId}");
             }
             ModelState.AddModelError("", "Something went wrong.");
             return View(model);
@@ -104,7 +104,7 @@ namespace RedWallet.WebMVC.Controllers
             if (await _req.DeleteRequestAsync(requestIdentity))
             {
                 TempData["DeleteResult"] = "Request data deleted";
-                return RedirectToAction($"Index/{walletId}");
+                return RedirectToAction($"Index", new { walletId = walletId });
             }
             ModelState.AddModelError("", "Something went wrong.");
             return View(id);

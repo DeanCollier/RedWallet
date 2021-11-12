@@ -33,6 +33,7 @@ namespace RedWallet.WebMVC.Controllers
         {
             var walletIdentity = new WalletIdentity { WalletId = walletId, UserId = User.Identity.GetUserId() };
             var model = await _send.GetWalletSendsAsync(walletIdentity);
+            ViewData["WalletId"] = walletId;
             return View(model);
         }
 
@@ -67,7 +68,7 @@ namespace RedWallet.WebMVC.Controllers
         {
             if (!ModelState.IsValid ||
                 (model.Balance < model.SendAmount) ||
-                (!_btc.IsValidWallet(model.RecipientAddress)))
+                (!_btc.IsValidWallet(model.RecipientAddress))) // need to move this below to check if password works for specified wallet
             {
                 return View(model);
             }
@@ -80,7 +81,7 @@ namespace RedWallet.WebMVC.Controllers
             if (transactionHash != null)
             {
                 var detail = await _send.CreateSendAsync(walletIdentity, transactionHash);
-                return Redirect($"Wallet/{detail.WalletId}/Send/{detail.SendId}/Details");
+                return Redirect($"Details/{detail.SendId}");
             }
             ModelState.AddModelError("", "Something went wrong.");
             return View(model);
@@ -117,7 +118,7 @@ namespace RedWallet.WebMVC.Controllers
             if (await _send.DeleteSendAsync(sendIdentity))
             {
                 TempData["DeleteDate"] = "Send data deleted";
-                return RedirectToAction($"Index/{walletId}");
+                return RedirectToAction("Index", new { walletId = walletId });
             }
             ModelState.AddModelError("", "Something went wrong.");
             return View(id);
