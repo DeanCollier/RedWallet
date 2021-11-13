@@ -6,28 +6,27 @@
                 @Html.Partial("_LoginPartial")
             </li>
             <li class="nav-item">
-                <i class="fas fa-arrow-up"></i>
-                @Html.ActionLink("Send", "Index", "Send", new { walletId = 5 }, new { })
+                <a href="#">
+                    <i class="fab fa-bitcoin"></i>
+                    @Html.ActionLink("Dashboard", "Index", "Dashboard")
+                </a>               
             </li>
             <li class="nav-item">
-                <i class="fas fa-arrow-down"></i>
-                @Html.ActionLink("Receive", "Index", "Request", new { walletId = 5 }, new { })
+                <a href="#">
+                    <i class="fas fa-arrow-up"></i>
+                    @Html.ActionLink("Send", "Index", "Send", new { walletId = 5 }, new { })
+                </a>    
+            </li>
+            <li class="nav-item">
+                <a href="#">
+                    <i class="fas fa-arrow-down"></i>
+                    @Html.ActionLink("Receive", "Index", "Request", new { walletId = 5 }, new { })
+                </a>                
             </li>
         </ul>
     </div>
     <!-- /#sidebar-wrapper -->
-    <!-- Page Content -->
-    <div id="page-content-wrapper">
-        <div class="container-fluid">
-            <a href="#menu-toggle" class="btn bg-danger text-white shadow m-2" id="menu-toggle"><i class="fas fa-bars"></i>  Menu</a>
-            <h1>Simple Sidebar</h1>
-            <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
-            <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
-
-
-        </div>
-    </div>
-    <!-- /#page-content-wrapper -->
+    
 </div>
 
 

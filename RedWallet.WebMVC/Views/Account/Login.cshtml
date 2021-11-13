@@ -4,9 +4,16 @@
     ViewBag.Title = "Log In";
 }
 
-<div class="card-title text-center">
-    <h1 class="text-danger text-xxl-center">RedWallet</h1>
-    <p class="lead">RedWallet is a free web application for creating and managing Bitcoin wallets.</p>
+<br />
+<br />
+<br />
+
+<div class="card-title text-center mt-5">
+    <div class="col-lg-15">
+        <h1 class="text-danger title-text">RedWallet</h1>
+        <p class="lead">RedWallet is a free web application for creating and managing Bitcoin wallets.</p>
+    </div>
+
 </div>
 
 <div class="d-flex p-2 justify-content-center">
@@ -40,16 +47,18 @@
                 </div>
                 <div class="form-group">
                     <div class="col-lg-15">
-                        <input type="submit" value="Log In" class="btn bg-danger text-white shadow m-2" onclick="location.href='@Url.Action("Index", "Wallet")'" />
-                        <input type="submit" value="New User?" class="btn bg-secondary text-white shadow" onclick="location.href='@Url.Action("Register", "Account")'" />
-
+                        <input type="submit" value="Log in" class="btn btn-long bg-danger text-white shadow mb-2" />
                     </div>
                 </div>
+                
                 @* Enable this once you have account confirmation enabled for password reset functionality
-                    <p>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>*@
+                <p>
+                    @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                </p>*@
             }
         </section>
+        <div class="col-lg-15">
+            <input type="submit" value="New User?" class="btn btn-long bg-secondary text-white shadow" onclick="location.href='@Url.Action("Register", "Account")'" />
+        </div>
     </div>
 </div>
