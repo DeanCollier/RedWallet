@@ -354,6 +354,8 @@
     <Content Include="Views\Wallet\Delete.cshtml" />
     <Content Include="Views\Shared\_RenderLayout.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Shared\_Sidebar.cshtml" />
+    <Content Include="Views\Shared\_Content.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

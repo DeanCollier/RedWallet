@@ -6,7 +6,11 @@
 
 @if (Request.IsAuthenticated)
 {
-    // dashboard stuff here
+    <div id="wrapper">
+        @Html.Partial("_Sidebar")
+    </div>
+    
+
 }
 else
 {

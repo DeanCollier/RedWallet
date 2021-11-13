@@ -143,7 +143,6 @@ namespace RedWallet.Services
 
                 context.Wallets.Remove(entity);
                 return await context.SaveChangesAsync() >= 1; // other db sends and requests may also be deleted
-
             }
         }
     }
