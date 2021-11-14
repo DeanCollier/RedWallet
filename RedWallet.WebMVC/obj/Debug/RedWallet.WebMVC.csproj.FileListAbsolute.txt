@@ -55,6 +55,7 @@ C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\Autofac.dll
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\Autofac.Integration.Mvc.dll
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\EntityFramework.dll
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\EntityFramework.SqlServer.dll
+C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\IronBarCode.dll
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\Microsoft.AspNet.Identity.Core.dll
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\Microsoft.AspNet.Identity.EntityFramework.dll
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\Microsoft.AspNet.Identity.Owin.dll
@@ -104,6 +105,7 @@ C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\Autofac.Integration.Mvc.pdb
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\Autofac.Integration.Mvc.xml
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\EntityFramework.xml
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\EntityFramework.SqlServer.xml
+C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\IronBarCode.xml
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\Microsoft.Bcl.AsyncInterfaces.xml
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\Microsoft.Extensions.Logging.Abstractions.xml
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\NBitcoin.xml

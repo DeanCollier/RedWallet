@@ -84,6 +84,12 @@ namespace RedWallet.Services
             return true;
         }
 
+        public string GetBitcoinBalance()
+        {
+            double balance = 100.00000000000000000d;
+            return Math.Round(balance, 8).ToString("0.00000000");
+        }
+
         public string BuildTransaction(string encryptedSecret, string walletPassword, double sendAmount, string recipientAddress)
         {
             string transaction = "ThisIsAFakeTransactionString";

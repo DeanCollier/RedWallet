@@ -1,0 +1,39 @@
+﻿@model RedWallet.Models.DashboardModels.DashboardViewModel
+
+<div id="page-content-wrapper">
+    <!-- Page Content -->
+    <div class="container-fluid">
+        <a href="#menu-toggle" class="btn bg-danger text-white shadow mb-3" id="menu-toggle"><i class="fas fa-bars"></i>  Menu</a>
+        @Html.DropDownListFor(model => model.SelectedWalletId, new SelectList(Model.UserWallets, "WalletId", "WalletName"))
+
+
+
+
+        <input type="submit" id="wallet-input">
+        <button id="btn">click</button>
+        <select id="wallet-input">
+            @Html.DropDownListFor(model => model.SelectedWalletId, new SelectList(Model.UserWallets, "WalletId", "WalletName"))
+        </select>
+        <script>
+            function getType() {
+                var x = document.getElementById("wallet-input").value;
+                var items;
+                if (x === "fruit") {
+                    items = ["Apple", "Oranges", "Bananas"];
+                } else {
+                    items = ["Eggplants", "Olives"]
+                }
+                var str = ""
+                for (var item of items) {
+                    str += "<option>" + item + "</option>"
+                }
+                document.getElementById("pickone").innerHTML = str;
+            }
+            document.getElementById("btn").addEventListener("click", getType)
+        </script>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+    </div>
+    <!-- /#page-content-wrapper -->
+</div>

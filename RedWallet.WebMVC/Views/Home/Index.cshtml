@@ -1,22 +1,9 @@
-﻿@using RedWallet.WebMVC.Models
-@model LoginViewModel
-@{
-    ViewBag.Title = "Home Page";
-}
+﻿
+<div id="wrapper">
+    @Html.Partial("_Sidebar")
+    @Html.Partial("_Content")
+</div>
 
-@if (Request.IsAuthenticated)
-{
-    <div id="wrapper">
-        @Html.Partial("_Sidebar")
-        @Html.Partial("_Content")
-    </div>
-    
-
-}
-else
-{
-    @Html.Action("Login", "Account")
-}
 
 
 

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace RedWallet.WebMVC.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         public ActionResult Index()

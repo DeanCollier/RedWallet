@@ -119,7 +119,7 @@ namespace RedWallet.Services
             }
         }
 
-        public async void IterateWalletXpubAsync(WalletIdentity model)
+        public async Task IterateWalletXpubAsync(WalletIdentity model)
         {
             using (var context = new ApplicationDbContext())
             {

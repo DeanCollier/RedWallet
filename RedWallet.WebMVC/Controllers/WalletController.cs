@@ -12,11 +12,12 @@ using System.Web.Mvc;
 
 namespace RedWallet.WebMVC.Controllers
 {
+    [Authorize]
+
     public class WalletController : Controller
     {
         private readonly IBitcoinService _btc;
         private readonly IWalletService _wallet;
-
 
         public WalletController(IBitcoinService btc, IWalletService wallet)
         {

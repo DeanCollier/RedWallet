@@ -14,6 +14,8 @@ using System.Web.Mvc;
 
 namespace RedWallet.WebMVC.Controllers
 {
+    [Authorize]
+
     public class SendController : Controller
     {
         private readonly IBitcoinService _btc;
@@ -46,14 +48,13 @@ namespace RedWallet.WebMVC.Controllers
             var encSecret = await _wallet.GetWalletEncryptedSecretAsync(walletIdentity);
 
             //********* get btc balance of wallet
-            //********* var balance = btcService.GetWalletBalance( walletSecret or encSecret or something)
-            double balance = 100; // filler for now so we can get app working
+            var balance = _btc.GetBitcoinBalance();
 
             var model = new TransactionCreate
             {
                 WalletId = walletDetail.WalletId,
                 WalletName = walletDetail.WalletName,
-                Balance = balance,
+                Balance = double.Parse(balance),
                 SendAmount = 0,
                 RecipientAddress = "",
                 WalletPassword = ""

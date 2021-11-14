@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Microsoft.AspNet.Identity
+
+@{
     ViewBag.Title = "_RenderLayout";
 }
 
@@ -11,32 +13,43 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
+    <style>
+        table { table-layout:fixed; }
+        table td {word-wrap:break-word; }
+    </style>
 </head>
 <body>
-    <div class="container body-content">
+    <div id="wrapper">
+        @if (Request.IsAuthenticated)
+        {
+            @Html.Partial("_Sidebar")
+        }
+        <div id="page-content-wrapper">
+            <!-- Page Content -->
+            <div class="container-fluid">
+                @if (Request.IsAuthenticated)
+                {
+                    <a href="#menu-toggle" class="btn bg-danger text-white shadow mb-3" id="menu-toggle"><i class="fas fa-bars"></i>  Menu</a>
+                }
+                @RenderBody()
+            </div>
+        </div>
     </div>
-    
-    @RenderBody()
+
     <footer>
     </footer>
 
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/Scripts/SidebarScript.js")
+
     @RenderSection("scripts", required: false)
 
 </body>
 </html>
 
-<script>
-    $(document).ready(function () {
-        $("#menu-toggle").click(function (e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
-        });
-    });
-</script>
+
+
 
 
 

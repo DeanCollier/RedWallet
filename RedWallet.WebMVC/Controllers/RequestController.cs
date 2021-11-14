@@ -13,6 +13,8 @@ using System.Web.Mvc;
 
 namespace RedWallet.WebMVC.Controllers
 {
+    [Authorize]
+
     public class RequestController : Controller
     {
         private readonly IBitcoinService _btc;
@@ -72,7 +74,7 @@ namespace RedWallet.WebMVC.Controllers
             if (newAddress != null)
             {
                 var detail = await _req.CreateRequestAsync(walletIdentity, newAddress.ToString());
-                _wallet.IterateWalletXpubAsync(walletIdentity);
+                await _wallet.IterateWalletXpubAsync(walletIdentity);
                 return Redirect($"Details/{detail.RequestId}");
             }
             ModelState.AddModelError("", "Something went wrong.");

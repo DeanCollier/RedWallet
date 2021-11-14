@@ -7,6 +7,23 @@
     background-size: cover, contain, cover;
     background-position: left top, right bottom, left top;
 }
+#wallet-dropdown {
+    width: 50%;
+    text-align: center;
+
+}
+#wallet-input {
+    width: 100%;
+    font-size: 75px;
+    text-align: center;
+    color: black;
+    background-color: rgb(220 53 69 / 0.22);
+    
+}
+#balance-display {
+    background-color: rgb(220 53 69 / 0.22)
+   
+}
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
@@ -37,29 +54,34 @@ textarea {
     font-size: 100px;
     text-align: center;
 }
+a.detail-link {
+    color: #b30f0f;
+    text-align: center;
+    text-decoration-color: rgb(179 15 15 / 0.00)
+}
 
 #wrapper {
     top: 0;
-    padding-left: 0;
+    padding-left: 250px;
     -webkit-transition: all 0.25s ease;
     -moz-transition: all 0.25s ease;
     -o-transition: all 0.25s ease;
     transition: all 0.25s ease;
 }
 
-#wrapper.toggled {
-    padding-left: 250px;
-}
+    #wrapper.toggled {
+        padding-left: 0px;
+    }
 
 #sidebar-wrapper {
     z-index: 1000;
     position: fixed;
-    left: 250px;
-    width: 0;
+    left: 0px;
+    width: 250px;
     height: 100%;
-    margin-left: -250px;
+    margin-left: 0px;
     overflow-y: auto;
-    background: #000;
+    background: #212529;
     -webkit-transition: all 0.25s ease;
     -moz-transition: all 0.25s ease;
     -o-transition: all 0.25s ease;
@@ -67,18 +89,19 @@ textarea {
 }
 
 #wrapper.toggled #sidebar-wrapper {
-    width: 250px;
+    width: 0px;
 }
 
 #page-content-wrapper {
     width: 100%;
     position: absolute;
     padding: 15px;
+    padding-left: -250px;
 }
 
 #wrapper.toggled #page-content-wrapper {
     position: absolute;
-    margin-right: -250px;
+    margin-right: 0px;
 }
 
 
@@ -93,64 +116,64 @@ textarea {
     list-style: none;
 }
 
-.sidebar-nav li {
-    line-height: 40px;
-    text-align: center;
-}
-
-.sidebar-nav li a {
-    display: block;
-    text-decoration: none;
-    color: #999999;
-}
-
-.sidebar-nav li i {
-    display: block;
-    text-decoration: none;
-    color: #999999;
-    text-align: center;
-}
-
-.sidebar-nav li a:hover {
-    text-decoration: none;
-    color: white;
-    background: #b30f0f;
-}
-
-.sidebar-nav li a:active, .sidebar-nav li a:focus {
-    text-decoration: none;
-}
-
-.sidebar-nav > .sidebar-brand {
-    height: 65px;
-    font-size: 18px;
-    line-height: 60px;
-}
-
-.sidebar-nav > .sidebar-brand a {
-    color: #999999;
-}
-
-    .sidebar-nav > .sidebar-brand a:hover {
-        color: #b30f0f;
-        background: none;
+    .sidebar-nav li {
+        line-height: 40px;
+        text-align: center;
     }
+
+        .sidebar-nav li a {
+            display: block;
+            text-decoration: none;
+            color: #999999;
+        }
+
+        .sidebar-nav li i {
+            display: block;
+            text-decoration: none;
+            color: #999999;
+            text-align: center;
+        }
+
+        .sidebar-nav li a:hover {
+            text-decoration: none;
+            color: white;
+            background: #b30f0f;
+        }
+
+        .sidebar-nav li a:active, .sidebar-nav li a:focus {
+            text-decoration: none;
+        }
+
+    .sidebar-nav > .sidebar-brand {
+        height: 65px;
+        font-size: 18px;
+        line-height: 60px;
+    }
+
+        .sidebar-nav > .sidebar-brand a {
+            color: #999999;
+        }
+
+            .sidebar-nav > .sidebar-brand a:hover {
+                color: #b30f0f;
+                background: none;
+            }
 
 @media(min-width:768px) {
     #wrapper {
-        padding-left: 0;
-    }
-
-    #wrapper.toggled {
         padding-left: 250px;
     }
 
+    #wrapper.toggled {
+        padding-left: -250px;
+    }
+
     #sidebar-wrapper {
-        width: 0;
+        width: 250px;
     }
 
     #wrapper.toggled #sidebar-wrapper {
-        width: 250px;
+        width: 0px;
     }
 
     #page-content-wrapper {
@@ -160,6 +183,6 @@ textarea {
 
     #wrapper.toggled #page-content-wrapper {
         position: relative;
-        margin-right: 0;
+        margin-right: 0px;
     }
 }

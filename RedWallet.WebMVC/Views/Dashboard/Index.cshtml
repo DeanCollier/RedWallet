@@ -1,66 +1,98 @@
 ﻿@model RedWallet.Models.DashboardModels.DashboardViewModel
 
-@{
-    ViewBag.Title = "Index";
-}
-
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-
-</head>
-<body>
-    <div id="wrapper">
-
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                <li class="nav-item">
-                    @Html.Partial("_LoginPartial")
-                </li>
-                <li class="nav-item">
-                    @Html.ActionLink("Send", "Index", "Send", new { walletId = 5 }, new { })
-                </li>
-                <li class="nav-item">
-                    @Html.ActionLink("Receive", "Index", "Request", new { walletId = 5 }, new { })
-                </li>
-            </ul>
-        </div>
-
-        <!-- Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-10">
-                        <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>
-
-
-                        <!-- Stuff in the dashboard -->
-
-                    </div>
-                </div>
-            </div>
+@if (Model.SelectedWalletId == 0)
+{
+    <div>
+        <h1>No Wallets Found.</h1>
+        <div class="col-md-6">
+            <input type="submit" value="Create New Wallet" class="btn btn-long bg-secondary text-white shadow" onclick="location.href='@Url.Action("Create", "Wallet")'" />
         </div>
     </div>
+}
+else
+{
+    <div class="row mt-5">
+        <div id="wallet-dropdown" class="col-md-6">
+            @Html.DropDownListFor(model => model.UserWallets[0], new SelectList(Model.UserWallets, "WalletId", "WalletName"), htmlAttributes: new { @id = "wallet-input", @class = "card" })
+        </div>
 
-    <script>
-        function openNav() {
-            document.getElementById("mySidenav").style.width = "250px";
+        <div id="balance-display" class="col-md-6 card">
+            <h2>Wallet Balance:</h2>
+            <h1>@Model.WalletBalance BTC</h1>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div id="sends-display" class="col-md-6 table-responsive card">
+            <table class="table table-striped table-dark table-bordered" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th class="th-sm text-center">
+                            Created
+                        </th>
+                        <th class="th-sm text-center">
+                            Transaction
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.WalletSends)
+                    {
+                        <tr>
+                            <td>@item.Created.ToString("MM/dd/yyyy hh:mm tt")</td>
+                            <td>@Html.ActionLink(item.TransactionHash, "Details", "Send", new { id = item.SendId }, new { @class = "detail-link" })</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div id="request-display" class="col-md-6 table-responsive card">
+            <table class="table table-striped table-dark" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th class="th-sm text-center">
+                            Created Public Addresses
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.WalletAddresses)
+                    {
+                        <tr>
+                            <td>@Html.ActionLink(item.RequestAddress, "Details", "Request", new { id = item.RequestId }, new { @class = "detail-link" })</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+<script>
+    window.addEventListener("DOMContentLoaded", function () {
+        if (window.location.href.slice(window.location.href.lastIndexOf('/') + 1) != "") {
+            document.getElementById("wallet-input").value = window.location.href.slice(window.location.href.lastIndexOf('/') + 1)
+
         }
+        setLinks(document.getElementById("wallet-input").value)
 
-        function closeNav() {
-            document.getElementById("mySidenav").style.width = "0";
-        }
-    </script>
+    })
+    function setLinks(walletId) {
+        var walletLink = document.getElementById("wallet-nav-link")
+        var sendLink = document.getElementById("send-nav-link")
+        var requestLink = document.getElementById("request-nav-link")
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+        walletLink.setAttribute("href", `/Wallet/Details/${walletId}`)
+        sendLink.setAttribute("href", `/Send?walletId=${walletId}`)
+        requestLink.setAttribute("href", `/Request?walletId=${walletId}`)
+    }
+    function handleClick() {
+        window.location.href = `/Dashboard/Index/${document.getElementById("wallet-input").value}`
 
-</body>
-</html>
+    }
+    // Drop down click event
+    document.getElementById("wallet-input").addEventListener("change", handleClick)
+</script>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+

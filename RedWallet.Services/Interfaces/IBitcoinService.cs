@@ -16,5 +16,6 @@ namespace RedWallet.Services.Interfaces
         BitcoinAddress GetNewBitcoinAddress(string encryptedSecret, string passphrase, string xpub, int xpubIteration);
         Task<KeyDetail> GetNewBitcoinKey(WalletCreate model);
         bool IsValidWallet(string recipientAddress);
+        string GetBitcoinBalance();
     }
 }
