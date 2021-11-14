@@ -10,10 +10,13 @@ namespace RedWallet.Models.WalletModels
     public class WalletCreate
     {
         [Required]
+        [Display(Name = "Create Wallet Name")]
+
         [MinLength(1), MaxLength(100)]
         public string WalletName { get; set; }
 
         [Required]
+        [Display(Name = "Craete Wallet Passphrase")]
         [MinLength(8), DataType(DataType.Password)]
         public string Passphrase { get; set; }
 
