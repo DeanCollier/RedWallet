@@ -18,11 +18,14 @@
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
-                @Html.LabelFor(model => model.WalletName, htmlAttributes: new { @class = "control-label col-lg-15" })
-                <div class="col-lg-15">
-                    @Html.EditorFor(model => model.WalletName, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.WalletName, "", new { @class = "text-danger" })
+                <div style="float: none ">
+                    @Html.LabelFor(model => model.WalletName, htmlAttributes: new { @class = "control-label col-lg-15" })
+                    <div class="col-lg-15">
+                        @Html.EditorFor(model => model.WalletName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.WalletName, "", new { @class = "text-danger" })
+                    </div>
                 </div>
+                
             </div>
 
             <div class="form-group">
@@ -37,7 +40,7 @@
                 @Html.LabelFor(model => model.EntropyInput, htmlAttributes: new { @class = "control-label col-lg-15" })
                 <div class="col-lg-15">
                     @Html.EditorFor(model => model.EntropyInput, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.EntropyInput, "Enter random inputs for security.", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.EntropyInput, "", new { @class = "text-danger" })
                 </div>
             </div>
 
