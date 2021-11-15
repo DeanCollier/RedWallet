@@ -19,6 +19,12 @@ namespace RedWallet.Models.WalletModels
         [Display(Name = "Create Wallet Passphrase", Description = "*This passphrase is specific to this wallet and should be different from your user password*")]
         [MinLength(8), DataType(DataType.Password)]
         public string Passphrase { get; set; }
+        
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm Passphrase")]
+        [Compare("Passphrase", ErrorMessage = "The passphrase and confirmation passphrase do not match.")]
+        public string ConfirmPassphrase { get; set; }
 
         [Required]
         [MinLength(8), Display(Name = "Entropy Input", Description = "*Enter random characters to enhance security. You will not need to remember these.*")]

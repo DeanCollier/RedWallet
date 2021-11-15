@@ -16,7 +16,7 @@
 </div>
 
 <div class="d-flex p-2 justify-content-center">
-    <div class="col-lg-15">
+    <div class="col-lg-15 text-center">
         <h3>Are you sure you want to delete @Model.WalletName?</h3>
         <div>
             @using (Html.BeginForm())
@@ -30,7 +30,16 @@
                 </div>
             }
         </div>
-        <button type="submit" class="btn bg-secondary text-white shadow m-2" onclick="location.href='@Url.Action("Index", "Wallet")'">Other Wallets</button>
+        <div>
+            <button type="submit" class="btn bg-dark text-white shadow m-2" onclick="location.href='@Url.Action("Index", "Wallet")'">No, Don't Delete</button>
+
+        </div>
+        <div>
+            <button type="submit" class="btn bg-secondary text-white shadow m-2" onclick="location.href='@Url.Action("Index", "Wallet")'">Other Wallets</button>
+
+        </div>
+
+
 
     </div>
 </div>

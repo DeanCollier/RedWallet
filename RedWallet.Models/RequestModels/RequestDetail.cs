@@ -20,7 +20,7 @@ namespace RedWallet.Models.RequestModels
 
         public string WalletName { get; set; }
 
-        [Required, Display(Name = "Address")]
+        [Required, Display(Name = "Send To This Address")]
         public string RequestAddress { get; set; }
 
         [Required]
