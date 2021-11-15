@@ -1,11 +1,15 @@
 ﻿using Microsoft.AspNet.Identity;
 using NBitcoin;
+using QRCoder;
 using RedWallet.Models.RequestModels;
 using RedWallet.Models.WalletModels;
 using RedWallet.Services;
 using RedWallet.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -87,6 +91,20 @@ namespace RedWallet.WebMVC.Controllers
         {
             var requestIdentity = new RequestIdentity { RequestId = id, UserId = User.Identity.GetUserId() };
             var model = await _req.GetWalletRequestByIdAsync(requestIdentity);
+            
+            using (MemoryStream ms = new MemoryStream())
+            {
+                QRCodeGenerator qrGenerator = new QRCodeGenerator();
+                QRCodeData qrCodeInfo = qrGenerator.CreateQrCode(model.RequestAddress, QRCodeGenerator.ECCLevel.Q);
+                QRCode qrCode = new QRCode(qrCodeInfo);
+
+                using (Bitmap bitMap = qrCode.GetGraphic(20))
+                {
+                    bitMap.Save(ms, ImageFormat.Png);
+                    ViewBag.QRCodeImage = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
+                }
+            }
+
             return View(model);
         }
 

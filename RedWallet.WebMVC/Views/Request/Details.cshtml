@@ -34,7 +34,12 @@
             @Html.DisplayFor(model => model.Created)
         </dd>
 
+
     </dl>
+    @if (ViewBag.QRCodeImage != null)
+    {
+        <img src="@ViewBag.QRCodeImage" alt="" style="height:150px;width:150px" />
+    }
 </div>
 <p>
     @Html.ActionLink("Back to List", "Index", new { walletId = Model.WalletId })
