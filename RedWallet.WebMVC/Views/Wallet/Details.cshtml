@@ -13,12 +13,12 @@
             <span>&times;</span>
         </button>
         !ATTENTION! - YOUR SEED PHRASE & PASSPHRASE WILL NOT BE SAVED. 
-        YOU NEED TO MANUALLY WRITE DOWN THE BELOW SEED PHRASE AND PASSWORD AND STORE THEM SOMEWHERE SAFE FOR WALLET RECOVERY. 
+        YOU NEED TO MANUALLY WRITE DOWN THE BELOW SEED PHRASE AND PASSPHRASE AND STORE THEM SOMEWHERE SAFE FOR WALLET RECOVERY. 
         WALLET WILL NOT BE RECOVERABLE WITHOUT THIS ACTION.
     </div>
 }
 <div class="d-flex p-2 justify-content-center">
-    <div class="col-lg-15">
+    <div class="col-lg-15 text-center">
         <h2>Wallet @Model.WalletName @ViewBag.Title:</h2>
 
         <div>
@@ -50,7 +50,7 @@
         @if (TempData.ContainsKey("Mnemonic"))
         {
             <p>
-                <div class="col-lg-15">
+                <div class="col-lg-15 text-center">
                     <button type="submit" class="btn bg-danger text-white shadow" onclick="location.href='@Url.Action("Index")'">I Have Backed Up My Seed and Passphrase</button>
                 </div>
             </p>
