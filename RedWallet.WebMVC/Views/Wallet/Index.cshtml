@@ -12,9 +12,9 @@
 </div>
 
 <div class="d-flex p-2 justify-content-center">
-    <div class="col-lg-15">
-        <div class="col-lg-15 text-center">
-            <input type="submit" value="Create New Wallet" class="btn btn-long bg-danger text-white shadow mx-0 px-0" onclick="location.href='@Url.Action("Create", "Wallet")'" />
+    <div class="col-lg-15 text-center">
+        <div class="col-lg-2 d-inline-block mb-2">
+            <button type="submit" class="btn btn-long bg-danger text-white shadow" onclick="location.href='@Url.Action("Create", "Wallet")'">Create New Wallet</button>
         </div>
         <br />
         <div class="col-lg-15 table-responsive">
@@ -36,8 +36,13 @@
                             <tr>
                                 <td style="font-weight: bold">@Html.ActionLink(item.WalletName, "Index", "Dashboard", new { id = item.WalletId }, new { @class = "detail-link" })</td>
                                 <td class="text-center">
-                                    @Html.ActionLink("Edit", "Edit", "Wallet", new { id = item.WalletId }, new { @class = "detail-link" }) |
                                     @Html.ActionLink("Details", "Details", "Wallet", new { id = item.WalletId }, new { @class = "detail-link" }) |
+
+                                    @Html.ActionLink("Send", "Create", "Send", new { walletId = item.WalletId }, new { @class = "detail-link" }) |
+
+                                    @Html.ActionLink("Receive", "Create", "Request", new { walletId = item.WalletId }, new { @class = "detail-link" }) |
+
+                                    @Html.ActionLink("Edit", "Edit", "Wallet", new { id = item.WalletId }, new { @class = "detail-link" }) |
                                     @Html.ActionLink("Delete", "Delete", "Wallet", new { id = item.WalletId }, new { @class = "detail-link" })
                                 </td>
                             </tr>

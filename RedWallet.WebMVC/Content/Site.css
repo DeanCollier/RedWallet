@@ -59,6 +59,11 @@
     margin: 0 !important;
 }
 
+.alert {
+    font-size: 30px;
+    height: auto;
+}
+
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
@@ -95,6 +100,7 @@ textarea {
     text-align: center;
 }
 a.detail-link {
+    font-weight: bold;
     color: #b30f0f;
     text-align: center;
     text-decoration-color: rgb(179 15 15 / 0.00)
