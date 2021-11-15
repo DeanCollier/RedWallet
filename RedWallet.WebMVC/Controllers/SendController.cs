@@ -88,6 +88,7 @@ namespace RedWallet.WebMVC.Controllers
             if (transactionHash != null)
             {
                 var detail = await _send.CreateSendAsync(walletIdentity, transactionHash);
+                TempData["SaveResult"] = "Transaction has been sent.";
                 return Redirect($"Details/{detail.SendId}");
             }
             ModelState.AddModelError("", "Something went wrong.");

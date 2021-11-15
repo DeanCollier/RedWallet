@@ -13,6 +13,7 @@
 
 <div class="d-flex p-2 justify-content-center">
     <div class="col-lg-15">
+
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
@@ -40,10 +41,14 @@
 
             <div class="form-group">
                 @Html.LabelFor(model => model.EntropyInput, htmlAttributes: new { @class = "control-label col-lg-15" })
+                <a href="https://en.wikipedia.org/wiki/Entropy_(computing)" target="_blank" rel="noreferrer">(what is this?)</a>
+
                 <div class="col-lg-15">
                     @Html.EditorFor(model => model.EntropyInput, new { htmlAttributes = new { @class = "form-control" } })
                 </div>
             </div>
+
+
 
             <div class="form-group">
                 <div class="col-lg-15">
@@ -55,6 +60,7 @@
         <div class="col-lg-15">
             <button type="submit" class="btn btn-long bg-secondary text-white shadow" onclick="location.href='@Url.Action("Index", "Wallet")'">Other Wallets</button>
         </div>
+        
     </div>
 </div>
 

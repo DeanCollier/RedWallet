@@ -18,11 +18,11 @@ namespace RedWallet.Models.BitcoinModels
         public string WalletName { get; set; }
 
         [Required]
-        [Display(Name = "Current Wallet Balance")]
+        [Display(Name = "Current Wallet Balance (currently not real, WIP)")]
         public string WalletBalance { get; set; }
 
         [Required]
-        [Display(Name = "Send Amount")]
+        [Display(Name = "Send Amount (in BTC)")]
 
         public double SendAmount { get; set; }
         

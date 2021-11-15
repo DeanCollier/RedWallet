@@ -10,7 +10,12 @@
 <div class="d-flex p-2 justify-content-center">
     <div class="col-lg-15 text-center">
         <h2>@ViewBag.Title:</h2>
-
+        @if (TempData["SaveResult"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show">
+                <strong>Succes!</strong> @TempData["SaveResult"]
+            </div>
+        }
         <div>
             <dl class="dl-horizontal">
                 <dt>

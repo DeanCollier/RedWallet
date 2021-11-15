@@ -26,8 +26,7 @@ namespace RedWallet.Models.WalletModels
         [Compare("Passphrase", ErrorMessage = "The passphrase and confirmation passphrase do not match.")]
         public string ConfirmPassphrase { get; set; }
 
-        [Required]
-        [MinLength(8), Display(Name = "Entropy Input", Description = "*Enter random characters to enhance security. You will not need to remember these.*")]
+        [Display(Name = "Add Entropy?", Description = "*Enter random characters to enhance security. You will not need to remember these.*")]
         public string EntropyInput { get; set; }
 
         public string UserId { get; set; }

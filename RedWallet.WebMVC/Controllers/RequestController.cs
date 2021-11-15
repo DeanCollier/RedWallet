@@ -85,6 +85,7 @@ namespace RedWallet.WebMVC.Controllers
             {
                 var detail = await _req.CreateRequestAsync(walletIdentity, newAddress.ToString());
                 await _wallet.IterateWalletXpubAsync(walletIdentity);
+                TempData["SaveResult"] = "New address created.";
                 return Redirect($"Details/{detail.RequestId}");
             }
             ModelState.AddModelError("", "Something went wrong.");

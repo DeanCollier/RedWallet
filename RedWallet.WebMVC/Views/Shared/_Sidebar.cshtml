@@ -1,40 +1,32 @@
 ﻿
 <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
-        <li class="nav-item">
-            @Html.Partial("_LoginPartial")
-        </li>
-        <li class="nav-item">
-            <a href="#">
-                <br />
-                <i class="fab fa-bitcoin"></i>
-                @Html.ActionLink("Dashboard", "Index", "Dashboard")
+        @Html.Partial("_LoginPartial")
+
+        <li type="submit" class="nav-item">
+            <a href="">
+                <span class="fab fa-bitcoin" style="padding-right:10px"></span>
+                <span>@Html.ActionLink("Dashboard", "Index", "Dashboard")</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a href="#">
-                <br />
-                <i class="fas fa-coins"></i>
-                @Html.ActionLink("Wallets", "Index", "Wallet", new { }, new { @id = "wallet-nav-link" })
+        <li type="submit" class="nav-item">
+            <a href="">
+                <span class="fas fa-coins" style="padding-right:10px"></span>
+                <span>@Html.ActionLink("Wallets", "Index", "Wallet", new { }, new { @id = "wallet-nav-link" })</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a href="#">
-                <br />
-                <i class="fas fa-arrow-up"></i>
-                @Html.ActionLink("Send", "Index", "Send", new { }, new { @id = "send-nav-link" })
+        <li type="submit" class="nav-item">
+            <a href="">
+                <span class="fas fa-arrow-up" style="padding-right:10px"></span>
+                <span>@Html.ActionLink("Send", "Index", "Send", new { }, new { @id = "send-nav-link" })</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a href="#">
-                <br />
-                <i class="fas fa-arrow-down"></i>
-                @Html.ActionLink("Receive", "Index", "Request", new { }, new { @id = "request-nav-link" })
+        <li type="submit" class="nav-item">
+            <a href="">
+                <span class="fas fa-arrow-down" style="padding-right:10px"></span>
+                <span>@Html.ActionLink("Receive", "Index", "Request", new { }, new { @id = "request-nav-link" })</span>
             </a>
         </li>
     </ul>
 </div>
 <!-- /#sidebar-wrapper -->
-
-
-

@@ -47,14 +47,17 @@ namespace RedWallet.WebMVC.Controllers
             {
                 return View(model);
             }
-
+            if (model.EntropyInput == null)
+            {
+                model.EntropyInput = "vires in numeris";
+            }
             model.UserId = User.Identity.GetUserId();
             var newKeyDetail = await _btc.GetNewBitcoinKey(model);
             var newWallet = await _wallet.CreateWalletAsync(model, newKeyDetail);
 
             if (!(string.IsNullOrEmpty(newWallet[0])) && !(string.IsNullOrEmpty(newWallet[1])) && !(string.IsNullOrEmpty(newWallet[2]))) // passphrase & mnemonic
             {
-                TempData["SaveResult"] = "Your wallet was created.";
+                TempData["SaveResult"] = "Your new wallet has been created.";
                 TempData["Passphrase"] = newWallet[0]; 
                 TempData["Mnemonic"] = newWallet[1];
                 var id = int.Parse(newWallet[2]);
