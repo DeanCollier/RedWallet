@@ -13,9 +13,12 @@ namespace RedWallet.Models.RequestModels
         public int WalletId { get; set; }
 
         [Required]
+        [Display(Name = "Wallet Name")]
+
         public string WalletName { get; set; }
 
         [Required]
+        [Display(Name = "Wallet Passphrase")]
         [MinLength(8), DataType(DataType.Password)]
         public string Passphrase { get; set; }
     }

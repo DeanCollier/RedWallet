@@ -16,6 +16,8 @@ namespace RedWallet.Models.RequestModels
         public int WalletId { get; set; }
 
         [Required]
+        [Display(Name = "Wallet Name")]
+
         public string WalletName { get; set; }
 
         [Required, Display(Name = "Address")]

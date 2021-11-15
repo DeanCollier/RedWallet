@@ -46,6 +46,7 @@ namespace RedWallet.Services
                     {
                         RequestId = r.Id,
                         WalletName = r.Wallet.WalletName,
+                        WalletId = r.WalletId,
                         RequestAddress = r.RequestAddress,
                         Created = r.Created
                     });

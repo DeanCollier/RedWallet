@@ -33,7 +33,7 @@ namespace RedWallet.Models.BitcoinModels
 
         [Required]
         [Display(Name = "Wallet Passphrase")]
-
+        [MinLength(8), DataType(DataType.Password)]
         public string WalletPassword { get; set; }
     }
 }

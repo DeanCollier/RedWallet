@@ -77,30 +77,5 @@ else
 }
 
 
-<script>
-    window.addEventListener("DOMContentLoaded", function () {
-        if (window.location.href.slice(window.location.href.lastIndexOf('/') + 1) != "") {
-            document.getElementById("wallet-input").value = window.location.href.slice(window.location.href.lastIndexOf('/') + 1)
-
-        }
-        setLinks(document.getElementById("wallet-input").value)
-
-    })
-    function setLinks(walletId) {
-        var walletLink = document.getElementById("wallet-nav-link")
-        var sendLink = document.getElementById("send-nav-link")
-        var requestLink = document.getElementById("request-nav-link")
-
-        walletLink.setAttribute("href", `/Wallet/Details/${walletId}`)
-        sendLink.setAttribute("href", `/Send?walletId=${walletId}`)
-        requestLink.setAttribute("href", `/Request?walletId=${walletId}`)
-    }
-    function handleClick() {
-        window.location.href = `/Send/Index/${document.getElementById("wallet-input").value}`
-
-    }
-    // Drop down click event
-    document.getElementById("wallet-input").addEventListener("change", handleClick)
-</script>
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")

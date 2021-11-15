@@ -12,13 +12,17 @@ namespace RedWallet.Models.RequestModels
         public int RequestId { get; set; }
 
         [Required]
+        [Display(Name = "Wallet Name")]
+
         public string WalletName { get; set; }
+
+        [Required]
+        public int WalletId { get; set; }
 
         [Required, Display(Name = "Address")]
         public string RequestAddress { get; set; }
         
         [Required]
-        [Display(Name = "Created Date")]
         public DateTimeOffset Created { get; set; }
     }
 }

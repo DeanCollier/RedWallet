@@ -2,46 +2,54 @@
 @model RedWallet.Models.RequestModels.RequestDetail
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Address Details";
 }
+<br />
+<br />
 
-<h2>Details</h2>
-<div>
-    <h4>RequestDetail</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.WalletName)
-        </dt>
+<div class="d-flex p-2 justify-content-center">
+    <div class="col-lg-15 text-center">
+        <h2>@ViewBag.Title:</h2>
 
-        <dd>
-            @Html.DisplayFor(model => model.WalletName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RequestAddress)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RequestAddress)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Created)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Created)
-        </dd>
+        <div>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Created)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Created)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.WalletName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.WalletName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.RequestAddress)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.RequestAddress)
+                </dd>
 
 
-    </dl>
-    @if (ViewBag.QRCodeImage != null)
-    {
-        <img src="@ViewBag.QRCodeImage" alt="" style="height:150px;width:150px" />
-    }
+
+            </dl>
+        </div>
+
+
+        </dl>
+        @if (ViewBag.QRCodeImage != null)
+        {
+            <img src="@ViewBag.QRCodeImage" alt="" style="height:300px;width:300px" />
+        }
+        <p>
+            <div class="col-lg-15">
+                <button type="submit" class="btn bg-secondary text-white shadow" onclick="location.href='@Url.Action("Index", "Request", new { walletId = Model.WalletId })'">Other Addresses</button>
+            </div>
+        </p>
+    </div>
+    
+
 </div>
-<p>
-    @Html.ActionLink("Back to List", "Index", new { walletId = Model.WalletId })
 
-</p>
