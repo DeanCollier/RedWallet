@@ -3,42 +3,16 @@
 @{
     ViewBag.Title = "Delete";
 }
+<br />
+<br />
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>SendDetail</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.SendId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SendId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.WalletId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.WalletId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.WalletName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.WalletName)
-        </dd>
+<div class="d-flex p-2 justify-content-center">
+    <div class="col-lg-15 text-center" ">
+        <h2>@ViewBag.Title:</h2>
 
         <dt>
             @Html.DisplayNameFor(model => model.Created)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Created)
         </dd>
@@ -46,19 +20,30 @@
         <dt>
             @Html.DisplayNameFor(model => model.TransactionHash)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.TransactionHash)
         </dd>
 
-    </dl>
+        <dt>
+            @Html.DisplayNameFor(model => model.WalletName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.WalletName)
+        </dd>
+        <div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
+                <div class="form-actions no-color text-center">
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index", new { walletId = Model.WalletId })
+                    <input type="submit" value="Delete Transaction" class="btn bg-danger text-white shadow" />
+
+                </div>
+            }
+
         </div>
-    }
+        <button type="submit" class="btn bg-secondary text-white shadow m-2" onclick="location.href='@Url.Action("Index", "Send", new { walletId = Model.WalletId })'">Other Wallets</button>
+
+    </div>
 </div>

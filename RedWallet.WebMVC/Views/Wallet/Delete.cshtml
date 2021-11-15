@@ -23,14 +23,15 @@
             {
                 @Html.AntiForgeryToken()
 
-            <div class="form-actions no-color text-center">
+                <div class="form-actions no-color text-center">
 
-                <input type="submit" value="Yes, Delete @Model.WalletName" class="btn bg-danger text-white shadow" /> 
-                <button type="submit" class="btn bg-secondary text-white shadow" onclick="location.href='@Url.Action("Index", "Wallet")'">Other Wallets</button>
+                    <input type="submit" value="Yes, Delete @Model.WalletName" class="btn bg-danger text-white shadow" />
 
-            </div>
+                </div>
             }
         </div>
+        <button type="submit" class="btn bg-secondary text-white shadow m-2" onclick="location.href='@Url.Action("Index", "Wallet")'">Other Wallets</button>
+
     </div>
 </div>
 
