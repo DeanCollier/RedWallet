@@ -1,6 +1,5 @@
 C:\RED_WALLET\RedWallet\RedWallet.Utilities\bin\Debug\RedWallet.Utilities.dll
 C:\RED_WALLET\RedWallet\RedWallet.Utilities\bin\Debug\RedWallet.Utilities.pdb
-C:\RED_WALLET\RedWallet\RedWallet.Utilities\obj\Debug\RedWallet.Utilities.csproj.AssemblyReference.cache
 C:\RED_WALLET\RedWallet\RedWallet.Utilities\obj\Debug\RedWallet.Utilities.csproj.CoreCompileInputs.cache
 C:\RED_WALLET\RedWallet\RedWallet.Utilities\obj\Debug\RedWallet.Utilities.dll
 C:\RED_WALLET\RedWallet\RedWallet.Utilities\obj\Debug\RedWallet.Utilities.pdb

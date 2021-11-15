@@ -13,18 +13,27 @@ namespace RedWallet.Models.BitcoinModels
         public int WalletId { get; set; }
 
         [Required]
+        [Display(Name = "Wallet Name")]
+
         public string WalletName { get; set; }
 
         [Required]
-        public double Balance { get; set; }
+        [Display(Name = "Current Wallet Balance")]
+        public string WalletBalance { get; set; }
 
         [Required]
+        [Display(Name = "Send Amount")]
+
         public double SendAmount { get; set; }
         
         [Required]
+        [Display(Name = "Recipient Bitcoin Address")]
+
         public string RecipientAddress { get; set; }
 
         [Required]
+        [Display(Name = "Wallet Passphrase")]
+
         public string WalletPassword { get; set; }
     }
 }

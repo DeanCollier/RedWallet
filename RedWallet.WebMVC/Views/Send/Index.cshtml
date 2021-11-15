@@ -1,38 +1,106 @@
-﻿@model IEnumerable<RedWallet.Models.SendModels.SendListItem>
+﻿
+@using Microsoft.AspNet.Identity
+@model IEnumerable<RedWallet.Models.SendModels.SendListItem>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="card-title text-center mt-5">
+    <div class="col-lg-15">
+        <h2>@User.Identity.GetUserName()'s Sent Transactions From Wallet @ViewData["WalletName"]: </h2>
+    </div>
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create", new { walletId = ViewData["WalletId"] })
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.WalletName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TransactionHash)
-        </th>
-        <th></th>
-    </tr>
+@if (Model.FirstOrDefault() == null)
+{
+    <div class="d-flex p-2 justify-content-center">
+        <div class="col-lg-15 text-center">
+            <div>
+                <h1>No Transactions Found.</h1>
+                <div class="col-lg-15">
+                    <input type="submit" value="Send New Transaction" class="btn btn-long bg-secondary text-white shadow" onclick="location.href='@Url.Action("Create", "Send", new { walletId = ViewData["WalletId"] })'" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="d-flex p-2 justify-content-center">
+        <div class="col-lg-15 text-center">
+            <div class="col-lg-2 d-inline-block mb-2">
+                <button type="submit" class="btn btn-long bg-danger text-white shadow" onclick="location.href='@Url.Action("Create", "Send", new { walletId = ViewBag.WalletId })'">Send New Transaction</button>
+            </div>
+            <br />
+            <div class="col-lg-15 table-responsive">
+                <div id="user-sends" class="col-lg-14 card shadow">
+                    <table class="table table-striped table-dark table-bordered" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th class="th-sm text-center">
+                                    Created
+                                </th>
+                                <th class="th-sm text-center">
+                                    Transaction
+                                </th>
+                                <th class="th-sm text-center">
+                                    Wallet
+                                </th>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.WalletName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TransactionHash)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id = item.SendId }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.SendId })
-        </td>
-    </tr>
+                                <th class="th-sm text-center">
+                                    Options
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Created.ToString("MM/dd/yyyy hh:mm tt")</td>
+
+                                    <td style="font-weight: bold">@Html.ActionLink(item.TransactionHash, "Details", "Send", new { id = item.SendId }, new { @class = "detail-link" })</td>
+                                    <td style="font-weight: bold">@Html.ActionLink(item.WalletName, "Details", "Wallet", new { id = item.WalletId }, new { @class = "detail-link" })</td>
+
+                                    <td class="text-center">
+                                        @Html.ActionLink("Details", "Details", "Send", new { id = item.SendId }, new { @class = "detail-link" }) |
+                                        @Html.ActionLink("Delete", "Delete", "Send", new { id = item.SendId }, new { @class = "detail-link" })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 
-</table>
+
+<script>
+    window.addEventListener("DOMContentLoaded", function () {
+        if (window.location.href.slice(window.location.href.lastIndexOf('/') + 1) != "") {
+            document.getElementById("wallet-input").value = window.location.href.slice(window.location.href.lastIndexOf('/') + 1)
+
+        }
+        setLinks(document.getElementById("wallet-input").value)
+
+    })
+    function setLinks(walletId) {
+        var walletLink = document.getElementById("wallet-nav-link")
+        var sendLink = document.getElementById("send-nav-link")
+        var requestLink = document.getElementById("request-nav-link")
+
+        walletLink.setAttribute("href", `/Wallet/Details/${walletId}`)
+        sendLink.setAttribute("href", `/Send?walletId=${walletId}`)
+        requestLink.setAttribute("href", `/Request?walletId=${walletId}`)
+    }
+    function handleClick() {
+        window.location.href = `/Send/Index/${document.getElementById("wallet-input").value}`
+
+    }
+    // Drop down click event
+    document.getElementById("wallet-input").addEventListener("change", handleClick)
+</script>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")

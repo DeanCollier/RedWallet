@@ -46,6 +46,7 @@ namespace RedWallet.Services
                     {
                         SendId = s.Id,
                         WalletName = s.Wallet.WalletName,
+                        WalletId = s.WalletId,
                         TransactionHash = s.TransactionHash,
                         Created = s.Created
                         

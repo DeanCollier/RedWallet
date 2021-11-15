@@ -14,6 +14,9 @@ namespace RedWallet.Models.SendModels
 
         [Required]
         public string WalletName { get; set; }
+        
+        [Required]
+        public int WalletId { get; set; }
 
         [Required]
         public string TransactionHash { get; set; }

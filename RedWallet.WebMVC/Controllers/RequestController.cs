@@ -33,11 +33,17 @@ namespace RedWallet.WebMVC.Controllers
         }
 
         // GET: Request
-        public async Task<ActionResult> Index(int walletId)
+        public async Task<ActionResult> Index(int? walletId)
         {
-            var walletIdentity = new WalletIdentity { WalletId = walletId, UserId = User.Identity.GetUserId() };
+            if (!walletId.HasValue)
+            {
+                return RedirectToAction("Index", "Dashboard");
+            }
+            var walletIdentity = new WalletIdentity { WalletId = walletId.GetValueOrDefault(), UserId = User.Identity.GetUserId() };
             var model = await _req.GetWalletRequestsAsync(walletIdentity);
+            var walletName = (await _wallet.GetWalletByIdAsync(walletIdentity)).WalletName;
             ViewData["WalletId"] = walletId;
+            ViewData["WalletName"] = walletName;
             return View(model);
         }
 
