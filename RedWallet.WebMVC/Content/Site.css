@@ -1,16 +1,76 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 0px;
     padding-bottom: 20px;
-    background-image: url("Assets/RedWalletHomeBackground.png");
-    background-repeat: no-repeat;
+    background-image: url("Assets/RedWalletForegroundTransparent.png"), url("Assets/RedWalletBTCSunTransparent.png"), url("Assets/RedWalletBackground.png");
+    background-repeat: no-repeat, no-repeat, no-repeat;
     background-attachment: fixed;
-    background-size: cover;
+    background-size: cover, contain, cover;
+    background-position: left top, right bottom, left top;
 }
+
+#wallet-dropdown {
+    float: left;
+    width: 50%;
+    height: 100%;
+    color: white;
+    padding-left: 1%;
+    background-color: #dc3545;
+    
+}
+    #wallet-dropdown button {
+        padding: 0;
+        width: 100%;
+        background: #dc3545;
+        border: none;
+    }
+
+
+#wallet-input {
+    width: 500px !important;
+    font-size: 40px;
+    font-weight: 500;
+    text-align: center;
+    color: white;
+    border: 0px;
+    padding-bottom: 10px;
+    background-color: #dc3545;
+}
+
+
+#balance-display {
+    text-align: right;
+    float: right;
+    width: 50%;
+    height: 100%;
+    color: white;
+    padding-right: 1%;
+    background-color: #dc3545;
+}
+
+.card {
+    padding: 0 !important;
+    height: auto;
+    width: auto;
+    margin: 0 !important;
+    border-color: #212529;
+}
+
+.table {
+    height: auto;
+    margin: 0 !important;
+}
+
+.alert-danger {
+    font-size: 30px;
+    height: auto;
+}
+
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    margin-left: 0;
+    padding-left: 0;
+    padding-right: 5px;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -24,5 +84,172 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    max-width: 250px;
+}
+.btn-long {
+    width: 95%;
+    text-align: center;
+    margin-left: 2.5%
+}
+.title-text {
+    font-size: 100px;
+    text-align: center;
+}
+.page-title {
+    margin-left: -6%;
+    font-size: 60px;
+    text-align: center;
+}
+a.detail-link {
+    font-weight: bold;
+    color: #b30f0f;
+    text-align: center;
+    text-decoration-color: rgb(179 15 15 / 0.00)
+}
+
+#wrapper {
+    top: 0;
+    padding-left: 250px;
+    -webkit-transition: all 0.25s ease;
+    -moz-transition: all 0.25s ease;
+    -o-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+}
+
+    #wrapper.toggled {
+        padding-left: 0px;
+    }
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 0px;
+    width: 250px;
+    height: 100%;
+    margin-left: 0px;
+    overflow-y: auto;
+    background: #212529;
+    -webkit-transition: all 0.25s ease;
+    -moz-transition: all 0.25s ease;
+    -o-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 0px;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+    padding-left: -250px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: 0px;
+}
+
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.nav-item {
+
+}
+
+    .sidebar-nav li {
+        font-size: 20px;
+        font-weight: bold;
+        line-height: 100px;
+        text-align: center;
+    }
+
+        .sidebar-nav li a {
+            display: inline-block;
+            text-decoration: none;
+            color: #999999;
+        }
+
+        .sidebar-nav li i {
+            display: block;
+            text-decoration: none;
+            color: #999999;
+            text-align: center;
+        }
+
+.nav-item:hover {
+    text-decoration: none;
+    color: white;
+    background: #b30f0f;
+}
+.nav-item:hover a {
+    text-decoration: none;
+    color: white;
+    background: #b30f0f;
+}
+
+.n
+.nav-item a {
+    display: inline-block;
+}
+        .nav-item a:hover {
+            text-decoration: none;
+            color: white;
+            background: #b30f0f;
+        }
+
+        .sidebar-nav li a:active, .sidebar-nav li a:focus {
+            text-decoration: none;
+        }
+
+    .sidebar-nav > .sidebar-brand {
+        height: 65px;
+        font-size: 18px;
+        line-height: 60px;
+    }
+
+        .sidebar-nav > .sidebar-brand a {
+            color: #999999;
+        }
+
+/*            .sidebar-nav > .sidebar-brand a:hover {
+                color: #b30f0f;
+                background: none;
+            }*/
+
+@media(min-width:768px) {
+    #wrapper {
+        padding-left: 250px;
+    }
+
+    #wrapper.toggled {
+        padding-left: -250px;
+    }
+
+    #sidebar-wrapper {
+        width: 250px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 0px;
+    }
+
+    #page-content-wrapper {
+        padding: 20px;
+        position: relative;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0px;
+    }
 }

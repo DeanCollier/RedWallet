@@ -4,38 +4,45 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
+<br />
+<br />
 
-<div class="alert alert-warning fade in" role="alert">
+<div class="alert alert-danger" role="alert">
     <button type="button" class="close" data-dismiss="alert">
         <span>&times;</span>
     </button>
-    "BACKUP YOUR WALLET SEED PHRASE AND PASSPHRASE BEFORE DELETING. IF SEED PHRASE AND PASSPHRASE ARE NOT BACKED UP, WALLET WILL NOT BE RECOVERABLE."
+    !ATTENTION! - MANUALLY BACKUP YOUR WALLET SEED PHRASE AND PASSPHRASE BEFORE DELETING.
+    IF SEED PHRASE AND PASSPHRASE ARE NOT BACKED UP, WALLET WILL NOT BE RECOVERABLE.
 </div>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>WalletDetail</h4>
-    <hr />
-    @Html.HiddenFor(model => model.WalletId)
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.WalletName)
-        </dt>
+<div class="d-flex p-2 justify-content-center">
+    <div class="col-lg-15 text-center">
+        <h3>Are you sure you want to delete @Model.WalletName?</h3>
+        <div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-        <dd>
-            @Html.DisplayFor(model => model.WalletName)
-        </dd>
+                <div class="form-actions no-color text-center">
 
-    </dl>
+                    <input type="submit" value="Yes, Delete @Model.WalletName" class="btn bg-danger text-white shadow" />
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+                </div>
+            }
         </div>
-    }
+        <div>
+            <button type="submit" class="btn bg-dark text-white shadow m-2" onclick="location.href='@Url.Action("Index", "Wallet")'">No, Don't Delete</button>
+
+        </div>
+        <div>
+            <button type="submit" class="btn bg-secondary text-white shadow m-2" onclick="location.href='@Url.Action("Index", "Wallet")'">Other Wallets</button>
+
+        </div>
+
+
+
+    </div>
 </div>
+
+
+

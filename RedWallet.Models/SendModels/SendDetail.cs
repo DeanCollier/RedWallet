@@ -16,12 +16,15 @@ namespace RedWallet.Models.SendModels
         public int WalletId { get; set; }
         
         [Required]
+        [Display(Name = "Wallet Name")]
         public string WalletName { get; set; }
         
         [Required]
         public DateTimeOffset Created { get; set; }
 
         [Required]
+        [Display(Name = "Bitcoin Transaction (currently not real, WIP)")]
+
         public string TransactionHash { get; set; }
     }
 }

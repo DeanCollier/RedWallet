@@ -1,57 +1,9 @@
-﻿@using RedWallet.WebMVC.Models
-@model LoginViewModel
-@{
-    ViewBag.Title = "Home Page";
-}
-
-<div class="card-title text-center">
-    <h1 class="text-danger text-xxl-center">RedWallet</h1>
-    <p class="lead">RedWallet is a free web application for creating and managing Bitcoin wallets.</p>
+﻿
+<div id="wrapper">
+    @Html.Partial("_Sidebar")
+    @Html.Partial("_Content")
 </div>
 
-<div class="row justify-content-center">
-    <div class="col-md-15">
-        <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Username, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-10">
-                        <input type="submit" value="Log In" class="btn bg-white text-black m-2" />
-                        <input type="submit" value="New User?" class="btn bg-white text-black" onclick="location.href='@Url.Action("Register", "Account")'" />
 
-                    </div>
-                </div>
-                @* Enable this once you have account confirmation enabled for password reset functionality
-                    <p>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>*@
-            }
-        </section>
-    </div>
-</div>
 
 

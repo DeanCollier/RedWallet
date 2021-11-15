@@ -1,42 +1,67 @@
-﻿@model RedWallet.Models.RequestModels.RequestDetail
+﻿
+@model RedWallet.Models.RequestModels.RequestDetail
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Address Details";
 }
+<br />
+<br />
 
-<h2>Details</h2>
+<div class="d-flex p-2 justify-content-center">
+    <div class="col-lg-15 text-center">
+        <h2>@ViewBag.Title:</h2>
+        @if (TempData["SaveResult"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show">
+                <strong>Succes!</strong> @TempData["SaveResult"]
+            </div>
+        }
+        <div>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Created)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Created)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.WalletName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.WalletName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.RequestAddress)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.RequestAddress)
+                </dd>
 
-<div>
-    <h4>RequestDetail</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.WalletName)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.WalletName)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.RequestAddress)
-        </dt>
+            </dl>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.RequestAddress)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Created)
-        </dt>
+        </dl>
+        @if (ViewBag.QRCodeImage != null)
+        {
+            <dl class="dl-horizontal">
+                <dt>
+                    Address QR Code
+                </dt>
+                <dd>
+                    <img src="@ViewBag.QRCodeImage" alt="" style="height:300px;width:300px" />
+                </dd>
+            </dl>
+        }
+        <p>
+            <div class="col-lg-15">
+                <button type="submit" class="btn bg-secondary text-white shadow" onclick="location.href='@Url.Action("Index", "Request", new { walletId = Model.WalletId })'">Other Addresses</button>
+            </div>
+        </p>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Created)
-        </dd>
 
-    </dl>
 </div>
-<p>
-    @Html.ActionLink("Back to List", "Index", new { walletId = Model.WalletId })
 
-</p>

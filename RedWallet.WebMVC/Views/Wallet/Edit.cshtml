@@ -1,40 +1,42 @@
 ﻿@model RedWallet.Models.WalletModels.WalletEdit
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Edit Wallet";
 }
 
-<h2>Edit</h2>
-
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>WalletEdit</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.WalletId)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NewWalletName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NewWalletName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NewWalletName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
+<br />
+<br />
+<div class="card-title text-center mt-5">
+    <div class="col-lg-15">
+        <h2>@ViewBag.Title:</h2>
     </div>
-}
+</div>
+<div class="d-flex p-2 justify-content-center">
+    <div class="col-lg-15">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.WalletId)
+            <div class="form-group">
+                @Html.LabelFor(model => model.NewWalletName, htmlAttributes: new { @class = "control-label col-lg-15" })
+                <div class="col-lg-15">
+                    @Html.EditorFor(model => model.NewWalletName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NewWalletName, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+            <div class="form-group">
+                <div class="col-lg-15">
+                    <input type="submit" value="Update" class="btn btn-long bg-danger text-white shadow mt-3 mb-2" />
+                </div>
+            </div>
+        }
+
+    <div class="col-lg-15">
+        <button type="submit" class="btn btn-long bg-secondary text-white shadow" onclick="location.href='@Url.Action("Index", "Wallet")'">Other Wallets</button>
+    </div>
+    </div>
 </div>
 
 @section Scripts {

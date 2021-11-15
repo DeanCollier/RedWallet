@@ -1,34 +1,65 @@
-﻿@model IEnumerable<RedWallet.Models.WalletModels.WalletListItem>
+﻿@using Microsoft.AspNet.Identity
+@model IEnumerable<RedWallet.Models.WalletModels.WalletListItem>
 
 @{
     ViewBag.Title = "Index";
 }
-@Html.Partial("_SideNavLayout")
 
-<h2>Index</h2>
+<div class="card-title text-center mt-5">
+    <div class="col-lg-15">
+        <h2>@User.Identity.GetUserName()'s Wallets: </h2>
+    </div>
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.WalletName)
-        </th>
-        <th></th>
-    </tr>
+<div class="d-flex p-2 justify-content-center">
+    <div class="col-lg-15 text-center">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.WalletName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.WalletId }) |
-            @Html.ActionLink("Details", "Details", new { id = item.WalletId }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.WalletId }) 
-        </td>
-    </tr>
-}
+        @if (TempData["SaveResult"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show">
+                <strong>Succes!</strong> @TempData["SaveResult"] 
+            </div>
+        }
+        <div class="col-lg-2 d-inline-block mb-2">
+            <button type="submit" class="btn btn-long bg-danger text-white shadow" onclick="location.href='@Url.Action("Create", "Wallet")'">Create New Wallet</button>
+        </div>
+        <br />
+        <div class="col-lg-15 table-responsive">
+            <div id="user-wallets" class="col-lg-14 card shadow">
+                <table class="table table-striped table-dark table-bordered" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th class="th-sm text-center">
+                                Wallet Name
+                            </th>
+                            <th class="th-sm text-center">
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td style="font-weight: bold">@Html.ActionLink(item.WalletName, "Index", "Dashboard", new { id = item.WalletId }, new { @class = "detail-link" })</td>
+                                <td class="text-center">
+                                    @Html.ActionLink("Details", "Details", "Wallet", new { id = item.WalletId }, new { @class = "detail-link" }) |
 
-</table>
+                                    @Html.ActionLink("Send", "Create", "Send", new { walletId = item.WalletId }, new { @class = "detail-link" }) |
+
+                                    @Html.ActionLink("Receive", "Create", "Request", new { walletId = item.WalletId }, new { @class = "detail-link" }) |
+
+                                    @Html.ActionLink("Edit", "Edit", "Wallet", new { id = item.WalletId }, new { @class = "detail-link" }) |
+                                    @Html.ActionLink("Delete", "Delete", "Wallet", new { id = item.WalletId }, new { @class = "detail-link" })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

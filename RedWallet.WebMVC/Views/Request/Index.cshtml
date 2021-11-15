@@ -1,37 +1,79 @@
-﻿@model IEnumerable<RedWallet.Models.RequestModels.RequestListItem>
+﻿@using Microsoft.AspNet.Identity
+
+@model IEnumerable<RedWallet.Models.RequestModels.RequestListItem>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-<p>
-    @Html.ActionLink("Create New", "Create", new { walletId = ViewData["WalletId"] })
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.WalletName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RequestAddress)
-        </th>
-        <th></th>
-    </tr>
+<div class="card-title text-center mt-5">
+    <div class="col-lg-15">
+        <h2>@User.Identity.GetUserName()'s Public Addresses For @ViewData["WalletName"]: </h2>
+    </div>
+</div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.WalletName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RequestAddress)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id = item.RequestId }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.RequestId })
-        </td>
-    </tr>
+@if (Model.FirstOrDefault() == null)
+{
+    <div class="d-flex p-2 justify-content-center">
+        <div class="col-lg-15 text-center">
+            <div>
+                <h1>No Addresses Found.</h1>
+                <div class="col-lg-15">
+                    <input type="submit" value="Create New Public Address" class="btn btn-long bg-secondary text-white shadow" onclick="location.href='@Url.Action("Create", "Request", new { walletId = ViewData["WalletId"] })'" />
+                </div>
+            </div>
+        </div>
+    </div>
 }
+else
+{
+    <div class="d-flex p-2 justify-content-center">
+        <div class="col-lg-15 text-center">
+            <div class="col-lg-2 d-inline-block mb-2">
+                <button type="submit" class="btn btn-long bg-danger text-white shadow" onclick="location.href='@Url.Action("Create", "Request", new { walletId = ViewBag.WalletId })'">Create New Public Address</button>
+            </div>
+            <br />
+            <div class="col-lg-15 table-responsive">
+                <div id="user-sends" class="col-lg-14 card shadow">
+                    <table class="table table-striped table-dark table-bordered" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th class="th-sm text-center">
+                                    @Html.DisplayNameFor(model => model.ToList().FirstOrDefault().Created)
 
-</table>
+                                </th>
+                                <th class="th-sm text-center">
+                                    @Html.DisplayNameFor(model => model.ToList().FirstOrDefault().RequestAddress)
+                                </th>
+                                <th class="th-sm text-center">
+                                    @Html.DisplayNameFor(model => model.ToList().FirstOrDefault().WalletName)
+
+                                </th>
+
+                                <th class="th-sm text-center">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Created.ToString("MM/dd/yyyy hh:mm tt")</td>
+
+                                    <td style="font-weight: bold">@Html.ActionLink(item.RequestAddress, "Details", "Request", new { id = item.RequestId }, new { @class = "detail-link" })</td>
+                                    <td style="font-weight: bold">@Html.ActionLink(item.WalletName, "Details", "Wallet", new { id = item.WalletId }, new { @class = "detail-link" })</td>
+
+                                    <td class="text-center">
+                                        @Html.ActionLink("Details", "Details", "Request", new { id = item.RequestId }, new { @class = "detail-link" }) |
+                                        @Html.ActionLink("Delete", "Delete", "Request", new { id = item.RequestId }, new { @class = "detail-link" })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}

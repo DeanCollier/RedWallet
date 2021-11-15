@@ -96,29 +96,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IdentityModels.cs" />
-    <Compile Include="Migrations\202110252235583_newstuff.cs" />
-    <Compile Include="Migrations\202110252235583_newstuff.Designer.cs">
-      <DependentUpon>202110252235583_newstuff.cs</DependentUpon>
+    <Compile Include="Migrations\202111082206048_InitialCreate.cs" />
+    <Compile Include="Migrations\202111082206048_InitialCreate.designer.cs">
+      <DependentUpon>202111082206048_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202110252338271_newstuff1.cs" />
-    <Compile Include="Migrations\202110252338271_newstuff1.Designer.cs">
-      <DependentUpon>202110252338271_newstuff1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202110262210435_smallUpdates.cs" />
-    <Compile Include="Migrations\202110262210435_smallUpdates.Designer.cs">
-      <DependentUpon>202110262210435_smallUpdates.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202110270330007_encryptionUpdate.cs" />
-    <Compile Include="Migrations\202110270330007_encryptionUpdate.Designer.cs">
-      <DependentUpon>202110270330007_encryptionUpdate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202110270436311_encryptionUpdate2.cs" />
-    <Compile Include="Migrations\202110270436311_encryptionUpdate2.Designer.cs">
-      <DependentUpon>202110270436311_encryptionUpdate2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202110291357563_updateRequest.cs" />
-    <Compile Include="Migrations\202110291357563_updateRequest.designer.cs">
-      <DependentUpon>202110291357563_updateRequest.cs</DependentUpon>
+    <Compile Include="Migrations\202111121814395_xpubAddresses.cs" />
+    <Compile Include="Migrations\202111121814395_xpubAddresses.designer.cs">
+      <DependentUpon>202111121814395_xpubAddresses.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -131,23 +115,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202110252235583_newstuff.resx">
-      <DependentUpon>202110252235583_newstuff.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202111082206048_InitialCreate.resx">
+      <DependentUpon>202111082206048_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202110252338271_newstuff1.resx">
-      <DependentUpon>202110252338271_newstuff1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202110262210435_smallUpdates.resx">
-      <DependentUpon>202110262210435_smallUpdates.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202110270330007_encryptionUpdate.resx">
-      <DependentUpon>202110270330007_encryptionUpdate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202110270436311_encryptionUpdate2.resx">
-      <DependentUpon>202110270436311_encryptionUpdate2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202110291357563_updateRequest.resx">
-      <DependentUpon>202110291357563_updateRequest.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202111121814395_xpubAddresses.resx">
+      <DependentUpon>202111121814395_xpubAddresses.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -74,6 +74,7 @@ C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\Microsoft.Web.Infrastructure.dll
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\NBitcoin.dll
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\Newtonsoft.Json.dll
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\Owin.dll
+C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\QRCoder.dll
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\RedWallet.Data.dll
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\RedWallet.Models.dll
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\RedWallet.Services.dll

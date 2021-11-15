@@ -40,12 +40,16 @@ namespace RedWallet.Services
             {
                 var query = context
                     .Sends
+                    .OrderByDescending(s => s.Created)
                     .Where(s => s.Wallet.UserId == model.UserId && s.WalletId == model.WalletId)
                     .Select(s => new SendListItem
                     {
                         SendId = s.Id,
                         WalletName = s.Wallet.WalletName,
-                        TransactionHash = s.TransactionHash
+                        WalletId = s.WalletId,
+                        TransactionHash = s.TransactionHash,
+                        Created = s.Created
+                        
                     });
 
                 return await query.ToArrayAsync();

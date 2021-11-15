@@ -3,58 +3,70 @@
 @{
     ViewBag.Title = "Details";
 }
+<br />
+<br />
 
-<h2>Details</h2>
 @if (TempData.ContainsKey("Mnemonic"))
 {
-    <div class="alert alert-warning fade in" role="alert">
+    <div class="alert alert-danger" role="alert">
         <button type="button" class="close" data-dismiss="alert">
             <span>&times;</span>
         </button>
-        "ATTENTION: YOUR SEED PHRASE WILL NOT BE SAVED. BE SURE TO WRITE THE SEED PHRASE AND YOUR PASSWORD DOWN AND STORE THEM SOMEWHERE SAFE FOR WALLET RECOVERY"
+        !ATTENTION! - YOUR SEED PHRASE & PASSPHRASE WILL NOT BE SAVED. 
+        YOU NEED TO MANUALLY WRITE DOWN BOTH THE SEED PHRASE AND PASSPHRASE AND STORE THEM SOMEWHERE SAFE FOR WALLET RECOVERY. 
+        WALLET WILL NOT BE RECOVERABLE WITHOUT THIS ACTION.
     </div>
 }
-<div>
-    <h4>WalletDetail</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.WalletName)
-        </dt>
+<div class="d-flex p-2 justify-content-center">
+    <div class="col-lg-15 text-center">
+        <h2>Wallet @Model.WalletName @ViewBag.Title:</h2>
 
-        <dd>
-            @Html.DisplayFor(model => model.WalletName)
-        </dd>
+        <div>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.WalletName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.WalletName)
+                </dd>
+                @if (TempData.ContainsKey("Mnemonic"))
+                {
+                    <dt>
+                        Seed Phrase
+                        <a href="https://coinmarketcap.com/alexandria/glossary/seed" target="_blank" rel="noreferrer">(what is this?)</a>
+                    </dt>
+                    <dd>
+                        @TempData["Mnemonic"]
+                    </dd>
+                    <dt>
+                        Passphrase
+                    </dt>
+                    <dd>
+                        @TempData["Passphrase"]
+                    </dd>
+                }
+            </dl>
+        </div>
         @if (TempData.ContainsKey("Mnemonic"))
         {
-            <dt>
-                Mnemonic Seed Phrase
-            </dt>
-            <dd>
-                @TempData["Mnemonic"]
-            </dd>
-            <dt>
-                Passphrase
-            </dt>
-            <dd>
-                @TempData["Passphrase"]
-            </dd>
+            <p>
+                <div class="col-lg-15 text-center">
+                    <button type="submit" class="btn bg-danger text-white shadow" onclick="location.href='@Url.Action("Index")'">I Have Backed Up My Seed and Passphrase</button>
+                </div>
+            </p>
         }
-    </dl>
-</div>
-@if (TempData.ContainsKey("Mnemonic"))
-{
-<p>
-    @Html.ActionLink("I Have Backed Up My Seed and Passphrase", "Index")
-</p>
-}
-else
-{
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.WalletId }) |
-    @Html.ActionLink("Back to List", "Index") |
-    @Html.ActionLink("Receive", "Create", "Request", new { walletId = Model.WalletId }, new { })
-    @Html.Route()
-</p>
-}
+        else
+        {
+            <p>
+                <div class="col-lg-15">
+                    <button type="submit" class="btn bg-secondary text-white shadow" onclick="location.href='@Url.Action("Edit", "Wallet", new { id = Model.WalletId })'">Edit</button>
+                    <button type="submit" class="btn bg-secondary text-white shadow" onclick="location.href='@Url.Action("Create", "Send", new { walletId = Model.WalletId })'">Send</button>
+                    <button type="submit" class="btn bg-secondary text-white shadow" onclick="location.href='@Url.Action("Create", "Request", new { walletId = Model.WalletId })'">Receive</button>
+                    <button type="submit" class="btn bg-secondary text-white shadow" onclick="location.href='@Url.Action("Index")'">Other Wallets</button>
+                </div>
+            </p>
+        }
 
+    </div>
+</div>

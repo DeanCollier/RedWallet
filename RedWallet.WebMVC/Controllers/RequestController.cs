@@ -1,11 +1,15 @@
 ﻿using Microsoft.AspNet.Identity;
 using NBitcoin;
+using QRCoder;
 using RedWallet.Models.RequestModels;
 using RedWallet.Models.WalletModels;
 using RedWallet.Services;
 using RedWallet.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -13,6 +17,8 @@ using System.Web.Mvc;
 
 namespace RedWallet.WebMVC.Controllers
 {
+    [Authorize]
+
     public class RequestController : Controller
     {
         private readonly IBitcoinService _btc;
@@ -27,11 +33,17 @@ namespace RedWallet.WebMVC.Controllers
         }
 
         // GET: Request
-        public async Task<ActionResult> Index(int walletId)
+        public async Task<ActionResult> Index(int? walletId)
         {
-            var walletIdentity = new WalletIdentity { WalletId = walletId, UserId = User.Identity.GetUserId() };
+            if (!walletId.HasValue)
+            {
+                return RedirectToAction("Index", "Dashboard");
+            }
+            var walletIdentity = new WalletIdentity { WalletId = walletId.GetValueOrDefault(), UserId = User.Identity.GetUserId() };
             var model = await _req.GetWalletRequestsAsync(walletIdentity);
+            var walletName = (await _wallet.GetWalletByIdAsync(walletIdentity)).WalletName;
             ViewData["WalletId"] = walletId;
+            ViewData["WalletName"] = walletName;
             return View(model);
         }
 
@@ -61,12 +73,19 @@ namespace RedWallet.WebMVC.Controllers
             }
 
             var walletIdentity = new WalletIdentity { WalletId = model.WalletId, UserId = User.Identity.GetUserId() };
-            var walletEncryptedSecret = await _wallet.GetWalletEncryptedSecretAsync(walletIdentity);
-            var requestAddress = _btc.GetNewBitcoinAddress(walletEncryptedSecret, model.Passphrase);
+            var wallet = await _wallet.GetWalletByIdAsync(walletIdentity);
             
-            if (requestAddress != null)
+            var xpub = wallet.Xpub;
+            var xpubIteration = wallet.XpubIteration;
+            var walletEncryptedSecret = await _wallet.GetWalletEncryptedSecretAsync(walletIdentity);
+
+            var newAddress = _btc.GetNewBitcoinAddress(walletEncryptedSecret, model.Passphrase, xpub, xpubIteration);
+            
+            if (newAddress != null)
             {
-                var detail = await _req.CreateRequestAsync(walletIdentity, requestAddress.ToString());
+                var detail = await _req.CreateRequestAsync(walletIdentity, newAddress.ToString());
+                await _wallet.IterateWalletXpubAsync(walletIdentity);
+                TempData["SaveResult"] = "New address created.";
                 return Redirect($"Details/{detail.RequestId}");
             }
             ModelState.AddModelError("", "Something went wrong.");
@@ -79,6 +98,20 @@ namespace RedWallet.WebMVC.Controllers
         {
             var requestIdentity = new RequestIdentity { RequestId = id, UserId = User.Identity.GetUserId() };
             var model = await _req.GetWalletRequestByIdAsync(requestIdentity);
+            
+            using (MemoryStream ms = new MemoryStream())
+            {
+                QRCodeGenerator qrGenerator = new QRCodeGenerator();
+                QRCodeData qrCodeInfo = qrGenerator.CreateQrCode(model.RequestAddress, QRCodeGenerator.ECCLevel.Q);
+                QRCode qrCode = new QRCode(qrCodeInfo);
+
+                using (Bitmap bitMap = qrCode.GetGraphic(20))
+                {
+                    bitMap.Save(ms, ImageFormat.Png);
+                    ViewBag.QRCodeImage = "data:image/png;base64," + Convert.ToBase64String(ms.ToArray());
+                }
+            }
+
             return View(model);
         }
 

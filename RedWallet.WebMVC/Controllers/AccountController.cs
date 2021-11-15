@@ -80,7 +80,7 @@ namespace RedWallet.WebMVC.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index","Dashboard");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -148,11 +148,13 @@ namespace RedWallet.WebMVC.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+        [ActionName("Register")]
+
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Username, Email = model.Username };
+                var user = new ApplicationUser { UserName = model.Username };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -164,7 +166,7 @@ namespace RedWallet.WebMVC.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Dashboard");
                 }
                 AddErrors(result);
             }
@@ -186,7 +188,7 @@ namespace RedWallet.WebMVC.Controllers
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
-        //
+
         // GET: /Account/ForgotPassword
         [AllowAnonymous]
         public ActionResult ForgotPassword()
@@ -203,7 +205,7 @@ namespace RedWallet.WebMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
+                var user = await UserManager.FindByNameAsync(model.Username);
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
@@ -249,7 +251,7 @@ namespace RedWallet.WebMVC.Controllers
             {
                 return View(model);
             }
-            var user = await UserManager.FindByNameAsync(model.Email);
+            var user = await UserManager.FindByNameAsync(model.Username);
             if (user == null)
             {
                 // Don't reveal that the user does not exist
@@ -393,7 +395,7 @@ namespace RedWallet.WebMVC.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //
@@ -450,7 +452,7 @@ namespace RedWallet.WebMVC.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Wallet");
+            return RedirectToAction("Index", "Dashboard");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

@@ -1,57 +1,54 @@
 ﻿@model RedWallet.Models.SendModels.SendDetail
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Transaction Details";
 }
 
-<h2>Details</h2>
+<br />
+<br />
 
-<div>
-    <h4>SendDetail</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.SendId)
-        </dt>
+<div class="d-flex p-2 justify-content-center">
+    <div class="col-lg-15 text-center">
+        <h2>@ViewBag.Title:</h2>
+        @if (TempData["SaveResult"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show">
+                <strong>Succes!</strong> @TempData["SaveResult"]
+            </div>
+        }
+        <div>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Created)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Created)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.SendId)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.TransactionHash)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.TransactionHash)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.WalletId)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.WalletName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.WalletName)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.WalletId)
-        </dd>
+            </dl>
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.WalletName)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.WalletName)
-        </dd>
+        <p>
+            <div class="col-lg-15">
+                <button type="submit" class="btn bg-secondary text-white shadow" onclick="location.href='@Url.Action("Index", "Send", new { walletId = Model.WalletId })'">Other Transactions</button>
+            </div>
+        </p>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Created)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Created)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TransactionHash)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TransactionHash)
-        </dd>
-
-    </dl>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Back to List", "Index", new { walletId = Model.WalletId })
-</p>

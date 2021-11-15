@@ -11,7 +11,9 @@ namespace RedWallet.Services.Interfaces
         Task<bool> DeleteWalletAsync(WalletIdentity model);
         Task<WalletDetail> GetWalletByIdAsync(WalletIdentity model);
         Task<string> GetWalletEncryptedSecretAsync(WalletIdentity model);
+        Task<string> GetWalletXpubAsync(WalletIdentity model);
         Task<IEnumerable<WalletListItem>> GetWalletsAsync(string userId);
-        Task<bool> UpdateWalletById(WalletEdit model);
+        Task<bool> UpdateWalletByIdAsync(WalletEdit model);
+        Task IterateWalletXpubAsync(WalletIdentity model);
     }
 }

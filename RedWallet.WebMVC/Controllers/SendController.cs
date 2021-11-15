@@ -14,6 +14,8 @@ using System.Web.Mvc;
 
 namespace RedWallet.WebMVC.Controllers
 {
+    [Authorize]
+
     public class SendController : Controller
     {
         private readonly IBitcoinService _btc;
@@ -29,11 +31,17 @@ namespace RedWallet.WebMVC.Controllers
 
         // GET: Send
         // Wallet/{walletId}/Send/Index
-        public async Task<ActionResult> Index(int walletId)
+        public async Task<ActionResult> Index(int? walletId)
         {
-            var walletIdentity = new WalletIdentity { WalletId = walletId, UserId = User.Identity.GetUserId() };
+            if (!walletId.HasValue)
+            {
+                return RedirectToAction("Index", "Dashboard");
+            }
+            var walletIdentity = new WalletIdentity { WalletId = walletId.GetValueOrDefault(), UserId = User.Identity.GetUserId() };
             var model = await _send.GetWalletSendsAsync(walletIdentity);
+            var walletName = (await _wallet.GetWalletByIdAsync(walletIdentity)).WalletName;
             ViewData["WalletId"] = walletId;
+            ViewData["WalletName"] = walletName;
             return View(model);
         }
 
@@ -46,14 +54,13 @@ namespace RedWallet.WebMVC.Controllers
             var encSecret = await _wallet.GetWalletEncryptedSecretAsync(walletIdentity);
 
             //********* get btc balance of wallet
-            //********* var balance = btcService.GetWalletBalance( walletSecret or encSecret or something)
-            double balance = 100; // filler for now so we can get app working
+            var balance = _btc.GetBitcoinBalance();
 
             var model = new TransactionCreate
             {
                 WalletId = walletDetail.WalletId,
                 WalletName = walletDetail.WalletName,
-                Balance = balance,
+                WalletBalance = balance,
                 SendAmount = 0,
                 RecipientAddress = "",
                 WalletPassword = ""
@@ -67,7 +74,7 @@ namespace RedWallet.WebMVC.Controllers
         public async Task<ActionResult> Create(TransactionCreate model)
         {
             if (!ModelState.IsValid ||
-                (model.Balance < model.SendAmount) ||
+                (double.Parse(model.WalletBalance) < model.SendAmount) ||
                 (!_btc.IsValidWallet(model.RecipientAddress))) // need to move this below to check if password works for specified wallet
             {
                 return View(model);
@@ -81,6 +88,7 @@ namespace RedWallet.WebMVC.Controllers
             if (transactionHash != null)
             {
                 var detail = await _send.CreateSendAsync(walletIdentity, transactionHash);
+                TempData["SaveResult"] = "Transaction has been sent.";
                 return Redirect($"Details/{detail.SendId}");
             }
             ModelState.AddModelError("", "Something went wrong.");

@@ -16,10 +16,12 @@ namespace RedWallet.Models.WalletModels
         [Required, Display(Name = "Wallet Name")]
         public string WalletName { get; set; }
 
-        [Display(Name = "Past Payment Requests")]
-        public IEnumerable<Request> PastPaymentRequests { get; set; }
+        [Required]
+        [Display(Name = "Extended Public Key")]
 
-        [Display(Name = "Sent Payments")]
-        public IEnumerable<Send> OutgoingPayments { get; set; }
+        public string Xpub { get; set; }
+        [Required]
+        public int XpubIteration { get; set; }
+
     }
 }

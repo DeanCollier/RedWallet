@@ -1,4 +1,4 @@
-namespace RedWallet.Data.Migrations
+﻿namespace RedWallet.Data.Migrations
 {
     using System;
     using System.Data.Entity;
@@ -10,22 +10,15 @@ namespace RedWallet.Data.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            ContextKey = "RedWallet.Data.ApplicationDbContext";
         }
 
         protected override void Seed(RedWallet.Data.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            //  You can use the DbSet<T>.AddOrUpdate() helper extension method
+            //  to avoid creating duplicate seed data.
         }
     }
 }
