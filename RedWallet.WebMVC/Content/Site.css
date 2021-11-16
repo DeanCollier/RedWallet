@@ -228,19 +228,19 @@ a.detail-link {
 
 @media(min-width:768px) {
     #wrapper {
-        padding-left: 250px;
+        padding-left: 0px;
     }
 
     #wrapper.toggled {
-        padding-left: -250px;
+        padding-left: 250px;
     }
 
     #sidebar-wrapper {
-        width: 250px;
+        width: 0px;
     }
 
     #wrapper.toggled #sidebar-wrapper {
-        width: 0px;
+        width: 250px;
     }
 
     #page-content-wrapper {
