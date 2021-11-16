@@ -14,13 +14,12 @@
     height: 100%;
     color: white;
     padding-left: 1%;
-    background-color: #dc3545;
-    
+    background-color: #b30f0f;
 }
     #wallet-dropdown button {
         padding: 0;
         width: 100%;
-        background: #dc3545;
+        background: #b30f0f;
         border: none;
     }
 
@@ -33,7 +32,7 @@
     color: white;
     border: 0px;
     padding-bottom: 10px;
-    background-color: #dc3545;
+    background-color: #b30f0f;
 }
 
 
@@ -44,7 +43,7 @@
     height: 100%;
     color: white;
     padding-right: 1%;
-    background-color: #dc3545;
+    background-color: #b30f0f;
 }
 
 .card {
@@ -93,7 +92,7 @@ textarea {
     margin-left: 2.5%
 }
 .title-text {
-    font-size: 100px;
+    font-size: 80px;
     text-align: center;
 }
 .page-title {
