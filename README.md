@@ -1,6 +1,5 @@
-# RedWallet
+# [RedWallet](https://redwalletdeployment.azurewebsites.net/) 
 # A Bitcoin Wallet
-## [RedWallet Web App ](https://redwalletdeployment.azurewebsites.net/)
 ### Dean Collier, Work In Progress, Winter 2021
  
 ## About
