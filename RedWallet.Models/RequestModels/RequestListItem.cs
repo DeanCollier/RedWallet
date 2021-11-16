@@ -19,7 +19,7 @@ namespace RedWallet.Models.RequestModels
         [Required]
         public int WalletId { get; set; }
 
-        [Required, Display(Name = "Address")]
+        [Required, Display(Name = "Send To This Bitcoin Address")]
         public string RequestAddress { get; set; }
         
         [Required]

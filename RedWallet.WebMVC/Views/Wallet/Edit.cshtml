@@ -18,7 +18,7 @@
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.WalletId)
-            <div class="form-group">
+            <div class="form-group fw-bold">
                 @Html.LabelFor(model => model.NewWalletName, htmlAttributes: new { @class = "control-label col-lg-15" })
                 <div class="col-lg-15">
                     @Html.EditorFor(model => model.NewWalletName, new { htmlAttributes = new { @class = "form-control" } })
