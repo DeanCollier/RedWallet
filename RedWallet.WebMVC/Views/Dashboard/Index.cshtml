@@ -15,7 +15,7 @@
 }
 else
 {
-    <div class="row mt-3 mx-5 px-2 table-responsive card">
+    <div class="row mt-3 mx-0 px-2 table-responsive card">
         <div class="col-lg-12 mx-0 px-0 shadow rounded" style="background: #dc3545">
             <div id="wallet-dropdown" class="col-5">
                 <h2>Select Wallet:</h2>
@@ -30,7 +30,7 @@ else
         </div>
     </div>
 
-    <div class="row mt-3 mx-0 px-0">
+    <div class="row mt-3 mx-0 ">
         <div class="col-6 table-responsive">
             <input type="submit" value="Send" class="btn bg-secondary text-white shadow m-0 mb-1" onclick="location.href='@Url.Action("Create", "Send", new { walletId = Model.SelectedWalletId })'" />
             <div id="sends-display" class="col-5 table-responsive card shadow">
