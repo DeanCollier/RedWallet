@@ -23,7 +23,7 @@ namespace RedWallet.Models.SendModels
         public DateTimeOffset Created { get; set; }
 
         [Required]
-        [Display(Name = "Bitcoin Transaction (currently not real, WIP)")]
+        [Display(Name = "Bitcoin Transaction (WIP)")]
 
         public string TransactionHash { get; set; }
     }

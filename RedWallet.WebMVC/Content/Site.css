@@ -109,7 +109,7 @@ a.detail-link {
 
 #wrapper {
     top: 0;
-    padding-left: 250px;
+    padding-left: 0px;
     -webkit-transition: all 0.25s ease;
     -moz-transition: all 0.25s ease;
     -o-transition: all 0.25s ease;
@@ -117,14 +117,14 @@ a.detail-link {
 }
 
     #wrapper.toggled {
-        padding-left: 0px;
+        padding-left: 250px;
     }
 
 #sidebar-wrapper {
     z-index: 1000;
     position: fixed;
     left: 0px;
-    width: 250px;
+    width: 0px;
     height: 100%;
     margin-left: 0px;
     overflow-y: auto;
@@ -136,7 +136,7 @@ a.detail-link {
 }
 
 #wrapper.toggled #sidebar-wrapper {
-    width: 0px;
+    width: 250px;
 }
 
 #page-content-wrapper {
@@ -228,19 +228,19 @@ a.detail-link {
 
 @media(min-width:768px) {
     #wrapper {
-        padding-left: 250px;
+        padding-left: 0px;
     }
 
     #wrapper.toggled {
-        padding-left: -250px;
+        padding-left: 250px;
     }
 
     #sidebar-wrapper {
-        width: 250px;
+        width: 0px;
     }
 
     #wrapper.toggled #sidebar-wrapper {
-        width: 0px;
+        width: 250px;
     }
 
     #page-content-wrapper {

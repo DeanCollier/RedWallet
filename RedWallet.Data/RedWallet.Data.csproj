@@ -96,13 +96,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IdentityModels.cs" />
-    <Compile Include="Migrations\202111082206048_InitialCreate.cs" />
-    <Compile Include="Migrations\202111082206048_InitialCreate.designer.cs">
-      <DependentUpon>202111082206048_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202111121814395_xpubAddresses.cs" />
-    <Compile Include="Migrations\202111121814395_xpubAddresses.designer.cs">
-      <DependentUpon>202111121814395_xpubAddresses.cs</DependentUpon>
+    <Compile Include="Migrations\202111152322434_first.cs" />
+    <Compile Include="Migrations\202111152322434_first.designer.cs">
+      <DependentUpon>202111152322434_first.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -115,11 +111,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202111082206048_InitialCreate.resx">
-      <DependentUpon>202111082206048_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111121814395_xpubAddresses.resx">
-      <DependentUpon>202111121814395_xpubAddresses.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202111152322434_first.resx">
+      <DependentUpon>202111152322434_first.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

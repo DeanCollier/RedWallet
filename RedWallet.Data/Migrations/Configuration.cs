@@ -10,7 +10,6 @@
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "RedWallet.Data.ApplicationDbContext";
         }
 
         protected override void Seed(RedWallet.Data.ApplicationDbContext context)

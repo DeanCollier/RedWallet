@@ -139,5 +139,6 @@ C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\Microsoft.CodeDom.Providers.DotNetC
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\RedWallet.Utilities.pdb
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\obj\Debug\RedWallet.WebMVC.csproj.AssemblyReference.cache
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\obj\Debug\RedWallet.WebMVC.csproj.CoreCompileInputs.cache
+C:\RED_WALLET\RedWallet\RedWallet.WebMVC\obj\Debug\RedWallet.WebMVC.csproj.CopyComplete
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\obj\Debug\RedWallet.WebMVC.dll
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\obj\Debug\RedWallet.WebMVC.pdb
