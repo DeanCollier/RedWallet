@@ -52,7 +52,8 @@
     height: auto;
     width: auto;
     margin: 0 !important;
-    border-color: #212529;
+    border: none;
+    border-radius: 0.80rem!important;
 }
 
 .table {
