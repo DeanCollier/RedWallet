@@ -1,4 +1,4 @@
-> :warning: This project is a hobby/learning experience for me and should not be considered fully secure, as it is constantly being improved while I learn. Your private keys and passphrases are not saved and cannot be recovered if not backed-up upon wallet creation. I cannot be liable for potential loss of funds using this application. See NOTES section for details on current functionality.  
+> :warning: This project is a work-in-progress and should not be considered fully secure, as it is constantly being improved while I learn. Your private keys and passphrases are not saved and cannot be recovered if not backed-up upon wallet creation. I cannot be liable for potential loss of funds using this application. See NOTES section for details on current functionality.  
 
 # [RedWallet](https://redwalletdeployment.azurewebsites.net/) 
 # A Bitcoin Wallet
