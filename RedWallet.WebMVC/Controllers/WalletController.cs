@@ -47,12 +47,8 @@ namespace RedWallet.WebMVC.Controllers
             {
                 return View(model);
             }
-            if (model.EntropyInput == null)
-            {
-                model.EntropyInput = "vires in numeris";
-            }
             model.UserId = User.Identity.GetUserId();
-            var newKeyDetail = await _btc.GetNewBitcoinKey(model);
+            var newKeyDetail = await _btc.CreateNewBitcoinKey(model);
             var newWallet = await _wallet.CreateWalletAsync(model, newKeyDetail);
 
             if (!(string.IsNullOrEmpty(newWallet[0])) && !(string.IsNullOrEmpty(newWallet[1])) && !(string.IsNullOrEmpty(newWallet[2]))) // passphrase & mnemonic
@@ -87,12 +83,11 @@ namespace RedWallet.WebMVC.Controllers
             {
                 WalletId = detail.WalletId,
                 NewWalletName = detail.WalletName
-                
             };
 
             return View(model);
         }
-        // POST: Update Wallet
+        // POST: Edit Wallet
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, WalletEdit model)

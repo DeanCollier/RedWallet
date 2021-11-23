@@ -20,8 +20,6 @@ namespace RedWallet.Models.WalletModels
         [Display(Name = "Extended Public Key")]
 
         public string Xpub { get; set; }
-        [Required]
-        public int XpubIteration { get; set; }
 
     }
 }

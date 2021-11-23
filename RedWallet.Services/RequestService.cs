@@ -23,13 +23,29 @@ namespace RedWallet.Services
                 Created = DateTimeOffset.Now,
             };
 
+            var requestIdentity = new RequestIdentity();
+
             using (var context = new ApplicationDbContext())
             {
-                context.Requests.Add(entity);
-                await context.SaveChangesAsync();
+                var clone = await context
+                    .Requests
+                    .SingleOrDefaultAsync(r => r.Wallet.UserId == model.UserId && r.RequestAddress == requestAddress);
+
+                if (clone.RequestAddress == null)
+                {
+                    context.Requests.Add(entity);
+                    await context.SaveChangesAsync();
+
+                    requestIdentity.RequestId = entity.Id;
+                    requestIdentity.UserId = model.UserId;
+                }
+                else
+                {
+                    requestIdentity.RequestId = clone.Id;
+                    requestIdentity.UserId = model.UserId;
+                }
             }
 
-            var requestIdentity = new RequestIdentity { RequestId = entity.Id, UserId = model.UserId };
             return await GetWalletRequestByIdAsync(requestIdentity);
         }
 

@@ -100,6 +100,10 @@
     <Compile Include="Migrations\202111152322434_first.designer.cs">
       <DependentUpon>202111152322434_first.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202111230536045_balanceupdate.cs" />
+    <Compile Include="Migrations\202111230536045_balanceupdate.designer.cs">
+      <DependentUpon>202111230536045_balanceupdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request.cs" />
@@ -113,6 +117,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202111152322434_first.resx">
       <DependentUpon>202111152322434_first.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111230536045_balanceupdate.resx">
+      <DependentUpon>202111230536045_balanceupdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

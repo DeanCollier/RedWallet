@@ -22,9 +22,9 @@ namespace RedWallet.Services
             {
                 UserId = model.UserId,
                 WalletName = model.WalletName,
+                //LastBalance = 0,
                 EncryptedSecret = keyDetail.EncryptedSecret,
                 Xpub = keyDetail.Xpub,
-                XpubIteration = keyDetail.XpubIteration
             };
 
             using (var context = new ApplicationDbContext())
@@ -68,8 +68,6 @@ namespace RedWallet.Services
                     WalletId = entity.Id,
                     WalletName = entity.WalletName,
                     Xpub = entity.Xpub,
-                    XpubIteration = entity.XpubIteration
-
                 };
 
                 return detail;
@@ -116,19 +114,6 @@ namespace RedWallet.Services
 
                 entity.WalletName = model.NewWalletName;
                 return await context.SaveChangesAsync() == 1;
-            }
-        }
-
-        public async Task IterateWalletXpubAsync(WalletIdentity model)
-        {
-            using (var context = new ApplicationDbContext())
-            {
-                var entity = await context
-                    .Wallets
-                    .SingleAsync(w => w.UserId == model.UserId && w.Id == model.WalletId);
-
-                entity.XpubIteration++;
-                await context.SaveChangesAsync();
             }
         }
 

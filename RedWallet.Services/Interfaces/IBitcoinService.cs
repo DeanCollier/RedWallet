@@ -7,15 +7,14 @@ namespace RedWallet.Services.Interfaces
 {
     public interface IBitcoinService
     {
-        /*Network Network { get; set; }
-        string RPCHost { get; set; }
-        string RPCCredentials { get; set; }*/
-
-        string BuildTransaction(string encryptedSecret, string walletPassword, double sendAmount, string recipientAddress);
-        BitcoinSecret GetBitcoinSecret(string encryptedSecret, string passphrase);
-        BitcoinAddress GetNewBitcoinAddress(string encryptedSecret, string passphrase, string xpub, int xpubIteration);
-        Task<KeyDetail> GetNewBitcoinKey(WalletCreate model);
-        bool IsValidWallet(string recipientAddress);
-        string GetBitcoinBalance();
+        string BuildTransaction(string encryptedSecret, string walletPassword, decimal sendAmount, string recipientAddress);
+        Task<KeyDetail> CreateNewBitcoinKey(WalletCreate model);
+        Task<decimal> FindBitcoinBalance(ExtPubKey xpub);
+        Task<BitcoinSecret> GetBitcoinSecret(string encryptedSecret, string passphrase);
+        Task<BitcoinAddress> GetNewChangeAddress(string xpub);
+        Task<BitcoinAddress> GetNewReceivingAddress(string xpub);
+        Task<ExtPubKey> GetXpub(string encryptedXpub);
+        Task<bool> IsBitcoinSecret(string encryptedSecret, string passphrase);
+        Task<bool> IsValidAddress(string recipientAddress);
     }
 }
