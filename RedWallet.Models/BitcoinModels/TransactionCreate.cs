@@ -19,12 +19,12 @@ namespace RedWallet.Models.BitcoinModels
 
         [Required]
         [Display(Name = "Current Wallet Balance (WIP)")]
-        public string WalletBalance { get; set; }
+        public decimal WalletBalance { get; set; }
 
         [Required]
         [Display(Name = "Send Amount (in BTC)")]
 
-        public double SendAmount { get; set; }
+        public decimal SendAmount { get; set; }
         
         [Required]
         [Display(Name = "Recipient Bitcoin Address")]
@@ -34,6 +34,6 @@ namespace RedWallet.Models.BitcoinModels
         [Required]
         [Display(Name = "Wallet Passphrase")]
         [MinLength(8), DataType(DataType.Password)]
-        public string WalletPassword { get; set; }
+        public string WalletPassphrase { get; set; }
     }
 }

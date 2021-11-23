@@ -76,16 +76,14 @@ namespace RedWallet.WebMVC.Controllers
             var wallet = await _wallet.GetWalletByIdAsync(walletIdentity);
             
             var xpub = wallet.Xpub;
-            var xpubIteration = wallet.XpubIteration;
             var walletEncryptedSecret = await _wallet.GetWalletEncryptedSecretAsync(walletIdentity);
 
-            var newAddress = _btc.GetNewBitcoinAddress(walletEncryptedSecret, model.Passphrase, xpub, xpubIteration);
+            var newAddress = await _btc.GetNewReceivingAddress(xpub);
             
             if (newAddress != null)
             {
                 var detail = await _req.CreateRequestAsync(walletIdentity, newAddress.ToString());
-                await _wallet.IterateWalletXpubAsync(walletIdentity);
-                TempData["SaveResult"] = "New address created.";
+                TempData["SaveResult"] = "Share the public address below to receive bitcoin from others.";
                 return Redirect($"Details/{detail.RequestId}");
             }
             ModelState.AddModelError("", "Something went wrong.");

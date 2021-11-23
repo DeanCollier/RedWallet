@@ -51,10 +51,11 @@ namespace RedWallet.WebMVC.Controllers
         {
             var walletIdentity = new WalletIdentity { WalletId = walletId, UserId = User.Identity.GetUserId() };
             var walletDetail = await _wallet.GetWalletByIdAsync(walletIdentity);
-            var encSecret = await _wallet.GetWalletEncryptedSecretAsync(walletIdentity);
+            var stringXpub = await _wallet.GetWalletXpubAsync(walletIdentity);
+            var xpub = await _btc.GetXpub(stringXpub);
 
             //********* get btc balance of wallet
-            var balance = _btc.GetBitcoinBalance();
+            var balance = await _btc.FindBitcoinBalance(xpub);
 
             var model = new TransactionCreate
             {
@@ -63,7 +64,7 @@ namespace RedWallet.WebMVC.Controllers
                 WalletBalance = balance,
                 SendAmount = 0,
                 RecipientAddress = "",
-                WalletPassword = ""
+                WalletPassphrase = ""
             };
 
             return View(model);
@@ -73,17 +74,20 @@ namespace RedWallet.WebMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(TransactionCreate model)
         {
+            var walletIdentity = new WalletIdentity { WalletId = model.WalletId, UserId = User.Identity.GetUserId() };
+            var encryptedSecret = await _wallet.GetWalletEncryptedSecretAsync(walletIdentity);
+
             if (!ModelState.IsValid ||
-                (double.Parse(model.WalletBalance) < model.SendAmount) ||
-                (!_btc.IsValidWallet(model.RecipientAddress))) // need to move this below to check if password works for specified wallet
+                (model.WalletBalance < model.SendAmount) ||
+                (!(await _btc.IsValidAddress(model.RecipientAddress))) ||
+                (!(await _btc.IsBitcoinSecret( encryptedSecret, model.WalletPassphrase)))) // need to move this below to check if password works for specified wallet
             {
                 return View(model);
             }
 
-            var walletIdentity = new WalletIdentity { WalletId = model.WalletId, UserId = User.Identity.GetUserId() };
 
             var walletEncryptedSecret = await _wallet.GetWalletEncryptedSecretAsync(walletIdentity);
-            var transactionHash = _btc.BuildTransaction(walletEncryptedSecret, model.WalletPassword, model.SendAmount, model.RecipientAddress);
+            var transactionHash = _btc.BuildTransaction(walletEncryptedSecret, model.WalletPassphrase, model.SendAmount, model.RecipientAddress);
 
             if (transactionHash != null)
             {

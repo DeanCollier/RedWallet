@@ -21,3 +21,4 @@ C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.csproj.GenerateR
 C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.csproj.CoreCompileInputs.cache
 C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.dll
 C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.pdb
+C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.Migrations.balanceupdate.resources

@@ -15,7 +15,7 @@ namespace RedWallet.Models.DashboardModels
         [Required]
         public int SelectedWalletId { get; set; }
         [Required]
-        public string WalletBalance { get; set; }
+        public decimal WalletBalance { get; set; }
         [Required]
         public IList<WalletListItem> UserWallets { get; set; }
         [Required]

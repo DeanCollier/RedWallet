@@ -52,8 +52,12 @@ namespace RedWallet.WebMVC.Controllers
                 }
             }
 
-            model.WalletBalance = _btc.GetBitcoinBalance();
             var walletIdentity = new WalletIdentity { WalletId = model.SelectedWalletId, UserId = userId };
+            if (model.SelectedWalletId != 0)
+            {
+                var walletXpub = await _btc.GetXpub(await _wallet.GetWalletXpubAsync(walletIdentity));
+                model.WalletBalance = await _btc.FindBitcoinBalance(walletXpub);
+            }
             model.WalletSends = (await _send.GetWalletSendsAsync(walletIdentity)).ToList();
             model.WalletAddresses = (await _req.GetWalletRequestsAsync(walletIdentity)).ToList();
             return View(model);

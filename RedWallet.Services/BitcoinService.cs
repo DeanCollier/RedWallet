@@ -2,6 +2,7 @@
 using NBitcoin.Protocol;
 using NBitcoin.Protocol.Behaviors;
 using NBitcoin.RPC;
+using QBitNinja.Client;
 using RedWallet.Models.BitcoinModels;
 using RedWallet.Models.WalletModels;
 using RedWallet.Services.Interfaces;
@@ -18,79 +19,186 @@ namespace RedWallet.Services
     public class BitcoinService : IBitcoinService
     {
         private Network Network { get; set; }
+        private QBitNinjaClient Client { get; set; }
         private string RPCHost { get; set; }
         private string RPCCredentials { get; set; }
 
         public BitcoinService()
         {
             Network = Network.Main;
+            Client = new QBitNinjaClient("http://api.qbit.ninja/", Network);
             RPCHost = "127.0.0.1:18444";
             RPCCredentials = "lightningbbobb:ViresEnNumeris";
         }
 
-        public async Task<KeyDetail> GetNewBitcoinKey(WalletCreate model)
+        // create
+        public async Task<KeyDetail> CreateNewBitcoinKey(WalletCreate model)
         {
-            RandomUtils.AddEntropy(model.EntropyInput); // adding random entropy
+            var entropy = RedWalletUtil.Generate256BitsOfRandomEntropy();
+            RandomUtils.AddEntropy(entropy.ToSHA256()); // adding random entropy
             var seedMnemonic = new Mnemonic(Wordlist.English, WordCount.TwentyFour); // random 24 work mnemonic
             var extendedKey = seedMnemonic.DeriveExtKey(); // derive extended key from mnemonic
-            var bitcoinSecret = extendedKey.PrivateKey.GetWif(Network); // get WIF, base58
+            var bitcoinMasterSecret = extendedKey.PrivateKey.GetWif(Network); // get WIF, base58
 
-            var encryptedSecret = bitcoinSecret.Encrypt(model.Passphrase.ToSHA256()); // encrypt with passphrase hash
-            //bitcoinSecret.PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH, Network);
+            var encryptedSecret = bitcoinMasterSecret.Encrypt(model.Passphrase.ToSHA256()); // encrypt with passphrase hash
 
             return new KeyDetail
             {
                 Passphrase = model.Passphrase,
                 MnemonicSeedPhrase = seedMnemonic.ToString(),
                 EncryptedSecret = encryptedSecret.ToString(),
-                Xpub = extendedKey.Neuter().ToString(Network),
-                XpubIteration = 0
+                Xpub = extendedKey.Neuter().ToString(Network)
             };
         }
 
-        // enter password and check
-        public bool CheckEcryptionPassword(string encryptedSecret, string passphrase)
+        // get new receive and change addresses
+        public async Task<BitcoinAddress> GetNewReceivingAddress(string xpub)
         {
-            if (GetBitcoinSecret(encryptedSecret, passphrase).ToString() != null)
+            var extPubKey = ExtPubKey.Parse(xpub, Network);
+            var position = await FindNextReceivingAddressPosition(extPubKey);
+            var newAddress = extPubKey.Derive(0).Derive((uint)position).PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH, Network);
+
+            return newAddress;
+        }
+        public async Task<BitcoinAddress> GetNewChangeAddress(string xpub)
+        {
+            var extPubKey = ExtPubKey.Parse(xpub, Network);
+            var position = await FindNextChangeAddressPosition(extPubKey);
+
+            var newAddress = extPubKey.Derive(1).Derive((uint)position).PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH, Network);
+
+            return newAddress;
+        }
+
+        // finders QbitNinja
+        public async Task<decimal> FindBitcoinBalance(ExtPubKey xpub)
+        {
+            var receivingAddresses = new List<BitcoinAddress>();
+            var changeAddresses = new List<BitcoinAddress>();
+            int recPosition = await FindNextReceivingAddressPosition(xpub);
+            int chngPosition = await FindNextChangeAddressPosition(xpub);
+
+            for (int i = 0; i < recPosition; i++)
             {
+                receivingAddresses.Add(xpub.Derive(0).Derive((uint)i).PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH, Network));
+            }
+            for (int i = 0; i < chngPosition; i++)
+            {
+                changeAddresses.Add(xpub.Derive(1).Derive((uint)i).PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH, Network));
+            }
+
+            var allAddresses = new List<BitcoinAddress>();
+            allAddresses.AddRange(receivingAddresses);
+            allAddresses.AddRange(changeAddresses);
+
+            decimal totalBalance = 0;
+
+            foreach (var address in allAddresses)
+            {
+                var balanceModel = await Client.GetBalance(address, true);
+                if (balanceModel.Operations.Count > 0)
+                {
+                    var unspentCoins = new List<Coin>();
+                    foreach (var operation in balanceModel.Operations)
+                    {
+                        unspentCoins.AddRange(operation.ReceivedCoins.Select(coin => coin as Coin));
+                    }
+                    totalBalance = totalBalance + unspentCoins.Sum(x => x.Amount.ToDecimal(MoneyUnit.BTC));
+                }
+            }
+            return totalBalance;
+        }
+        private async Task<int> FindNextReceivingAddressPosition(ExtPubKey xpub)
+        {
+            int i = 0;
+            int max = (int)(Math.Pow(2, 31) - 1);
+            while (i < max)
+            {
+                var address = xpub.Derive(0).Derive((uint)i).PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH, Network);
+                var balanceModel = await Client.GetBalance(address);
+                if (balanceModel.Operations.Count > 0)
+                {
+                    i++;
+                }
+                else
+                {
+                    return i;
+                }
+            }
+            return 0;
+        }
+        private async Task<int> FindNextChangeAddressPosition(ExtPubKey xpub)
+        {
+            int i = 0;
+            int max = (int)(Math.Pow(2, 31) - 1);
+
+            while (i < max)
+            {
+                var address = xpub.Derive(1).Derive((uint)i).PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH, Network);
+                var balanceModel = await Client.GetBalance(address);
+                if (balanceModel.Operations.Count > 0)
+                {
+                    i++;
+                }
+                else
+                {
+                    return i;
+                }
+            }
+            return 0;
+        }
+
+        // checkers
+        public async Task<bool> IsBitcoinSecret(string encryptedSecret, string passphrase)
+        {
+            try
+            {
+                BitcoinEncryptedSecret.Create(encryptedSecret, Network).GetSecret(passphrase.ToSHA256());
                 return true;
             }
-            return false;
+            catch (Exception)
+            {
+                return false;
+            }
         }
-
-        public BitcoinAddress GetNewBitcoinAddress(string encryptedSecret, string passphrase, string xpub, int xpubIteration)
+        public async Task<bool> IsValidAddress(string recipientAddress)
         {
-            if (CheckEcryptionPassword(encryptedSecret, passphrase)) // verify password
+            try
             {
-                var extPubKey = ExtPubKey.Parse(xpub, Network);
-                var newAddress = extPubKey.Derive(0).Derive((uint)xpubIteration).PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH ,Network);
-
-                return newAddress;
+                BitcoinAddress.Create(recipientAddress, Network);
+                return true;
             }
-            else
+            catch (Exception)
             {
-                return null;
+                return false;
             }
-
         }
 
-        public BitcoinSecret GetBitcoinSecret(string encryptedSecret, string passphrase)
+        // get encrypted info after checkers
+        public async Task<BitcoinSecret> GetBitcoinSecret(string encryptedSecret, string passphrase)
         {
             return BitcoinEncryptedSecret.Create(encryptedSecret, Network).GetSecret(passphrase.ToSHA256());
         }
-
-        public bool IsValidWallet(string recipientAddress)
+        public async Task<ExtPubKey> GetXpub(string Xpub)
         {
-            return true;
+            return ExtPubKey.Parse(Xpub, Network);
         }
 
-        public string GetBitcoinBalance()
-        {
-            double balance = 100.00000000000000000d;
-            return Math.Round(balance, 8).ToString("0.00000000");
-        }
 
-        public string BuildTransaction(string encryptedSecret, string walletPassword, double sendAmount, string recipientAddress)
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public string BuildTransaction(string encryptedSecret, string walletPassword, decimal sendAmount, string recipientAddress)
         {
             string transaction = "ThisIsAFakeTransactionString";
             var transactionHash = transaction.ToSHA256();
