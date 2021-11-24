@@ -54,7 +54,7 @@ namespace RedWallet.Services
         // get new receive and change addresses
         public async Task<BitcoinAddress> GetNewReceivingAddress(string xpub)
         {
-            var extPubKey = ExtPubKey.Parse(xpub, Network);
+            var extPubKey = await GetXpub(xpub);
             var position = await FindNextReceivingAddressPosition(extPubKey);
             var newAddress = extPubKey.Derive(0).Derive((uint)position).PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH, Network);
 
@@ -62,7 +62,7 @@ namespace RedWallet.Services
         }
         public async Task<BitcoinAddress> GetNewChangeAddress(string xpub)
         {
-            var extPubKey = ExtPubKey.Parse(xpub, Network);
+            var extPubKey = await GetXpub(xpub);
             var position = await FindNextChangeAddressPosition(extPubKey);
 
             var newAddress = extPubKey.Derive(1).Derive((uint)position).PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH, Network);
@@ -77,6 +77,11 @@ namespace RedWallet.Services
             var changeAddresses = new List<BitcoinAddress>();
             int recPosition = await FindNextReceivingAddressPosition(xpub);
             int chngPosition = await FindNextChangeAddressPosition(xpub);
+
+            if (recPosition + chngPosition == 0) // first addresses are empty, no UTXO's
+            {
+                return 0m;
+            }
 
             for (int i = 0; i < recPosition; i++)
             {
@@ -103,7 +108,7 @@ namespace RedWallet.Services
                     {
                         unspentCoins.AddRange(operation.ReceivedCoins.Select(coin => coin as Coin));
                     }
-                    totalBalance = totalBalance + unspentCoins.Sum(x => x.Amount.ToDecimal(MoneyUnit.BTC));
+                    totalBalance += unspentCoins.Sum(x => x.Amount.ToDecimal(MoneyUnit.BTC));
                 }
             }
             return totalBalance;

@@ -364,7 +364,7 @@
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Shared\_Sidebar.cshtml" />
     <Content Include="Views\Shared\_Content.cshtml" />
-    <Content Include="Views\Shared\_BitcoinBallance.cshtml" />
+    <Content Include="Views\Shared\_BitcoinBalance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

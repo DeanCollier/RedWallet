@@ -74,20 +74,28 @@ namespace RedWallet.WebMVC.Controllers
 
             var walletIdentity = new WalletIdentity { WalletId = model.WalletId, UserId = User.Identity.GetUserId() };
             var wallet = await _wallet.GetWalletByIdAsync(walletIdentity);
-            
-            var xpub = wallet.Xpub;
-            var walletEncryptedSecret = await _wallet.GetWalletEncryptedSecretAsync(walletIdentity);
+            var encryptedSecret = await _wallet.GetWalletEncryptedSecretAsync(walletIdentity);
+            var isPassword = await _btc.IsBitcoinSecret(encryptedSecret, model.Passphrase);
 
-            var newAddress = await _btc.GetNewReceivingAddress(xpub);
-            
-            if (newAddress != null)
+            if (isPassword)
             {
-                var detail = await _req.CreateRequestAsync(walletIdentity, newAddress.ToString());
-                TempData["SaveResult"] = "Share the public address below to receive bitcoin from others.";
-                return Redirect($"Details/{detail.RequestId}");
+                var xpub = wallet.Xpub;
+                var newAddress = await _btc.GetNewReceivingAddress(xpub);
+
+                if (newAddress != null)
+                {
+                    var detail = await _req.CreateRequestAsync(walletIdentity, newAddress.ToString());
+                    TempData["SaveResult"] = "Share the public address below to receive bitcoin from others.";
+                    return Redirect($"Details/{detail.RequestId}");
+                }
+                ModelState.AddModelError("", "Something went wrong.");
+                return View(model);
             }
-            ModelState.AddModelError("", "Something went wrong.");
-            return View(model);
+            else
+            {
+                ModelState.AddModelError("", "Incorrect wallet passphrase.");
+                return View(model);
+            }
         }
 
         // GET: Request Details
