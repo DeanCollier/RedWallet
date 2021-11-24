@@ -79,21 +79,21 @@ namespace RedWallet.WebMVC.Controllers
 
             if (!ModelState.IsValid)
             {
-                if (model.WalletBalance <= model.SendAmount)
-                {
-                    if (!(await _btc.IsValidAddress(model.RecipientAddress)))
-                    {
-                        if (!(await _btc.IsBitcoinSecret(encryptedSecret, model.WalletPassphrase)))
-                        {
-                            ModelState.AddModelError("", "Incorrect wallet passphrase.");
-                            return View(model);
-                        }
-                        ModelState.AddModelError("", "Not sending to a valid Bitcoin address.");
-                        return View(model);
-                    }
-                    ModelState.AddModelError("", "Insufficient funds.");
-                    return View(model);
-                }
+                return View(model);
+            }
+            if (model.WalletBalance <= model.SendAmount)
+            {
+                ModelState.AddModelError("", "Insufficient funds.");
+                return View(model);
+            }
+            if (!(await _btc.IsValidAddress(model.RecipientAddress)))
+            {
+                ModelState.AddModelError("", "Recipient Bitcoin Address is not a valid Bitcoin address.");
+                return View(model);
+            }
+            if (!(await _btc.IsBitcoinSecret(encryptedSecret, model.WalletPassphrase)))
+            {
+                ModelState.AddModelError("", "Incorrect wallet passphrase.");
                 return View(model);
             }
 
