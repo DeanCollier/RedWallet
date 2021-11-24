@@ -62,7 +62,7 @@ namespace RedWallet.WebMVC.Controllers
                 WalletId = walletDetail.WalletId,
                 WalletName = walletDetail.WalletName,
                 WalletBalance = balance,
-                SendAmount = 0,
+                SendAmount = 0m,
                 RecipientAddress = "",
                 WalletPassphrase = ""
             };
@@ -77,14 +77,25 @@ namespace RedWallet.WebMVC.Controllers
             var walletIdentity = new WalletIdentity { WalletId = model.WalletId, UserId = User.Identity.GetUserId() };
             var encryptedSecret = await _wallet.GetWalletEncryptedSecretAsync(walletIdentity);
 
-            if (!ModelState.IsValid ||
-                (model.WalletBalance < model.SendAmount) ||
-                (!(await _btc.IsValidAddress(model.RecipientAddress))) ||
-                (!(await _btc.IsBitcoinSecret( encryptedSecret, model.WalletPassphrase)))) // need to move this below to check if password works for specified wallet
+            if (!ModelState.IsValid)
             {
                 return View(model);
             }
-
+            if (model.WalletBalance <= model.SendAmount)
+            {
+                ModelState.AddModelError("", "Insufficient funds.");
+                return View(model);
+            }
+            if (!(await _btc.IsValidAddress(model.RecipientAddress)))
+            {
+                ModelState.AddModelError("", "Recipient Bitcoin Address is not a valid Bitcoin address.");
+                return View(model);
+            }
+            if (!(await _btc.IsBitcoinSecret(encryptedSecret, model.WalletPassphrase)))
+            {
+                ModelState.AddModelError("", "Incorrect wallet passphrase.");
+                return View(model);
+            }
 
             var walletEncryptedSecret = await _wallet.GetWalletEncryptedSecretAsync(walletIdentity);
             var transactionHash = _btc.BuildTransaction(walletEncryptedSecret, model.WalletPassphrase, model.SendAmount, model.RecipientAddress);

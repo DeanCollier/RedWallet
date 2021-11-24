@@ -18,7 +18,7 @@ namespace RedWallet.Models.BitcoinModels
         public string WalletName { get; set; }
 
         [Required]
-        [Display(Name = "Current Wallet Balance (WIP)")]
+        [Display(Name = "Current Wallet Balance")]
         public decimal WalletBalance { get; set; }
 
         [Required]

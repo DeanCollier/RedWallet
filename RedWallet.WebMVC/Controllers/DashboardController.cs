@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using RedWallet.Models.BitcoinModels;
 using RedWallet.Models.DashboardModels;
 using RedWallet.Models.WalletModels;
 using RedWallet.Services.Interfaces;
@@ -60,6 +61,21 @@ namespace RedWallet.WebMVC.Controllers
             }
             model.WalletSends = (await _send.GetWalletSendsAsync(walletIdentity)).ToList();
             model.WalletAddresses = (await _req.GetWalletRequestsAsync(walletIdentity)).ToList();
+            return View(model);
+        }
+
+        // GET: Dashboard wallet balance
+        [Route("{id}")]
+        public async Task<ActionResult> BalancePartialView(int id)
+        {
+            var userId = User.Identity.GetUserId();
+            var walletIdentity = new WalletIdentity { WalletId = id, UserId = userId };
+
+            var model = new BalanceDetail();
+
+            var walletXpub = await _btc.GetXpub(await _wallet.GetWalletXpubAsync(walletIdentity));
+            model.WalletBalance = await _btc.FindBitcoinBalance(walletXpub);
+
             return View(model);
         }
     }
