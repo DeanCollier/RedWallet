@@ -22,3 +22,4 @@ C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.csproj.CoreCompi
 C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.dll
 C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.pdb
 C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.Migrations.balanceupdate.resources
+C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.Migrations.addingbtcwalletinfo.resources

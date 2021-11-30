@@ -30,3 +30,4 @@ C:\RED_WALLET\RedWallet\RedWallet.Services\obj\Debug\RedWallet.Services.csproj.C
 C:\RED_WALLET\RedWallet\RedWallet.Services\obj\Debug\RedWallet.Services.dll
 C:\RED_WALLET\RedWallet\RedWallet.Services\obj\Debug\RedWallet.Services.pdb
 C:\RED_WALLET\RedWallet\RedWallet.Services\bin\Debug\QBitNinja.Client.dll
+C:\RED_WALLET\RedWallet\RedWallet.Services\obj\Debug\RedWallet.Services.csproj.CopyComplete

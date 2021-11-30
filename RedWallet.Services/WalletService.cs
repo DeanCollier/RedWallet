@@ -22,7 +22,9 @@ namespace RedWallet.Services
             {
                 UserId = model.UserId,
                 WalletName = model.WalletName,
-                //LastBalance = 0,
+                LatestBalance = 0m,
+                NextReceiveChild = 0,
+                NextChangeChild = 0,
                 EncryptedSecret = keyDetail.EncryptedSecret,
                 Xpub = keyDetail.Xpub,
             };
@@ -61,7 +63,7 @@ namespace RedWallet.Services
             {
                 var entity = await context
                     .Wallets
-                    .SingleAsync(w => w.UserId == model.UserId && w.Id == model.WalletId);
+                    .SingleOrDefaultAsync(w => w.UserId == model.UserId && w.Id == model.WalletId);
 
                 var detail = new WalletDetail
                 {
@@ -81,7 +83,7 @@ namespace RedWallet.Services
             {
                 var entity = await context
                     .Wallets
-                    .SingleAsync(w => w.UserId == model.UserId && w.Id == model.WalletId);
+                    .SingleOrDefaultAsync(w => w.UserId == model.UserId && w.Id == model.WalletId);
 
                 return entity.EncryptedSecret;
             }
@@ -93,7 +95,7 @@ namespace RedWallet.Services
             {
                 var entity = await context
                     .Wallets
-                    .SingleAsync(w => w.UserId == model.UserId && w.Id == model.WalletId);
+                    .SingleOrDefaultAsync(w => w.UserId == model.UserId && w.Id == model.WalletId);
 
                 return entity.Xpub;
             }
@@ -110,9 +112,26 @@ namespace RedWallet.Services
             {
                 var entity = await context
                     .Wallets
-                    .SingleAsync(w => w.UserId == model.UserId && w.Id == model.WalletId);
+                    .SingleOrDefaultAsync(w => w.UserId == model.UserId && w.Id == model.WalletId);
 
                 entity.WalletName = model.NewWalletName;
+                return await context.SaveChangesAsync() == 1;
+            }
+        }
+
+        // UPDATE
+        public async Task<bool> UpdateWalletBTCInfo(WalletBTCInfo model)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var entity = await context
+                    .Wallets
+                    .SingleOrDefaultAsync(w => w.UserId == model.UserId && w.Id == model.WalletId);
+
+                entity.LatestBalance = model.LatestBalance;
+                entity.NextReceiveChild = model.NextReceiveChild;
+                entity.NextChangeChild = model.NextChangeChild;
+
                 return await context.SaveChangesAsync() == 1;
             }
         }
@@ -122,9 +141,9 @@ namespace RedWallet.Services
         {
             using (var context = new ApplicationDbContext())
             {
-                var entity = context
+                var entity = await context
                     .Wallets
-                    .Single(w => w.UserId == model.UserId && w.Id == model.WalletId);
+                    .SingleOrDefaultAsync(w => w.UserId == model.UserId && w.Id == model.WalletId);
 
                 context.Wallets.Remove(entity);
                 return await context.SaveChangesAsync() >= 1; // other db sends and requests may also be deleted
