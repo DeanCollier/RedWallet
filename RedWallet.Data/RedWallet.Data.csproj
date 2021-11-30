@@ -96,17 +96,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IdentityModels.cs" />
-    <Compile Include="Migrations\202111152322434_first.cs" />
-    <Compile Include="Migrations\202111152322434_first.designer.cs">
-      <DependentUpon>202111152322434_first.cs</DependentUpon>
+    <Compile Include="Migrations\202111301734512_fix.cs" />
+    <Compile Include="Migrations\202111301734512_fix.designer.cs">
+      <DependentUpon>202111301734512_fix.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202111230536045_balanceupdate.cs" />
-    <Compile Include="Migrations\202111230536045_balanceupdate.designer.cs">
-      <DependentUpon>202111230536045_balanceupdate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202111301617468_addingbtcwalletinfo.cs" />
-    <Compile Include="Migrations\202111301617468_addingbtcwalletinfo.designer.cs">
-      <DependentUpon>202111301617468_addingbtcwalletinfo.cs</DependentUpon>
+    <Compile Include="Migrations\202111301828070_fixconnection.cs" />
+    <Compile Include="Migrations\202111301828070_fixconnection.designer.cs">
+      <DependentUpon>202111301828070_fixconnection.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -119,14 +115,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202111152322434_first.resx">
-      <DependentUpon>202111152322434_first.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202111301734512_fix.resx">
+      <DependentUpon>202111301734512_fix.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111230536045_balanceupdate.resx">
-      <DependentUpon>202111230536045_balanceupdate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202111301617468_addingbtcwalletinfo.resx">
-      <DependentUpon>202111301617468_addingbtcwalletinfo.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202111301828070_fixconnection.resx">
+      <DependentUpon>202111301828070_fixconnection.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
