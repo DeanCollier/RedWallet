@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class first : DbMigration
+    public partial class fix : DbMigration
     {
         public override void Up()
         {
@@ -27,9 +27,11 @@
                         Id = c.Int(nullable: false, identity: true),
                         UserId = c.String(nullable: false, maxLength: 128),
                         WalletName = c.String(nullable: false),
+                        LatestBalance = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        NextReceiveChild = c.Int(nullable: false),
+                        NextChangeChild = c.Int(nullable: false),
                         EncryptedSecret = c.String(nullable: false),
                         Xpub = c.String(nullable: false),
-                        XpubIteration = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.ApplicationUser", t => t.UserId, cascadeDelete: true)
