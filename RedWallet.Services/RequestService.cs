@@ -31,7 +31,7 @@ namespace RedWallet.Services
                     .Requests
                     .SingleOrDefaultAsync(r => r.Wallet.UserId == model.UserId && r.RequestAddress == requestAddress);
 
-                if (clone.RequestAddress == null)
+                if (clone == null)
                 {
                     context.Requests.Add(entity);
                     await context.SaveChangesAsync();

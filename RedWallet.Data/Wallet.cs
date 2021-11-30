@@ -19,9 +19,15 @@ namespace RedWallet.Data
 
         [Required, Display(Name = "Wallet Name")]
         public string WalletName { get; set; }
-    
-        //[Required]
-        //public decimal LastBalance { get; set; }
+
+        [Required]
+        public decimal LatestBalance { get; set; }
+
+        [Required]
+        public int NextReceiveChild { get; set; }
+
+        [Required]
+        public int NextChangeChild { get; set; }
 
         [Required]
         public string EncryptedSecret { get; set; }

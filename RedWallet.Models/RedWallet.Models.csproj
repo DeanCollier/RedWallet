@@ -108,6 +108,7 @@
     <Compile Include="SendModels\SendDetail.cs" />
     <Compile Include="SendModels\SendIdentity.cs" />
     <Compile Include="SendModels\SendListItem.cs" />
+    <Compile Include="WalletModels\WalletBTCInfo.cs" />
     <Compile Include="WalletModels\WalletCreate.cs" />
     <Compile Include="WalletModels\WalletDetail.cs" />
     <Compile Include="WalletModels\WalletEdit.cs" />

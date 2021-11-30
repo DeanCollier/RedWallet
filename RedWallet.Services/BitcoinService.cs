@@ -55,7 +55,7 @@ namespace RedWallet.Services
         public async Task<BitcoinAddress> GetNewReceivingAddress(string xpub)
         {
             var extPubKey = await GetXpub(xpub);
-            var position = await FindNextReceivingAddressPosition(extPubKey);
+            var position = await FindNextReceivingChildPosition(extPubKey);
             var newAddress = extPubKey.Derive(0).Derive((uint)position).PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH, Network);
 
             return newAddress;
@@ -63,7 +63,7 @@ namespace RedWallet.Services
         public async Task<BitcoinAddress> GetNewChangeAddress(string xpub)
         {
             var extPubKey = await GetXpub(xpub);
-            var position = await FindNextChangeAddressPosition(extPubKey);
+            var position = await FindNextChangeChildPosition(extPubKey);
 
             var newAddress = extPubKey.Derive(1).Derive((uint)position).PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH, Network);
 
@@ -75,8 +75,8 @@ namespace RedWallet.Services
         {
             var receivingAddresses = new List<BitcoinAddress>();
             var changeAddresses = new List<BitcoinAddress>();
-            int recPosition = await FindNextReceivingAddressPosition(xpub);
-            int chngPosition = await FindNextChangeAddressPosition(xpub);
+            int recPosition = await FindNextReceivingChildPosition(xpub);
+            int chngPosition = await FindNextChangeChildPosition(xpub);
 
             if (recPosition + chngPosition == 0) // first addresses are empty, no UTXO's
             {
@@ -113,7 +113,7 @@ namespace RedWallet.Services
             }
             return totalBalance;
         }
-        private async Task<int> FindNextReceivingAddressPosition(ExtPubKey xpub)
+        private async Task<int> FindNextReceivingChildPosition(ExtPubKey xpub)
         {
             int i = 0;
             int max = (int)(Math.Pow(2, 31) - 1);
@@ -132,7 +132,7 @@ namespace RedWallet.Services
             }
             return 0;
         }
-        private async Task<int> FindNextChangeAddressPosition(ExtPubKey xpub)
+        private async Task<int> FindNextChangeChildPosition(ExtPubKey xpub)
         {
             int i = 0;
             int max = (int)(Math.Pow(2, 31) - 1);
