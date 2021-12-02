@@ -20,15 +20,15 @@ namespace RedWallet.Services
     {
         private Network Network { get; set; }
         private QBitNinjaClient Client { get; set; }
-        private string RPCHost { get; set; }
-        private string RPCCredentials { get; set; }
+        //private string RPCHost { get; set; }
+        //private string RPCCredentials { get; set; }
 
         public BitcoinService()
         {
             Network = Network.Main;
             Client = new QBitNinjaClient("http://api.qbit.ninja/", Network);
-            RPCHost = "127.0.0.1:18444";
-            RPCCredentials = "lightningbbobb:ViresEnNumeris";
+            //RPCHost = "127.0.0.1:18444";
+            //RPCCredentials = "lightningbbobb:ViresEnNumeris";
         }
 
         // create
@@ -49,6 +49,12 @@ namespace RedWallet.Services
                 EncryptedSecret = encryptedSecret.ToString(),
                 Xpub = extendedKey.Neuter().ToString(Network)
             };
+        }
+        public async Task<BitcoinAddress> DeriveAddress(string xpub, bool isChange, int position)
+        {
+            var extPubKey = await GetXpub(xpub);
+            int change = isChange ? 1 : 0;
+            return extPubKey.Derive((uint)change).Derive((uint)position).PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH, Network);
         }
 
         // get new receive and change addresses
@@ -71,23 +77,21 @@ namespace RedWallet.Services
         }
 
         // finders QbitNinja
-        public async Task<decimal> FindBitcoinBalance(ExtPubKey xpub)
+        public async Task<decimal> FindBitcoinBalance(ExtPubKey xpub, int nextRecChild, int nextChngChild)
         {
             var receivingAddresses = new List<BitcoinAddress>();
             var changeAddresses = new List<BitcoinAddress>();
-            int recPosition = await FindNextReceivingChildPosition(xpub);
-            int chngPosition = await FindNextChangeChildPosition(xpub);
 
-            if (recPosition + chngPosition == 0) // first addresses are empty, no UTXO's
+            if (nextRecChild + nextChngChild == 0) // first addresses are empty, no UTXO's
             {
                 return 0m;
             }
 
-            for (int i = 0; i < recPosition; i++)
+            for (int i = 0; i < nextRecChild; i++)
             {
                 receivingAddresses.Add(xpub.Derive(0).Derive((uint)i).PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH, Network));
             }
-            for (int i = 0; i < chngPosition; i++)
+            for (int i = 0; i < nextChngChild; i++)
             {
                 changeAddresses.Add(xpub.Derive(1).Derive((uint)i).PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH, Network));
             }
@@ -113,7 +117,7 @@ namespace RedWallet.Services
             }
             return totalBalance;
         }
-        private async Task<int> FindNextReceivingChildPosition(ExtPubKey xpub)
+        public async Task<int> FindNextReceivingChildPosition(ExtPubKey xpub)
         {
             int i = 0;
             int max = (int)(Math.Pow(2, 31) - 1);
@@ -132,7 +136,7 @@ namespace RedWallet.Services
             }
             return 0;
         }
-        private async Task<int> FindNextChangeChildPosition(ExtPubKey xpub)
+        public async Task<int> FindNextChangeChildPosition(ExtPubKey xpub)
         {
             int i = 0;
             int max = (int)(Math.Pow(2, 31) - 1);

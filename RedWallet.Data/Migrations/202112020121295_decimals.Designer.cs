@@ -7,13 +7,13 @@ namespace RedWallet.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class fix : IMigrationMetadata
+    public sealed partial class decimals : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(fix));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(decimals));
         
         string IMigrationMetadata.Id
         {
-            get { return "202111301734512_fix"; }
+            get { return "202112020121295_decimals"; }
         }
         
         string IMigrationMetadata.Source

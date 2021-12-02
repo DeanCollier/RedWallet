@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class fix : DbMigration
+    public partial class decimals : DbMigration
     {
         public override void Up()
         {

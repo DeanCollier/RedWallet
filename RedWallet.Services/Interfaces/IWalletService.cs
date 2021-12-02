@@ -14,5 +14,7 @@ namespace RedWallet.Services.Interfaces
         Task<string> GetWalletXpubAsync(WalletIdentity model);
         Task<IEnumerable<WalletListItem>> GetWalletsAsync(string userId);
         Task<bool> UpdateWalletByIdAsync(WalletEdit model);
+        Task UpdateWalletBTCInfo(WalletBTCInfo model);
+        Task<WalletBTCInfo> GetWalletBTCInfoAsync(WalletIdentity model);
     }
 }

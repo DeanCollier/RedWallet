@@ -16,6 +16,7 @@ namespace RedWallet.Models.WalletModels
         [Required, Display(Name = "Wallet Name")]
         public string WalletName { get; set; }
 
+
         [Required]
         [Display(Name = "Extended Public Key")]
 

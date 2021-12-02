@@ -7,13 +7,13 @@ namespace RedWallet.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class fixconnection : IMigrationMetadata
+    public sealed partial class decimalupdate : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(fixconnection));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(decimalupdate));
         
         string IMigrationMetadata.Id
         {
-            get { return "202111301828070_fixconnection"; }
+            get { return "202112020251594_decimalupdate"; }
         }
         
         string IMigrationMetadata.Source
