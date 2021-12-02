@@ -9,6 +9,8 @@
 
 4. build sending tool, pull from change first, then receives
 
+5. fix azure migration problems
+
 
 
 encryptedsecret:
