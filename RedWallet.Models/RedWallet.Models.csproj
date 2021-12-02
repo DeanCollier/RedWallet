@@ -95,7 +95,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BitcoinModels\BalanceDetail.cs" />
     <Compile Include="BitcoinModels\KeyDetail.cs" />
     <Compile Include="BitcoinModels\TransactionCreate.cs" />
     <Compile Include="DashboardModels\DashboardViewModel.cs" />

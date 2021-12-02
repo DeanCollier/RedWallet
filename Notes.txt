@@ -1,0 +1,15 @@
+1. Load balance and other data in background and update when done.
+	a. create update balance button on dashboard for running this process
+	b. run this process for all user wallets on login in background and update wallet properties
+	c. add all used recieve addresses to requests if they are not there already
+
+2. Load wallet properties in dashboard, update when #1 is done.  This includes lastest balance
+
+3. 
+
+
+
+encryptedsecret:
+6PYP3Q78DHfDgARkYHw72wdPm2rhT8nUnXbZyfB8Tn2XbuBfSQJVH9Gy7M
+xpub:
+xpub661MyMwAqRbcF6Ln2DH68ndwZ6TRs5kuhuV9JdJnWfJ943Z7AschmdNfDuC8zt845wARqsGejdni2ses3iwJAeMTNTZMJpxMbg3mZg5Ay1L

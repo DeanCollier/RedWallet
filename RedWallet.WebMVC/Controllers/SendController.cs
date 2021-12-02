@@ -55,7 +55,10 @@ namespace RedWallet.WebMVC.Controllers
             var xpub = await _btc.GetXpub(stringXpub);
 
             //********* get btc balance of wallet
-            var balance = await _btc.FindBitcoinBalance(xpub);
+            var nextRecChild = await _btc.FindNextReceivingChildPosition(xpub);
+            var nextChngChild = await _btc.FindNextChangeChildPosition(xpub);
+
+            var balance = await _btc.FindBitcoinBalance(xpub, nextRecChild, nextChngChild);
 
             var model = new TransactionCreate
             {

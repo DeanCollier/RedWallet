@@ -75,6 +75,26 @@ namespace RedWallet.Services
                 return detail;
             }
         }
+        public async Task<WalletBTCInfo> GetWalletBTCInfoAsync(WalletIdentity model)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var entity = await context
+                    .Wallets
+                    .SingleOrDefaultAsync(w => w.UserId == model.UserId && w.Id == model.WalletId);
+
+                var info = new WalletBTCInfo
+                {
+                    UserId = model.UserId,
+                    WalletId = entity.Id,
+                    LatestBalance = entity.LatestBalance,
+                    NextReceiveChild = entity.NextReceiveChild,
+                    NextChangeChild = entity.NextChangeChild
+                };
+
+                return info;
+            }
+        }
 
         // READ
         public async Task<string> GetWalletEncryptedSecretAsync(WalletIdentity model)
@@ -120,7 +140,7 @@ namespace RedWallet.Services
         }
 
         // UPDATE
-        public async Task<bool> UpdateWalletBTCInfo(WalletBTCInfo model)
+        public async Task UpdateWalletBTCInfo(WalletBTCInfo model)
         {
             using (var context = new ApplicationDbContext())
             {
@@ -128,11 +148,11 @@ namespace RedWallet.Services
                     .Wallets
                     .SingleOrDefaultAsync(w => w.UserId == model.UserId && w.Id == model.WalletId);
 
-                entity.LatestBalance = model.LatestBalance;
+                entity.LatestBalance = 21000000m;
                 entity.NextReceiveChild = model.NextReceiveChild;
                 entity.NextChangeChild = model.NextChangeChild;
 
-                return await context.SaveChangesAsync() == 1;
+                await context.SaveChangesAsync();
             }
         }
 

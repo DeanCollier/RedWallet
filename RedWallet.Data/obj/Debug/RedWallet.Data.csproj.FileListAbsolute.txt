@@ -19,6 +19,7 @@ C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.csproj.AssemblyR
 C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.csproj.CoreCompileInputs.cache
 C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.dll
 C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.pdb
-C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.Migrations.fix.resources
+C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.Migrations.decimals.resources
 C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.csproj.GenerateResource.cache
-C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.Migrations.fixconnection.resources
+C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.Migrations.decimalupdate.resources
+C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.Migrations.decimalupdate1.resources

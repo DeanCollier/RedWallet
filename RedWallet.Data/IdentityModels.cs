@@ -40,6 +40,10 @@ namespace RedWallet.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder
+                .Entity<Wallet>()
+                .Property(w => w.LatestBalance).HasPrecision(16, 8);
+
+            modelBuilder
                 .Conventions
                 .Remove<PluralizingTableNameConvention>();
 
