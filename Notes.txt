@@ -5,7 +5,9 @@
 
 2. Load wallet properties in dashboard, update when #1 is done.  This includes lastest balance
 
-3. 
+3. Fix balance display on send create
+
+4. build sending tool, pull from change first, then receives
 
 
 
@@ -13,3 +15,4 @@ encryptedsecret:
 6PYP3Q78DHfDgARkYHw72wdPm2rhT8nUnXbZyfB8Tn2XbuBfSQJVH9Gy7M
 xpub:
 xpub661MyMwAqRbcF6Ln2DH68ndwZ6TRs5kuhuV9JdJnWfJ943Z7AschmdNfDuC8zt845wARqsGejdni2ses3iwJAeMTNTZMJpxMbg3mZg5Ay1L
+

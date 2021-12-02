@@ -18,5 +18,6 @@ namespace RedWallet.Services.Interfaces
         Task<ExtPubKey> GetXpub(string xpub);
         Task<bool> IsBitcoinSecret(string encryptedSecret, string passphrase);
         Task<bool> IsValidAddress(string recipientAddress);
+        Task<BitcoinAddress> DeriveAddress(string xpub, bool isChange, int position);
     }
 }

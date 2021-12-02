@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using RedWallet.Models.RequestModels;
 using RedWallet.Models.WalletModels;
 using RedWallet.Services.Interfaces;
 using System;
@@ -27,68 +28,65 @@ namespace RedWallet.WebMVC.Controllers
         }
 
         // GET: Update all wallets BTC info
-        [Route("{id}")]
-        public async Task<ActionResult> Update(int? id)
+        [Route("{walletId}")]
+        public async Task<ActionResult> Update(int walletId)
         {
             var userId = User.Identity.GetUserId();
             try
             {
-                if (id.HasValue)
-                {
-                    var walletIdentity = new WalletIdentity { UserId = userId, WalletId = id.GetValueOrDefault() };
-                    var xpub = await _btc.GetXpub(await _wallet.GetWalletXpubAsync(walletIdentity));
-                    // find change and receive children
-                    var nextRecChild = _btc.FindNextReceivingChildPosition(xpub);
-                    var nextChngChild = _btc.FindNextChangeChildPosition(xpub);
-                    await Task.WhenAll(nextRecChild, nextRecChild);
-                    // find balance
-                    var balance = await _btc.FindBitcoinBalance(xpub, nextRecChild.Result, nextChngChild.Result);
-                    // update ballance and children in wallets
-                    var model = new WalletBTCInfo
-                    {
-                        WalletId = id.GetValueOrDefault(),
-                        UserId = userId,
-                        LatestBalance = balance,
-                        NextReceiveChild = nextRecChild.Result,
-                        NextChangeChild = nextChngChild.Result
-                    };
-                    await _wallet.UpdateWalletBTCInfo(model);
-                    return RedirectToAction("Index", "Dashboard", new { id = id.GetValueOrDefault() });
-                }
-                else
-                {
-                    var userWallets = await _wallet.GetWalletsAsync(userId);
-                    foreach (var wallet in userWallets)
-                    {
-                        var walletIdentity = new WalletIdentity { UserId = userId, WalletId = wallet.WalletId };
-                        var xpub = await _btc.GetXpub(await _wallet.GetWalletXpubAsync(walletIdentity));
-
-                        var nextRecChild = await _btc.FindNextReceivingChildPosition(xpub);
-                        var nextChngChild = await _btc.FindNextChangeChildPosition(xpub);
-
-                        var balance = await _btc.FindBitcoinBalance(xpub, nextRecChild, nextChngChild);
-
-                        var model = new WalletBTCInfo
-                        {
-                            WalletId = wallet.WalletId,
-                            UserId = userId,
-                            LatestBalance = balance,
-                            NextReceiveChild = nextRecChild,
-                            NextChangeChild = nextChngChild
-                        };
-                        await _wallet.UpdateWalletBTCInfo(model);
-                    }
-                    return RedirectToAction("Index", "Dashboard");
-
-                }
+                var walletIdentity = new WalletIdentity { UserId = userId, WalletId = walletId };
+                await UpdateBTCInfo(walletIdentity);
+                await UpdateUsedAddresses(walletIdentity);
+                //await UpdatePastTransactions(walletIdentity, info);
+                return RedirectToAction("Index", "Dashboard", new { id = walletId });
             }
             catch
             {
                 return RedirectToAction("Index", "Dashboard");
             }
-
         }
 
-       
+        private async Task<WalletBTCInfo> UpdateBTCInfo(WalletIdentity walletIdentity)
+        {
+            var xpub = await _btc.GetXpub(await _wallet.GetWalletXpubAsync(walletIdentity));
+            // find change and receive children
+            var nextRecChild = await _btc.FindNextReceivingChildPosition(xpub);
+            var nextChngChild = await _btc.FindNextChangeChildPosition(xpub);
+            // find balance
+            var balance = await _btc.FindBitcoinBalance(xpub, nextRecChild, nextChngChild);
+            // update ballance and children in wallets
+            var model = new WalletBTCInfo
+            {
+                WalletId = walletIdentity.WalletId,
+                UserId = walletIdentity.UserId,
+                LatestBalance = balance,
+                NextReceiveChild = nextRecChild,
+                NextChangeChild = nextChngChild
+            };
+            await _wallet.UpdateWalletBTCInfo(model);
+            return await _wallet.GetWalletBTCInfoAsync(walletIdentity);
+        }
+        private async Task UpdateUsedAddresses(WalletIdentity walletIdentity)
+        {
+            ICollection<string> currentAddresses =
+                (await _req.GetWalletRequestsAsync(walletIdentity))
+                .Select(r => r.RequestAddress).ToArray();
+
+            var nextRecChild = (await _wallet.GetWalletBTCInfoAsync(walletIdentity)).NextReceiveChild;
+            var xpub = await _wallet.GetWalletXpubAsync(walletIdentity);
+            for (int i = 0; i < nextRecChild; i++)
+            {
+                var address = (await _btc.DeriveAddress(xpub, false, i)).ToString();
+                if (!(currentAddresses.Contains(address)))
+                {
+                    await _req.CreateRequestAsync(walletIdentity, address);
+                }
+            }
+        }
+        
+
+
+
+
     }
 }

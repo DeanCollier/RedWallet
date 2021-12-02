@@ -50,6 +50,12 @@ namespace RedWallet.Services
                 Xpub = extendedKey.Neuter().ToString(Network)
             };
         }
+        public async Task<BitcoinAddress> DeriveAddress(string xpub, bool isChange, int position)
+        {
+            var extPubKey = await GetXpub(xpub);
+            int change = isChange ? 1 : 0;
+            return extPubKey.Derive((uint)change).Derive((uint)position).PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH, Network);
+        }
 
         // get new receive and change addresses
         public async Task<BitcoinAddress> GetNewReceivingAddress(string xpub)

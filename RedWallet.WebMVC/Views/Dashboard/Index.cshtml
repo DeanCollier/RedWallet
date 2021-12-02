@@ -24,7 +24,7 @@ else
                 </button>
             </div>
             <div id="balance-display" class="col-5">
-                <button class="btn text-white shadow mb-3" onclick="location.href='@Url.Action("Update", "BTCInfo", new { id = Model.SelectedWalletId })'"><i class="fas fa-sync-alt"></i>  Refresh Balance</button>
+                <button class="btn text-white shadow mb-3" onclick="location.href='@Url.Action("Update", "BTCInfo", new { walletId = Model.SelectedWalletId })'"><i class="fas fa-sync-alt"></i>  Refresh Balance</button>
                 <h1>@Model.WalletBalance BTC</h1>
             </div>
         </div>

@@ -22,4 +22,3 @@ C:\RED_WALLET\RedWallet\RedWallet.Models\obj\Debug\RedWallet.Models.csproj.Assem
 C:\RED_WALLET\RedWallet\RedWallet.Models\obj\Debug\RedWallet.Models.csproj.CoreCompileInputs.cache
 C:\RED_WALLET\RedWallet\RedWallet.Models\obj\Debug\RedWallet.Models.dll
 C:\RED_WALLET\RedWallet\RedWallet.Models\obj\Debug\RedWallet.Models.pdb
-C:\RED_WALLET\RedWallet\RedWallet.Models\obj\Debug\RedWallet.Models.csproj.CopyComplete

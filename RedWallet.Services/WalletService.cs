@@ -148,7 +148,7 @@ namespace RedWallet.Services
                     .Wallets
                     .SingleOrDefaultAsync(w => w.UserId == model.UserId && w.Id == model.WalletId);
 
-                entity.LatestBalance = 21000000m;
+                entity.LatestBalance = model.LatestBalance;
                 entity.NextReceiveChild = model.NextReceiveChild;
                 entity.NextChangeChild = model.NextChangeChild;
 
