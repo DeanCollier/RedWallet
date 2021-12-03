@@ -125,6 +125,7 @@ namespace RedWallet.Services
             {
                 var address = xpub.Derive(0).Derive((uint)i).PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH, Network);
                 var balanceModel = await Client.GetBalance(address);
+                
                 if (balanceModel.Operations.Count > 0)
                 {
                     i++;

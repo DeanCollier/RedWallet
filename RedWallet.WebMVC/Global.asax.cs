@@ -39,8 +39,8 @@ namespace RedWallet.WebMVC
             //builder.InjectActionInvoker();
 
             builder.RegisterType<WalletService>().As<IWalletService>();
-            builder.RegisterType<RequestService>().As<IRequestService>();
-            builder.RegisterType<SendService>().As<ISendService>();
+            builder.RegisterType<AddressService>().As<IAddressService>();
+            builder.RegisterType<TransactionService>().As<ITransactionService>();
             builder.RegisterType<BitcoinService>().As<IBitcoinService>();
 
             // Set the dependency resolver to be Autofac.

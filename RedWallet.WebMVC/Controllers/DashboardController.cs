@@ -16,15 +16,15 @@ namespace RedWallet.WebMVC.Controllers
     public class DashboardController : Controller
     {
         private readonly IWalletService _wallet;
-        private readonly ISendService _send;
-        private readonly IRequestService _req;
+        private readonly ITransactionService _trans;
+        private readonly IAddressService _addr;
         private readonly IBitcoinService _btc;
 
-        public DashboardController(IWalletService wallet, ISendService send, IRequestService req, IBitcoinService btc)
+        public DashboardController(IWalletService wallet, ITransactionService trans, IAddressService addr, IBitcoinService btc)
         {
             _wallet = wallet;
-            _send = send;
-            _req = req;
+            _trans = trans;
+            _addr = addr;
             _btc = btc;
         }
 
@@ -58,8 +58,8 @@ namespace RedWallet.WebMVC.Controllers
             {
                 model.WalletBalance = (await _wallet.GetWalletBTCInfoAsync(walletIdentity)).LatestBalance;
             }
-            model.WalletSends = (await _send.GetWalletSendsAsync(walletIdentity)).ToList();
-            model.WalletAddresses = (await _req.GetWalletRequestsAsync(walletIdentity)).ToList();
+            model.WalletTransactions = (await _trans.GetWalletTransactionsAsync(walletIdentity)).ToList();
+            model.WalletAddresses = (await _addr.GetWalletAddressesAsync(walletIdentity)).ToList();
             return View(model);
         }
 

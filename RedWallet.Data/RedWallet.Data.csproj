@@ -96,22 +96,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IdentityModels.cs" />
-    <Compile Include="Migrations\202112020121295_decimals.cs" />
-    <Compile Include="Migrations\202112020121295_decimals.designer.cs">
-      <DependentUpon>202112020121295_decimals.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112020251594_decimalupdate.cs" />
-    <Compile Include="Migrations\202112020251594_decimalupdate.designer.cs">
-      <DependentUpon>202112020251594_decimalupdate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112020258311_decimalupdate1.cs" />
-    <Compile Include="Migrations\202112020258311_decimalupdate1.designer.cs">
-      <DependentUpon>202112020258311_decimalupdate1.cs</DependentUpon>
+    <Compile Include="Migrations\202112032202244_bigchanges.cs" />
+    <Compile Include="Migrations\202112032202244_bigchanges.designer.cs">
+      <DependentUpon>202112032202244_bigchanges.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Request.cs" />
-    <Compile Include="Send.cs" />
+    <Compile Include="Address.cs" />
+    <Compile Include="Transaction.cs" />
     <Compile Include="Wallet.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -119,14 +111,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202112020121295_decimals.resx">
-      <DependentUpon>202112020121295_decimals.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112020251594_decimalupdate.resx">
-      <DependentUpon>202112020251594_decimalupdate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112020258311_decimalupdate1.resx">
-      <DependentUpon>202112020258311_decimalupdate1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112032202244_bigchanges.resx">
+      <DependentUpon>202112032202244_bigchanges.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

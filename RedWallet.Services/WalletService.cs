@@ -69,6 +69,7 @@ namespace RedWallet.Services
                 {
                     WalletId = entity.Id,
                     WalletName = entity.WalletName,
+                    LastestBalance = entity.LatestBalance,
                     Xpub = entity.Xpub,
                 };
 

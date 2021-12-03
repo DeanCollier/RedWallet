@@ -1,18 +1,21 @@
-1. Load balance and other data in background and update when done.
-	a. create update balance button on dashboard for running this process
-	b. run this process for all user wallets on login in background and update wallet properties
-	c. add all used recieve addresses to requests if they are not there already
+General:
+1. Finding a good way to update wallet info on login in background
+2. maybe adding dropdown to all nav options in order to select specific wallets for sends and requests
 
-2. Load wallet properties in dashboard, update when #1 is done.  This includes lastest balance
+Wallets:
+1. add balance to wallet detail view, add wallet refresh option to page and reload page after
+2. create views for getting wallet xpub and private key, need passphrase for this
 
-3. Fix balance display on send create
+Requests:
+1. get nextRecChild from wallet info
 
-4. build sending tool, pull from change first, then receives
+Sends:
+1. creating sending method, iterating through change addresses first, then receiving addresses
+2. Update wallet info after send
+3. fix the wallet balance displayed on the send Create view
 
-5. fix azure migration problems
 
-
-
+wallet with small amount of btc
 encryptedsecret:
 6PYP3Q78DHfDgARkYHw72wdPm2rhT8nUnXbZyfB8Tn2XbuBfSQJVH9Gy7M
 xpub:
