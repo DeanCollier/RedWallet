@@ -52,40 +52,41 @@ namespace RedWallet.WebMVC.Controllers
         public async Task<ActionResult> Create(int walletId)
         {
             var walletIdentity = new WalletIdentity { WalletId = walletId, UserId = User.Identity.GetUserId() };
-            var detail = await _wallet.GetWalletByIdAsync(walletIdentity);
-            var model = new AddressCreate
-            {
-                WalletId = detail.WalletId,
-                WalletName = detail.WalletName,
-                PublicAddress = "",
-                IsChange = false
-            };
-
+            var model = await _wallet.GetWalletByIdAsync(walletIdentity);
+           
             return View(model);
         }
         // POST: Create Address
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(AddressCreate model)
+        [ActionName("Create")]
+        public async Task<ActionResult> CreateAddress(int walletId)
         {
-            if (!ModelState.IsValid)
+            /*if (!ModelState.IsValid)
             {
                 return View(model);
-            }
+            }*/
 
-            var walletIdentity = new WalletIdentity { WalletId = model.WalletId, UserId = User.Identity.GetUserId() };
+            var walletIdentity = new WalletIdentity { WalletId = walletId, UserId = User.Identity.GetUserId() };
             var wallet = await _wallet.GetWalletByIdAsync(walletIdentity);
-            var encryptedSecret = await _wallet.GetWalletEncryptedSecretAsync(walletIdentity);
 
             var xpub = wallet.Xpub;
             var newAddress = await _btc.GetNewReceivingAddress(xpub);
+
+            var model = new AddressCreate
+            {
+                WalletId = walletId,
+                WalletName = wallet.WalletName,
+                PublicAddress = "",
+                IsChange = false
+            };
 
             if (newAddress != null)
             {
                 model.PublicAddress = newAddress.ToString();
                 var detail = await _addr.CreateAddressAsync(walletIdentity, model);
                 TempData["SaveResult"] = "Share the public address below to receive bitcoin from others.";
-                return Redirect($"Details/{detail.PublicAddress}");
+                return RedirectToAction("Details", new { pa = detail.PublicAddress });
             }
             ModelState.AddModelError("", "Something went wrong.");
             return View(model);
@@ -97,8 +98,8 @@ namespace RedWallet.WebMVC.Controllers
         // Wallet/{walletId}/Address/{id}/Details
         public async Task<ActionResult> Details(string pa)
         {
-            var requestIdentity = new AddressIdentity { PublicAddress = pa, UserId = User.Identity.GetUserId() };
-            var model = await _addr.GetWalletAddressByIdAsync(requestIdentity);
+            var addressIdentity = new AddressIdentity { PublicAddress = pa, UserId = User.Identity.GetUserId() };
+            var model = await _addr.GetWalletAddressByIdAsync(addressIdentity);
             
             using (MemoryStream ms = new MemoryStream())
             {
@@ -122,8 +123,8 @@ namespace RedWallet.WebMVC.Controllers
         // Address/Delete/{id}
         public async Task<ActionResult> Delete(string pa)
         {
-            var requestIdentity = new AddressIdentity { PublicAddress = pa, UserId = User.Identity.GetUserId() };
-            var model = await _addr.GetWalletAddressByIdAsync(requestIdentity);
+            var addressIdentity = new AddressIdentity { PublicAddress = pa, UserId = User.Identity.GetUserId() };
+            var model = await _addr.GetWalletAddressByIdAsync(addressIdentity);
             return View(model);
         }
         // POST: Delete Address
@@ -132,10 +133,10 @@ namespace RedWallet.WebMVC.Controllers
         [ActionName("Delete")]
         public async Task<ActionResult> DeleteAddress(string pa)
         {
-            var requestIdentity = new AddressIdentity { PublicAddress = pa, UserId = User.Identity.GetUserId() };
-            var walletId = (await _addr.GetWalletAddressByIdAsync(requestIdentity)).WalletId;
+            var addressIdentity = new AddressIdentity { PublicAddress = pa, UserId = User.Identity.GetUserId() };
+            var walletId = (await _addr.GetWalletAddressByIdAsync(addressIdentity)).WalletId;
 
-            if (await _addr.DeleteAddressAsync(requestIdentity))
+            if (await _addr.DeleteAddressAsync(addressIdentity))
             {
                 TempData["DeleteResult"] = "Address data deleted";
                 return RedirectToAction($"Index", new { walletId = walletId });

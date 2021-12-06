@@ -30,7 +30,6 @@ namespace RedWallet.Services
             {
                 var clone = await context
                     .Transactions
-                    .FindAsync(entity.TransactionHash)
                     .SingleOrDefaultAsync(t => t.Wallet.UserId == model.UserId && t.TransactionHash == transaction.TransactionHash);
 
                 if (clone == null)

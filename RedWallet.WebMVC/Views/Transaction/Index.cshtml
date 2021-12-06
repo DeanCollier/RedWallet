@@ -60,7 +60,7 @@ else
                                     <td>@item.Created.ToString("MM/dd/yyyy hh:mm tt")</td>
 
                                     <td style="font-weight: bold">@Html.ActionLink(item.TransactionHash, "Details", "Transaction", new { thash = item.TransactionHash }, new { @class = "detail-link" })</td>
-                                    <td style="font-weight: bold">@Html.ActionLink(item.WalletName, "Details", "Wallet", new { id = item.WalletId }, new { @class = "detail-link" })</td>
+                                    <td style="font-weight: bold">@Html.ActionLink(item.WalletName, "Index", "Dashboard", new { id = item.WalletId }, new { @class = "detail-link" })</td>
 
                                     <td class="text-center">
                                         @Html.ActionLink("Details", "Details", "Transaction", new { thash = item.TransactionHash }, new { @class = "detail-link" }) |

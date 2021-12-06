@@ -20,7 +20,6 @@ namespace RedWallet.Models.AddressModels
 
         [Required]
         [Display(Name = "Wallet Name")]
-
         public string WalletName { get; set; }
     }
 }

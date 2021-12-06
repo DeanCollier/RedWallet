@@ -1,6 +1,7 @@
 General:
 1. Finding a good way to update wallet info on login in background
 2. maybe adding dropdown to all nav options in order to select specific wallets for sends and requests
+3. convert getnewaddress method calls to deriveaddress calls instead, using walletBTCInfo
 
 Wallets:
 1. add balance to wallet detail view, add wallet refresh option to page and reload page after
@@ -10,7 +11,7 @@ Requests:
 1. get nextRecChild from wallet info
 
 Sends:
-1. creating sending method, iterating through change addresses first, then receiving addresses
+1. creating sending method, need to update wallet before creating a send, iterating through change addresses first, then receiving addresses
 2. Update wallet info after send
 3. fix the wallet balance displayed on the send Create view
 

@@ -104,7 +104,7 @@ namespace RedWallet.WebMVC.Controllers
             {
                 var detail = await _trans.CreateTransactionAsync(walletIdentity, newTransaction);
                 TempData["SaveResult"] = "Transaction has been sent.";
-                return Redirect($"Details/{detail.TransactionHash}");
+                return RedirectToAction("Details", new { thash = detail.TransactionHash });
             }
             ModelState.AddModelError("", "Something went wrong.");
             return View(model);
@@ -112,6 +112,7 @@ namespace RedWallet.WebMVC.Controllers
 
         // GET: Transaction Details
         // Wallet/{walletId}/Transaction/{id}/Details
+        [Route("{thash}")]
         public async Task<ActionResult> Details(string thash)
         {
             var transactionIdentity = new TransactionIdentity { TransactionHash = thash, UserId = User.Identity.GetUserId() };
@@ -121,7 +122,7 @@ namespace RedWallet.WebMVC.Controllers
 
         // UPDATE: No Update for Transactions
 
-        // GET: Delete Request (for db management)
+        // GET: Delete Address (for db management)
         // Wallet/{walletId}/Transaction/{id}/Delete
         public async Task<ActionResult> Delete(string thash)
         {
@@ -129,7 +130,7 @@ namespace RedWallet.WebMVC.Controllers
             var model = await _trans.GetWalletTransactionByIdAsync(transactionIdentity);
             return View(model);
         }
-        // POST: Delete Request
+        // POST: Delete Address
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Delete")]

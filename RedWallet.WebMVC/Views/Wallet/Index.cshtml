@@ -45,9 +45,9 @@
                                 <td class="text-center">
                                     @Html.ActionLink("Details", "Details", "Wallet", new { id = item.WalletId }, new { @class = "detail-link" }) |
 
-                                    @Html.ActionLink("Send", "Create", "Send", new { walletId = item.WalletId }, new { @class = "detail-link" }) |
+                                    @Html.ActionLink("Send", "Create", "Transaction", new { walletId = item.WalletId }, new { @class = "detail-link" }) |
 
-                                    @Html.ActionLink("Receive", "Create", "Request", new { walletId = item.WalletId }, new { @class = "detail-link" }) |
+                                    @Html.ActionLink("Receive", "Create", "Address", new { walletId = item.WalletId }, new { @class = "detail-link" }) |
 
                                     @Html.ActionLink("Edit", "Edit", "Wallet", new { id = item.WalletId }, new { @class = "detail-link" }) |
                                     @Html.ActionLink("Delete", "Delete", "Wallet", new { id = item.WalletId }, new { @class = "detail-link" })

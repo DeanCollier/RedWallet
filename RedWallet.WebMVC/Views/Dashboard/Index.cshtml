@@ -72,7 +72,7 @@ else
                         @foreach (var item in Model.WalletAddresses)
                         {
                             <tr>
-                                <td>@Html.ActionLink(item.PublicAddress, "Details", "Request", new { pa = item.PublicAddress }, new { @class = "detail-link" })</td>
+                                <td>@Html.ActionLink(item.PublicAddress, "Details", "Address", new { pa = item.PublicAddress }, new { @class = "detail-link" })</td>
                             </tr>
                         }
                     </tbody>

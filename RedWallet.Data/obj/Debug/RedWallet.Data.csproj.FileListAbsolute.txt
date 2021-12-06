@@ -15,8 +15,8 @@ C:\RED_WALLET\RedWallet\RedWallet.Data\bin\Debug\Microsoft.AspNet.Identity.Entit
 C:\RED_WALLET\RedWallet\RedWallet.Data\bin\Debug\Microsoft.Extensions.Logging.Abstractions.xml
 C:\RED_WALLET\RedWallet\RedWallet.Data\bin\Debug\Newtonsoft.Json.xml
 C:\RED_WALLET\RedWallet\RedWallet.Data\bin\Debug\System.Buffers.xml
+C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.Migrations.bigchanges.resources
+C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.csproj.GenerateResource.cache
 C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.csproj.CoreCompileInputs.cache
 C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.dll
 C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.pdb
-C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.Migrations.bigchanges.resources
-C:\RED_WALLET\RedWallet\RedWallet.Data\obj\Debug\RedWallet.Data.csproj.GenerateResource.cache
