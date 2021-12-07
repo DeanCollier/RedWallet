@@ -21,5 +21,7 @@ namespace RedWallet.Models.AddressModels
         [Required]
         [Display(Name = "Wallet Name")]
         public string WalletName { get; set; }
+
+        public DateTimeOffset? Created { get; set; }
     }
 }

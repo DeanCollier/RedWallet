@@ -20,5 +20,7 @@ namespace RedWallet.Models.TransactionModels
         
         [Required]
         public decimal TotalAmount { get; set; }
+
+        public DateTimeOffset? Created { get; set; }
     }
 }

@@ -7,13 +7,13 @@ namespace RedWallet.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class bigchanges : IMigrationMetadata
+    public sealed partial class idfix : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(bigchanges));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(idfix));
         
         string IMigrationMetadata.Id
         {
-            get { return "202112032202244_bigchanges"; }
+            get { return "202112072206519_idfix"; }
         }
         
         string IMigrationMetadata.Source

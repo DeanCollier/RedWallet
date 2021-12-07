@@ -1,4 +1,5 @@
 ﻿using RedWallet.Data;
+using RedWallet.Models.BitcoinModels;
 using RedWallet.Models.TransactionModels;
 using RedWallet.Models.WalletModels;
 using RedWallet.Services.Interfaces;
@@ -15,13 +16,14 @@ namespace RedWallet.Services
         // CREATE
         public async Task<TransactionDetail> CreateTransactionAsync(WalletIdentity model, TransactionCreate transaction)
         {
+            var created = transaction.Created == null ? DateTimeOffset.Now : transaction.Created;
             var entity = new Transaction
             {
                 TransactionHash = transaction.TransactionHash,
                 WalletId = model.WalletId,
                 IsSend = transaction.IsSend,
                 TotalAmount = transaction.TotalAmount,
-                Created = DateTimeOffset.Now
+                Created = created.GetValueOrDefault()
             };
 
             var transactionIdentity = new TransactionIdentity();
@@ -30,19 +32,20 @@ namespace RedWallet.Services
             {
                 var clone = await context
                     .Transactions
-                    .SingleOrDefaultAsync(t => t.Wallet.UserId == model.UserId && t.TransactionHash == transaction.TransactionHash);
+                    .SingleOrDefaultAsync
+                    (t => t.Wallet.UserId == model.UserId && t.TransactionHash == transaction.TransactionHash && t.WalletId == transaction.WalletId);
 
                 if (clone == null)
                 {
                     context.Transactions.Add(entity);
                     await context.SaveChangesAsync();
 
-                    transactionIdentity.TransactionHash = entity.TransactionHash;
+                    transactionIdentity.TransactionId = entity.Id;
                     transactionIdentity.UserId = model.UserId;
                 }
                 else
                 {
-                    transactionIdentity.TransactionHash = clone.TransactionHash;
+                    transactionIdentity.TransactionId = clone.Id;
                     transactionIdentity.UserId = model.UserId;
                 }
             }
@@ -61,6 +64,7 @@ namespace RedWallet.Services
                     .Where(t => t.Wallet.UserId == model.UserId && t.WalletId == model.WalletId)
                     .Select(t => new TransactionListItem
                     {
+                        TransactionId = t.Id,
                         TransactionHash = t.TransactionHash,
                         WalletName = t.Wallet.WalletName,
                         WalletId = t.WalletId,
@@ -80,10 +84,11 @@ namespace RedWallet.Services
             {
                 var entity = await context
                     .Transactions
-                    .SingleOrDefaultAsync(t => t.Wallet.UserId == model.UserId && t.TransactionHash == model.TransactionHash);
+                    .SingleOrDefaultAsync(t => t.Wallet.UserId == model.UserId && t.Id == model.TransactionId);
 
                 var detail = new TransactionDetail
                 {
+                    TransactionId = entity.Id,
                     TransactionHash = entity.TransactionHash,
                     WalletId = entity.WalletId,
                     WalletName = entity.Wallet.WalletName,
@@ -98,6 +103,19 @@ namespace RedWallet.Services
 
         // UPDATE -- not needed yet?
         // possibly need in the future if transaction doesn't get confirmed
+        public async Task<bool> UpdateTransactionAsync(TransactionIdentity model, OperationDetail detail)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var entity = await context
+                    .Transactions
+                    .SingleOrDefaultAsync(t => t.Wallet.UserId == model.UserId && t.Id == model.TransactionId);
+
+                entity.TotalAmount = detail.Amount;
+                entity.Created = detail.Created;
+                return await context.SaveChangesAsync() == 1;
+            }
+        }
 
         // DELETE
         public async Task<bool> DeleteTransactionAsync(TransactionIdentity model)
@@ -106,7 +124,7 @@ namespace RedWallet.Services
             {
                 var entity = await context
                     .Transactions
-                    .SingleOrDefaultAsync(t => t.Wallet.UserId == model.UserId && t.TransactionHash == model.TransactionHash);
+                    .SingleOrDefaultAsync(t => t.Wallet.UserId == model.UserId && t.Id == model.TransactionId);
 
                 context.Transactions.Remove(entity);
                 return await context.SaveChangesAsync() == 1;

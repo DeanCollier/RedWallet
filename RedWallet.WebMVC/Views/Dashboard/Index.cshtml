@@ -50,7 +50,7 @@ else
                         {
                             <tr>
                                 <td>@item.Created.ToString("MM/dd/yyyy hh:mm tt")</td>
-                                <td>@Html.ActionLink(item.TransactionHash, "Details", "Transaction", new { thash = item.TransactionHash }, new { @class = "detail-link" })</td>
+                                <td>@Html.ActionLink(item.TransactionHash, "Details", "Transaction", new { id = item.TransactionId }, new { @class = "detail-link" })</td>
                             </tr>
                         }
                     </tbody>
@@ -72,7 +72,7 @@ else
                         @foreach (var item in Model.WalletAddresses)
                         {
                             <tr>
-                                <td>@Html.ActionLink(item.PublicAddress, "Details", "Address", new { pa = item.PublicAddress }, new { @class = "detail-link" })</td>
+                                <td>@Html.ActionLink(item.PublicAddress, "Details", "Address", new { id = item.AddressId }, new { @class = "detail-link" })</td>
                             </tr>
                         }
                     </tbody>

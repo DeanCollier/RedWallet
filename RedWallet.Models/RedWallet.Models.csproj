@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitcoinModels\KeyDetail.cs" />
+    <Compile Include="BitcoinModels\OperationDetail.cs" />
     <Compile Include="BitcoinModels\TransactionSend.cs" />
     <Compile Include="DashboardModels\DashboardViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

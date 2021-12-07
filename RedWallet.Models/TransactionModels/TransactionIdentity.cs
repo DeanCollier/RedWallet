@@ -10,7 +10,7 @@ namespace RedWallet.Models.TransactionModels
     public class TransactionIdentity
     {
         [Required]
-        public string TransactionHash { get; set; }
+        public int TransactionId { get; set; }
         [Required]
         public string UserId { get; set; }
     }

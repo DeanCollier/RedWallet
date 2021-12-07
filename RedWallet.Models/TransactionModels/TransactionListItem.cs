@@ -10,6 +10,9 @@ namespace RedWallet.Models.TransactionModels
     public class TransactionListItem
     {
         [Required]
+        public int TransactionId { get; set; }
+
+        [Required]
         [Display(Name = "Bitcoin Transaction")]
         public string TransactionHash { get; set; }
 

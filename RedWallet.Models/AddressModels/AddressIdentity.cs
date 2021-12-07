@@ -10,7 +10,7 @@ namespace RedWallet.Models.AddressModels
     public class AddressIdentity
     {
         [Required]
-        public string PublicAddress { get; set; }
+        public int AddressId { get; set; }
         [Required]
         public string UserId { get; set; }
     }

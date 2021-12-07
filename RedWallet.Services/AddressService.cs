@@ -16,13 +16,14 @@ namespace RedWallet.Services
         // CREATE 
         public async Task<AddressDetail> CreateAddressAsync(WalletIdentity model, AddressCreate address)
         {
+            var created = address.Created == null ? DateTimeOffset.Now:address.Created;
             var entity = new Address
             {
                 PublicAddress = address.PublicAddress,
                 WalletId = model.WalletId,
                 IsChange = address.IsChange,
                 LatestBalance = 0m,
-                Created = DateTimeOffset.Now,
+                Created = created.GetValueOrDefault()
             };
 
             var addressIdentity = new AddressIdentity();
@@ -38,12 +39,12 @@ namespace RedWallet.Services
                     context.Addresses.Add(entity);
                     await context.SaveChangesAsync();
 
-                    addressIdentity.PublicAddress = entity.PublicAddress;
+                    addressIdentity.AddressId = entity.Id;
                     addressIdentity.UserId = model.UserId;
                 }
                 else
                 {
-                    addressIdentity.PublicAddress = clone.PublicAddress;
+                    addressIdentity.AddressId = clone.Id;
                     addressIdentity.UserId = model.UserId;
                 }
             }
@@ -58,14 +59,15 @@ namespace RedWallet.Services
             {
                 var query = context
                     .Addresses
-                    .OrderByDescending(r => r.Created)
-                    .Where(r => r.Wallet.UserId == model.UserId && r.WalletId == model.WalletId)
-                    .Select(r => new AddressListItem
+                    .OrderByDescending(a => a.Created)
+                    .Where(a => a.Wallet.UserId == model.UserId && a.WalletId == model.WalletId)
+                    .Select(a => new AddressListItem
                     {
-                        PublicAddress = r.PublicAddress,
-                        WalletName = r.Wallet.WalletName,
-                        WalletId = r.WalletId,
-                        Created = r.Created
+                        AddressId = a.Id,
+                        PublicAddress = a.PublicAddress,
+                        WalletName = a.Wallet.WalletName,
+                        WalletId = a.WalletId,
+                        Created = a.Created
                     });
 
                 return await query.ToArrayAsync();
@@ -79,10 +81,11 @@ namespace RedWallet.Services
             {
                 var entity = await context
                     .Addresses
-                    .SingleOrDefaultAsync(r => r.Wallet.UserId == model.UserId && r.PublicAddress == model.PublicAddress);
+                    .SingleOrDefaultAsync(a => a.Wallet.UserId == model.UserId && a.Id == model.AddressId);
 
                 var detail = new AddressDetail
                 {
+                    AddressId = entity.Id,
                     PublicAddress = entity.PublicAddress,
                     WalletId = entity.WalletId,
                     WalletName = entity.Wallet.WalletName,
@@ -102,9 +105,22 @@ namespace RedWallet.Services
             {
                 var entity = await context
                     .Addresses
-                    .SingleOrDefaultAsync(r => r.Wallet.UserId == model.UserId && r.PublicAddress == model.PublicAddress);
+                    .SingleOrDefaultAsync(a => a.Wallet.UserId == model.UserId && a.Id == model.AddressId);
 
                 entity.LatestBalance = newBalance;
+                return await context.SaveChangesAsync() == 1;
+            }
+        }
+        // UPDATE
+        public async Task<bool> UpdateAddressCreatedDate(AddressIdentity model, DateTimeOffset created)
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var entity = await context
+                    .Addresses
+                    .SingleOrDefaultAsync(a => a.Wallet.UserId == model.UserId && a.Id == model.AddressId);
+
+                entity.Created = created;
                 return await context.SaveChangesAsync() == 1;
             }
         }
@@ -116,7 +132,7 @@ namespace RedWallet.Services
             {
                 var entity = await context
                     .Addresses
-                    .SingleAsync(r => r.Wallet.UserId == model.UserId && r.PublicAddress == model.PublicAddress);
+                    .SingleAsync(a => a.Wallet.UserId == model.UserId && a.Id == model.AddressId);
 
                 context.Addresses.Remove(entity);
                 return await context.SaveChangesAsync() == 1;

@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class bigchanges : DbMigration
+    public partial class InitialCreate : DbMigration
     {
         public override void Up()
         {
@@ -11,13 +11,14 @@
                 "dbo.Address",
                 c => new
                     {
-                        PublicAddress = c.String(nullable: false, maxLength: 128),
+                        Id = c.Int(nullable: false, identity: true),
+                        PublicAddress = c.String(nullable: false),
                         WalletId = c.Int(nullable: false),
                         IsChange = c.Boolean(nullable: false),
                         LatestBalance = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Created = c.DateTimeOffset(nullable: false, precision: 7),
                     })
-                .PrimaryKey(t => t.PublicAddress)
+                .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Wallet", t => t.WalletId, cascadeDelete: true)
                 .Index(t => t.WalletId);
             
@@ -112,13 +113,14 @@
                 "dbo.Transaction",
                 c => new
                     {
-                        TransactionHash = c.String(nullable: false, maxLength: 128),
+                        Id = c.Int(nullable: false, identity: true),
+                        TransactionHash = c.String(nullable: false),
                         WalletId = c.Int(nullable: false),
                         IsSend = c.Boolean(nullable: false),
                         TotalAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Created = c.DateTimeOffset(nullable: false, precision: 7),
                     })
-                .PrimaryKey(t => t.TransactionHash)
+                .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Wallet", t => t.WalletId, cascadeDelete: true)
                 .Index(t => t.WalletId);
             

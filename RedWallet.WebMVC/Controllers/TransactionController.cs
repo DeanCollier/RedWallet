@@ -104,7 +104,7 @@ namespace RedWallet.WebMVC.Controllers
             {
                 var detail = await _trans.CreateTransactionAsync(walletIdentity, newTransaction);
                 TempData["SaveResult"] = "Transaction has been sent.";
-                return RedirectToAction("Details", new { thash = detail.TransactionHash });
+                return RedirectToAction("Details", new { id = detail.TransactionId });
             }
             ModelState.AddModelError("", "Something went wrong.");
             return View(model);
@@ -112,10 +112,10 @@ namespace RedWallet.WebMVC.Controllers
 
         // GET: Transaction Details
         // Wallet/{walletId}/Transaction/{id}/Details
-        [Route("{thash}")]
-        public async Task<ActionResult> Details(string thash)
+        [Route("{id}")]
+        public async Task<ActionResult> Details(int id)
         {
-            var transactionIdentity = new TransactionIdentity { TransactionHash = thash, UserId = User.Identity.GetUserId() };
+            var transactionIdentity = new TransactionIdentity { TransactionId = id, UserId = User.Identity.GetUserId() };
             var model = await _trans.GetWalletTransactionByIdAsync(transactionIdentity);
             return View(model);
         }
@@ -124,9 +124,9 @@ namespace RedWallet.WebMVC.Controllers
 
         // GET: Delete Address (for db management)
         // Wallet/{walletId}/Transaction/{id}/Delete
-        public async Task<ActionResult> Delete(string thash)
+        public async Task<ActionResult> Delete(int id)
         {
-            var transactionIdentity = new TransactionIdentity { TransactionHash = thash, UserId = User.Identity.GetUserId() };
+            var transactionIdentity = new TransactionIdentity { TransactionId = id, UserId = User.Identity.GetUserId() };
             var model = await _trans.GetWalletTransactionByIdAsync(transactionIdentity);
             return View(model);
         }
@@ -134,9 +134,9 @@ namespace RedWallet.WebMVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Delete")]
-        public async Task<ActionResult> DeleteTransaction(string thash)
+        public async Task<ActionResult> DeleteTransaction(int id)
         {
-            var transactionIdentity = new TransactionIdentity { TransactionHash = thash, UserId = User.Identity.GetUserId() };
+            var transactionIdentity = new TransactionIdentity { TransactionId = id, UserId = User.Identity.GetUserId() };
             var walletId = (await _trans.GetWalletTransactionByIdAsync(transactionIdentity)).WalletId;
 
             if (await _trans.DeleteTransactionAsync(transactionIdentity))
@@ -145,7 +145,7 @@ namespace RedWallet.WebMVC.Controllers
                 return RedirectToAction("Index", new { walletId = walletId });
             }
             ModelState.AddModelError("", "Something went wrong.");
-            return View(thash);
+            return View(id);
         }
     }
 }

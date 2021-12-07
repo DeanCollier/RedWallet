@@ -11,6 +11,8 @@ namespace RedWallet.Data
     public class Transaction
     {
         [Key]
+        public int Id { get; set; }
+
         [Required, Display(Name = "Transaction")]
         [MinLength(1)]
         public string TransactionHash { get; set; }

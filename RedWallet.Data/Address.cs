@@ -11,6 +11,8 @@ namespace RedWallet.Data
     public class Address
     {
         [Key]
+        public int Id { get; set; }
+
         [Required, Display(Name = "Address")]
         [MinLength(1)]
         public string PublicAddress { get; set; }

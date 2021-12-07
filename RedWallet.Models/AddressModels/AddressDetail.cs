@@ -9,6 +9,9 @@ namespace RedWallet.Models.AddressModels
 {
     public class AddressDetail
     {
+        [Required]
+        public int AddressId { get; set; }
+
         [Required, Display(Name = "Send To This Bitcoin Address")]
         public string PublicAddress { get; set; }
 

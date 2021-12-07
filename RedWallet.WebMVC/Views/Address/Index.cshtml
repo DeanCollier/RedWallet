@@ -61,12 +61,12 @@ else
                                 <tr>
                                     <td>@item.Created.ToString("MM/dd/yyyy hh:mm tt")</td>
 
-                                    <td style="font-weight: bold">@Html.ActionLink(item.PublicAddress, "Details", "Address", new { pa = item.PublicAddress }, new { @class = "detail-link" })</td>
+                                    <td style="font-weight: bold">@Html.ActionLink(item.PublicAddress, "Details", "Address", new { id = item.AddressId }, new { @class = "detail-link" })</td>
                                     <td style="font-weight: bold">@Html.ActionLink(item.WalletName, "Index", "Dashboard", new { id = item.WalletId }, new { @class = "detail-link" })</td>
 
                                     <td class="text-center">
-                                        @Html.ActionLink("Details", "Details", "Address", new { pa = item.PublicAddress }, new { @class = "detail-link" }) |
-                                        @Html.ActionLink("Delete", "Delete", "Address", new { pa = item.PublicAddress }, new { @class = "detail-link" })
+                                        @Html.ActionLink("Details", "Details", "Address", new { id = item.AddressId }, new { @class = "detail-link" }) |
+                                        @Html.ActionLink("Delete", "Delete", "Address", new { id = item.AddressId }, new { @class = "detail-link" })
                                     </td>
                                 </tr>
                             }
