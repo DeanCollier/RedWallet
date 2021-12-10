@@ -45,6 +45,9 @@ else
                                     Transaction
                                 </th>
                                 <th class="th-sm text-center">
+                                    Total Amount
+                                </th>
+                                <th class="th-sm text-center">
                                     Wallet
                                 </th>
 
@@ -56,17 +59,20 @@ else
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                <tr>
-                                    <td>@item.Created.ToString("MM/dd/yyyy hh:mm tt")</td>
+                            <tr>
+                                <td>@item.Created.ToString("MM/dd/yyyy hh:mm tt")</td>
 
-                                    <td style="font-weight: bold">@Html.ActionLink(item.TransactionHash, "Details", "Transaction", new { id = item.TransactionId }, new { @class = "detail-link" })</td>
-                                    <td style="font-weight: bold">@Html.ActionLink(item.WalletName, "Index", "Dashboard", new { id = item.WalletId }, new { @class = "detail-link" })</td>
+                                <td style="font-weight: bold">@Html.ActionLink(item.TransactionHash, "Details", "Transaction", new { id = item.TransactionId }, new { @class = "detail-link" })</td>
 
-                                    <td class="text-center">
-                                        @Html.ActionLink("Details", "Details", "Transaction", new { id = item.TransactionId }, new { @class = "detail-link" }) |
-                                        @Html.ActionLink("Delete", "Delete", "Transaction", new { id = item.TransactionId }, new { @class = "detail-link" })
-                                    </td>
-                                </tr>
+                                <td>@item.TotalAmount</td>
+
+                                <td style="font-weight: bold">@Html.ActionLink(item.WalletName, "Index", "Dashboard", new { id = item.WalletId }, new { @class = "detail-link" })</td>
+
+                                <td class="text-center">
+                                    @Html.ActionLink("Details", "Details", "Transaction", new { id = item.TransactionId }, new { @class = "detail-link" }) |
+                                    @Html.ActionLink("Delete", "Delete", "Transaction", new { id = item.TransactionId }, new { @class = "detail-link" })
+                                </td>
+                            </tr>
                             }
                         </tbody>
                     </table>

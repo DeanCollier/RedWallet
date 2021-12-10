@@ -67,6 +67,7 @@ namespace RedWallet.Services
                         PublicAddress = a.PublicAddress,
                         WalletName = a.Wallet.WalletName,
                         WalletId = a.WalletId,
+                        LatestBalance = a.LatestBalance,
                         Created = a.Created
                     });
 

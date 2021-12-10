@@ -31,12 +31,23 @@
                 <dd>
                     @Html.DisplayFor(model => model.TransactionHash)
                 </dd>
-
+                <dt>
+                    @Html.DisplayNameFor(model => model.TotalAmount)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.TotalAmount)
+                </dd>
                 <dt>
                     @Html.DisplayNameFor(model => model.WalletName)
                 </dt>
                 <dd>
                     @Html.DisplayFor(model => model.WalletName)
+                </dd>
+                <dt>
+                    View in block explorer
+                </dt>
+                <dd>
+                    <a href='@string.Format("https://www.blockchain.com/btc/tx/{0}", Model.TransactionHash)' target="_blank">transaction</a>
                 </dd>
 
             </dl>

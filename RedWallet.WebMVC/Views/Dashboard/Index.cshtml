@@ -38,20 +38,24 @@ else
                     <thead>
                         <tr>
                             <th class="th-sm text-center">
-                                Created
+                                Transaction
                             </th>
                             <th class="th-sm text-center">
-                                Transaction
+                                Total Amount
+                            </th>
+                            <th class="th-sm text-center">
+                                Date Created
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model.WalletTransactions)
                         {
-                            <tr>
-                                <td>@item.Created.ToString("MM/dd/yyyy hh:mm tt")</td>
-                                <td>@Html.ActionLink(item.TransactionHash, "Details", "Transaction", new { id = item.TransactionId }, new { @class = "detail-link" })</td>
-                            </tr>
+                        <tr>
+                            <td>@Html.ActionLink(item.TransactionHash, "Details", "Transaction", new { id = item.TransactionId }, new { @class = "detail-link" })</td>
+                            <td>@item.TotalAmount</td>
+                            <td>@item.Created.ToString("MM/dd/yyyy hh:mm tt")</td>
+                        </tr>
                         }
                     </tbody>
                 </table>
@@ -66,14 +70,19 @@ else
                             <th class="th-sm text-center">
                                 Public Addresses Created
                             </th>
+                            <th class="th-sm text-center">
+                                Date Created
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model.WalletAddresses)
                         {
-                            <tr>
-                                <td>@Html.ActionLink(item.PublicAddress, "Details", "Address", new { id = item.AddressId }, new { @class = "detail-link" })</td>
-                            </tr>
+                        <tr>
+                            <td>@Html.ActionLink(item.PublicAddress, "Details", "Address", new { id = item.AddressId }, new { @class = "detail-link" })</td>
+                            <td>@item.Created.ToString("MM/dd/yyyy hh:mm tt")</td>
+
+                        </tr>
                         }
                     </tbody>
                 </table>

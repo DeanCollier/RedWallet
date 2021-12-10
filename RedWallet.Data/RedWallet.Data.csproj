@@ -108,6 +108,10 @@
     <Compile Include="Migrations\202112072207353_test.designer.cs">
       <DependentUpon>202112072207353_test.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112101933187_decimalupdate.cs" />
+    <Compile Include="Migrations\202112101933187_decimalupdate.designer.cs">
+      <DependentUpon>202112101933187_decimalupdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Address.cs" />
@@ -127,6 +131,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112072207353_test.resx">
       <DependentUpon>202112072207353_test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112101933187_decimalupdate.resx">
+      <DependentUpon>202112101933187_decimalupdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

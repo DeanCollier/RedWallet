@@ -42,6 +42,12 @@ namespace RedWallet.Data
             modelBuilder
                 .Entity<Wallet>()
                 .Property(w => w.LatestBalance).HasPrecision(16, 8);
+            modelBuilder
+                .Entity<Transaction>()
+                .Property(t => t.TotalAmount).HasPrecision(16, 8);
+            modelBuilder
+                .Entity<Address>()
+                .Property(a => a.LatestBalance).HasPrecision(16, 8);
 
             modelBuilder
                 .Conventions

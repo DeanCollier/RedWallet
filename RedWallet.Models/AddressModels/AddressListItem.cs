@@ -22,7 +22,11 @@ namespace RedWallet.Models.AddressModels
         [Required]
         public int WalletId { get; set; }
 
-        
+        [Required]
+        [Display(Name = "Latest Balance")]
+
+        public decimal LatestBalance { get; set; }
+
         [Required]
         public DateTimeOffset Created { get; set; }
     }
