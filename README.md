@@ -7,18 +7,21 @@
 ## About
 This is a free web application for create and using Bitcoin wallets.
 ASP.NET Web MVC, N-tier architecture, C# was the main language used to create the models, logic, and MVC along with some SQL for database querying and Javascript. 
+Due to limitations with the NBitcoin nuget package in .NET Framework, I've built this wallet to only work for P2SH addresses.
 
 ## NOTES
 # Currently, functions that need to connect to the Bitcoin network are not complete. This currently includes:
-1. Getting and returning the balance of wallets. - Currently every wallet in the app has 100BTC balance(hardcoded)
-2. Constructing transactions and sedding to the network. - Currently just returning a hash of a string for the transaction hash.
+1. Constructing transactions and sedding to the network. - Currently just returning a hash of a string for the transaction hash.
+2. Want to add functionality for restoring wallet from seed phrase
 
 # Functions working:
 1. Creating real mainnet Bitcoin private keys and mnemonic seed.
 2. Encrypting private keys with passphrase for storage.
 4. Creating new Bitcoin public addresses based on Xpub
-4. CRUD methods for all data models
-5. MVC web app
+5. Getting wallet balance from network
+6. Updating transaction and public address data from network
+7. CRUD methods for all data models
+8. MVC web app
 
 ## Technologies
 1. NBitcoin 
