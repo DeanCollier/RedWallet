@@ -24,7 +24,7 @@ else
                 </button>
             </div>
             <div id="balance-display" class="col-5">
-                <button class="btn text-white shadow mb-3" onclick="location.href='@Url.Action("Update", "BTCInfo", new { walletId = Model.SelectedWalletId })'"><i class="fas fa-sync-alt"></i>  Refresh Balance</button>
+                <button class="btn text-white shadow mb-3" onclick="location.href='@Url.Action("Update", "BTCInfo", new { walletId = Model.SelectedWalletId })'"><i class="fas fa-sync-alt"></i>  Refresh Wallet</button>
                 <h1>@Model.WalletBalance BTC</h1>
             </div>
         </div>
@@ -32,33 +32,37 @@ else
 
     <div class="row mt-3 mx-0 ">
         <div class="col-6 table-responsive">
-            <button class="btn bg-secondary text-white shadow m-0 mb-1" onclick="location.href='@Url.Action("Index", "Send", new { walletId = Model.SelectedWalletId })'">Send</button>
+            <button class="btn bg-secondary text-white shadow m-0 mb-1" onclick="location.href='@Url.Action("Index", "Transaction", new { walletId = Model.SelectedWalletId })'">Send</button>
             <div id="sends-display" class="col-5 table-responsive card shadow">
                 <table class="table table-striped table-dark table-bordered" cellspacing="0">
                     <thead>
                         <tr>
                             <th class="th-sm text-center">
-                                Created
+                                Transaction
                             </th>
                             <th class="th-sm text-center">
-                                Transaction
+                                Total Amount
+                            </th>
+                            <th class="th-sm text-center">
+                                Date Created
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.WalletSends)
+                        @foreach (var item in Model.WalletTransactions)
                         {
-                            <tr>
-                                <td>@item.Created.ToString("MM/dd/yyyy hh:mm tt")</td>
-                                <td>@Html.ActionLink(item.TransactionHash, "Details", "Send", new { id = item.SendId }, new { @class = "detail-link" })</td>
-                            </tr>
+                        <tr>
+                            <td>@Html.ActionLink(item.TransactionHash, "Details", "Transaction", new { id = item.TransactionId }, new { @class = "detail-link" })</td>
+                            <td>@item.TotalAmount</td>
+                            <td>@item.Created.ToString("MM/dd/yyyy hh:mm tt")</td>
+                        </tr>
                         }
                     </tbody>
                 </table>
             </div>
         </div>
         <div class="col-6">
-            <button value="Receive" class="btn bg-secondary text-white shadow m-0 mb-1" onclick="location.href='@Url.Action("Index", "Request", new { walletId = Model.SelectedWalletId })'">Receive</button>
+            <button value="Receive" class="btn bg-secondary text-white shadow m-0 mb-1" onclick="location.href='@Url.Action("Index", "Address", new { walletId = Model.SelectedWalletId })'">Receive</button>
             <div id="receive-display" class="col-5 table-responsive card shadow">
                 <table class="table table-striped table-dark table-bordered" cellspacing="0">
                     <thead>
@@ -66,14 +70,19 @@ else
                             <th class="th-sm text-center">
                                 Public Addresses Created
                             </th>
+                            <th class="th-sm text-center">
+                                Date Created
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model.WalletAddresses)
                         {
-                            <tr>
-                                <td>@Html.ActionLink(item.RequestAddress, "Details", "Request", new { id = item.RequestId }, new { @class = "detail-link" })</td>
-                            </tr>
+                        <tr>
+                            <td>@Html.ActionLink(item.PublicAddress, "Details", "Address", new { id = item.AddressId }, new { @class = "detail-link" })</td>
+                            <td>@item.Created.ToString("MM/dd/yyyy hh:mm tt")</td>
+
+                        </tr>
                         }
                     </tbody>
                 </table>
@@ -97,8 +106,8 @@ else
         var requestLink = document.getElementById("request-nav-link")
 
         walletLink.setAttribute("href", `/Wallet/Details/${walletId}`)
-        sendLink.setAttribute("href", `/Send?walletId=${walletId}`)
-        requestLink.setAttribute("href", `/Request?walletId=${walletId}`)
+        sendLink.setAttribute("href", `/Transaction?walletId=${walletId}`)
+        requestLink.setAttribute("href", `/Address?walletId=${walletId}`)
     }
     function handleClick() {
         window.location.href = `/Dashboard/Index/${document.getElementById("wallet-input").value}`

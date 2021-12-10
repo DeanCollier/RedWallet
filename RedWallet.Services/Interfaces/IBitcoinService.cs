@@ -1,6 +1,8 @@
 ﻿using NBitcoin;
 using RedWallet.Models.BitcoinModels;
 using RedWallet.Models.WalletModels;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace RedWallet.Services.Interfaces
@@ -9,9 +11,11 @@ namespace RedWallet.Services.Interfaces
     {
         string BuildTransaction(string encryptedSecret, string walletPassword, decimal sendAmount, string recipientAddress);
         Task<KeyDetail> CreateNewBitcoinKey(WalletCreate model);
-        Task<decimal> FindBitcoinBalance(ExtPubKey xpub, int nextRecChild, int nextChngChild);
-        Task<int> FindNextReceivingChildPosition(ExtPubKey xpub);
-        Task<int> FindNextChangeChildPosition(ExtPubKey xpub);
+        Task<decimal> FindBitcoinBalance(string xpub, int nextRecChild, int nextChngChild);
+        Task<IEnumerable<OperationDetail>> FindAllTransactions(string xpub, int nextRecChild, int nextChngChild);
+        Task<int> FindNextReceivingChildPosition(string xpub);
+        Task<int> FindNextChangeChildPosition(string xpub);
+        Task<DateTimeOffset> FindAddressFirstSeenDate(string address);
         Task<BitcoinSecret> GetBitcoinSecret(string encryptedSecret, string passphrase);
         Task<BitcoinAddress> GetNewChangeAddress(string xpub);
         Task<BitcoinAddress> GetNewReceivingAddress(string xpub);

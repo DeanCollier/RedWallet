@@ -1,0 +1,65 @@
+﻿@model RedWallet.Models.TransactionModels.TransactionDetail
+
+@{
+    ViewBag.Title = "Transaction Details";
+}
+
+<br />
+<br />
+
+<div class="d-flex p-2 justify-content-center">
+    <div class="col-lg-15 text-center">
+        <h2>@ViewBag.Title:</h2>
+        @if (TempData["SaveResult"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show">
+                <strong>Succes!</strong> @TempData["SaveResult"]
+            </div>
+        }
+        <div>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Created)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Created)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.TransactionHash)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.TransactionHash)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.TotalAmount)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.TotalAmount)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.WalletName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.WalletName)
+                </dd>
+                <dt>
+                    View in block explorer
+                </dt>
+                <dd>
+                    <a href='@string.Format("https://www.blockchain.com/btc/tx/{0}", Model.TransactionHash)' target="_blank">transaction</a>
+                </dd>
+
+            </dl>
+        </div>
+
+
+        <p>
+            <div class="col-lg-15">
+                <button type="submit" class="btn bg-secondary text-white shadow" onclick="location.href='@Url.Action("Index", "Transaction", new { walletId = Model.WalletId })'">Other Transactions</button>
+            </div>
+        </p>
+
+
+    </div>
+</div>

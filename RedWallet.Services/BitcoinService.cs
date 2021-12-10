@@ -60,90 +60,140 @@ namespace RedWallet.Services
         // get new receive and change addresses
         public async Task<BitcoinAddress> GetNewReceivingAddress(string xpub)
         {
-            var extPubKey = await GetXpub(xpub);
-            var position = await FindNextReceivingChildPosition(extPubKey);
-            var newAddress = extPubKey.Derive(0).Derive((uint)position).PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH, Network);
+            var position = await FindNextReceivingChildPosition(xpub);
+            var newAddress = await DeriveAddress(xpub, false, position);
 
             return newAddress;
         }
         public async Task<BitcoinAddress> GetNewChangeAddress(string xpub)
         {
-            var extPubKey = await GetXpub(xpub);
-            var position = await FindNextChangeChildPosition(extPubKey);
-
-            var newAddress = extPubKey.Derive(1).Derive((uint)position).PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH, Network);
+            var position = await FindNextReceivingChildPosition(xpub);
+            var newAddress = await DeriveAddress(xpub, true, position);
 
             return newAddress;
         }
 
         // finders QbitNinja
-        public async Task<decimal> FindBitcoinBalance(ExtPubKey xpub, int nextRecChild, int nextChngChild)
+        public async Task<decimal> FindBitcoinBalance(string xpub, int nextRecChild, int nextChngChild)
         {
             var receivingAddresses = new List<BitcoinAddress>();
             var changeAddresses = new List<BitcoinAddress>();
 
+            decimal totalBalance = 0m;
+
             if (nextRecChild + nextChngChild == 0) // first addresses are empty, no UTXO's
             {
-                return 0m;
+                return totalBalance;
             }
 
             for (int i = 0; i < nextRecChild; i++)
             {
-                receivingAddresses.Add(xpub.Derive(0).Derive((uint)i).PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH, Network));
+                receivingAddresses.Add(await DeriveAddress(xpub, false, i));
             }
             for (int i = 0; i < nextChngChild; i++)
             {
-                changeAddresses.Add(xpub.Derive(1).Derive((uint)i).PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH, Network));
+                changeAddresses.Add(await DeriveAddress(xpub, true, i));
             }
 
             var allAddresses = new List<BitcoinAddress>();
             allAddresses.AddRange(receivingAddresses);
             allAddresses.AddRange(changeAddresses);
 
-            decimal totalBalance = 0;
-
             foreach (var address in allAddresses)
             {
                 var balanceModel = await Client.GetBalance(address, true);
-                if (balanceModel.Operations.Count > 0)
+                var unspentCoins = new List<Coin>();
+                foreach (var operation in balanceModel.Operations)
                 {
-                    var unspentCoins = new List<Coin>();
-                    foreach (var operation in balanceModel.Operations)
-                    {
-                        unspentCoins.AddRange(operation.ReceivedCoins.Select(coin => coin as Coin));
-                    }
-                    totalBalance += unspentCoins.Sum(x => x.Amount.ToDecimal(MoneyUnit.BTC));
+                    unspentCoins.AddRange(operation.ReceivedCoins.Select(coin => coin as Coin));
                 }
+                totalBalance += unspentCoins.Sum(x => x.Amount.ToDecimal(MoneyUnit.BTC));
             }
             return totalBalance;
         }
-        public async Task<int> FindNextReceivingChildPosition(ExtPubKey xpub)
+        public async Task<IEnumerable<OperationDetail>> FindAllTransactions(string xpub, int nextRecChild, int nextChngChild)
         {
-            int i = 0;
-            int max = (int)(Math.Pow(2, 31) - 1);
-            while (i < max)
+            var receivingAddresses = new List<BitcoinAddress>();
+            var changeAddresses = new List<BitcoinAddress>();
+
+            if (nextRecChild + nextChngChild == 0) // first addresses are empty, no UTXO's
             {
-                var address = xpub.Derive(0).Derive((uint)i).PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH, Network);
-                var balanceModel = await Client.GetBalance(address);
-                if (balanceModel.Operations.Count > 0)
+                return null;
+            }
+
+            for (int i = 0; i < nextRecChild; i++)
+            {
+                receivingAddresses.Add(await DeriveAddress(xpub, false, i));
+            }
+            for (int i = 0; i < nextChngChild; i++)
+            {
+                changeAddresses.Add(await DeriveAddress(xpub, true, i));
+            }
+
+            var allAddresses = new List<BitcoinAddress>();
+            allAddresses.AddRange(receivingAddresses);
+            allAddresses.AddRange(changeAddresses);
+
+            var allTransactions = new List<OperationDetail>();
+
+            foreach (var address in allAddresses)
+            {
+                var balanceModel = await Client.GetBalance(address, false);
+                var unspentCoins = new List<Coin>();
+                foreach (var operation in balanceModel.Operations)
                 {
-                    i++;
-                }
-                else
-                {
-                    return i;
+                    // check if transaction is already in operation detail list
+                    var clone = allTransactions.FirstOrDefault(t => t.TransactionHash == operation.TransactionId.ToString());
+                    if (clone != null)
+                    {
+                        clone.Amount += operation.Amount.ToDecimal(MoneyUnit.BTC);
+                    }
+                    else
+                    {
+                        var detail = new OperationDetail
+                        {
+                            TransactionHash = operation.TransactionId.ToString(),
+                            Amount = operation.Amount.ToDecimal(MoneyUnit.BTC),
+                            Created = operation.FirstSeen
+                        };
+                        allTransactions.Add(detail);
+                    } 
                 }
             }
-            return 0;
+            return allTransactions;
         }
-        public async Task<int> FindNextChangeChildPosition(ExtPubKey xpub)
+
+        public async Task<int> FindNextReceivingChildPosition(string xpub)
         {
+            bool isChange = false;
             int i = 0;
             int max = (int)(Math.Pow(2, 31) - 1);
 
             while (i < max)
             {
-                var address = xpub.Derive(1).Derive((uint)i).PubKey.GetAddress(ScriptPubKeyType.SegwitP2SH, Network);
+                var address = await DeriveAddress(xpub, isChange, i);
+                var balanceModel = await Client.GetBalance(address);
+
+                if (balanceModel.Operations.Count > 0)
+                {
+                    i++;
+                }
+                else
+                {
+                    return i;
+                }
+            }
+            return 0;
+        }
+        public async Task<int> FindNextChangeChildPosition(string xpub)
+        {
+            bool isChange = true;
+            int i = 0;
+            int max = (int)(Math.Pow(2, 31) - 1);
+
+            while (i < max)
+            {
+                var address = await DeriveAddress(xpub, isChange, i);
                 var balanceModel = await Client.GetBalance(address);
                 if (balanceModel.Operations.Count > 0)
                 {
@@ -155,6 +205,18 @@ namespace RedWallet.Services
                 }
             }
             return 0;
+        }
+        public async Task<DateTimeOffset> FindAddressFirstSeenDate(string address)
+        {
+            if (await IsValidAddress(address))
+            {
+                var btcAddress = BitcoinAddress.Create(address, Network);
+                var balanceModel = await Client.GetBalance(btcAddress, false);
+                var firstSeen = balanceModel.Operations.Last().FirstSeen;
+                return firstSeen;
+            }
+            return DateTimeOffset.Now;
+
         }
 
         // checkers
@@ -170,11 +232,11 @@ namespace RedWallet.Services
                 return false;
             }
         }
-        public async Task<bool> IsValidAddress(string recipientAddress)
+        public async Task<bool> IsValidAddress(string address)
         {
             try
             {
-                BitcoinAddress.Create(recipientAddress, Network);
+                BitcoinAddress.Create(address, Network);
                 return true;
             }
             catch (Exception)

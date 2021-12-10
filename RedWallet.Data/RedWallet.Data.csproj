@@ -96,22 +96,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IdentityModels.cs" />
-    <Compile Include="Migrations\202112020121295_decimals.cs" />
-    <Compile Include="Migrations\202112020121295_decimals.designer.cs">
-      <DependentUpon>202112020121295_decimals.cs</DependentUpon>
+    <Compile Include="Migrations\202112072205038_InitialCreate.cs" />
+    <Compile Include="Migrations\202112072205038_InitialCreate.designer.cs">
+      <DependentUpon>202112072205038_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202112020251594_decimalupdate.cs" />
-    <Compile Include="Migrations\202112020251594_decimalupdate.designer.cs">
-      <DependentUpon>202112020251594_decimalupdate.cs</DependentUpon>
+    <Compile Include="Migrations\202112072206519_idfix.cs" />
+    <Compile Include="Migrations\202112072206519_idfix.designer.cs">
+      <DependentUpon>202112072206519_idfix.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202112020258311_decimalupdate1.cs" />
-    <Compile Include="Migrations\202112020258311_decimalupdate1.designer.cs">
-      <DependentUpon>202112020258311_decimalupdate1.cs</DependentUpon>
+    <Compile Include="Migrations\202112072207353_test.cs" />
+    <Compile Include="Migrations\202112072207353_test.designer.cs">
+      <DependentUpon>202112072207353_test.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112101933187_decimalupdate.cs" />
+    <Compile Include="Migrations\202112101933187_decimalupdate.designer.cs">
+      <DependentUpon>202112101933187_decimalupdate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Request.cs" />
-    <Compile Include="Send.cs" />
+    <Compile Include="Address.cs" />
+    <Compile Include="Transaction.cs" />
     <Compile Include="Wallet.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -119,14 +123,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202112020121295_decimals.resx">
-      <DependentUpon>202112020121295_decimals.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112072205038_InitialCreate.resx">
+      <DependentUpon>202112072205038_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112020251594_decimalupdate.resx">
-      <DependentUpon>202112020251594_decimalupdate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112072206519_idfix.resx">
+      <DependentUpon>202112072206519_idfix.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112020258311_decimalupdate1.resx">
-      <DependentUpon>202112020258311_decimalupdate1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112072207353_test.resx">
+      <DependentUpon>202112072207353_test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112101933187_decimalupdate.resx">
+      <DependentUpon>202112101933187_decimalupdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

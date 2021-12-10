@@ -92,6 +92,7 @@ C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\System.Web.WebPages.Deployment.dll
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\System.Web.WebPages.dll
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\System.Web.WebPages.Razor.dll
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\WebGrease.dll
+C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\QBitNinja.Client.dll
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\RedWallet.Utilities.dll
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\RedWallet.Data.pdb
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\RedWallet.Data.dll.config
@@ -141,4 +142,3 @@ C:\RED_WALLET\RedWallet\RedWallet.WebMVC\obj\Debug\RedWallet.WebMVC.csproj.Assem
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\obj\Debug\RedWallet.WebMVC.csproj.CoreCompileInputs.cache
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\obj\Debug\RedWallet.WebMVC.dll
 C:\RED_WALLET\RedWallet\RedWallet.WebMVC\obj\Debug\RedWallet.WebMVC.pdb
-C:\RED_WALLET\RedWallet\RedWallet.WebMVC\bin\QBitNinja.Client.dll

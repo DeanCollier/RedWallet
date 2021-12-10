@@ -80,6 +80,9 @@ namespace RedWallet.WebMVC.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    //var controller = DependencyResolver.Current.GetService<BTCInfoController>();
+                    //controller.ControllerContext = new ControllerContext(this.Request.RequestContext, controller);
+                    //controller.UpdateAll();
                     return RedirectToAction("Index","Dashboard");
                 case SignInStatus.LockedOut:
                     return View("Lockout");

@@ -237,10 +237,10 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BTCInfoController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
-    <Compile Include="Controllers\RequestController.cs" />
+    <Compile Include="Controllers\AddressController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\SendController.cs" />
+    <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Controllers\WalletController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -348,24 +348,24 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Request\Create.cshtml" />
-    <Content Include="Views\Request\Delete.cshtml" />
-    <Content Include="Views\Request\Details.cshtml" />
-    <Content Include="Views\Request\Index.cshtml" />
+    <Content Include="Views\Address\Delete.cshtml" />
+    <Content Include="Views\Address\Details.cshtml" />
+    <Content Include="Views\Address\Index.cshtml" />
     <Content Include="Views\Wallet\Create.cshtml" />
     <Content Include="Views\Wallet\Details.cshtml" />
     <Content Include="Views\Wallet\Edit.cshtml" />
     <Content Include="Views\Wallet\Index.cshtml" />
-    <Content Include="Views\Send\Index.cshtml" />
-    <Content Include="Views\Send\Create.cshtml" />
-    <Content Include="Views\Send\Details.cshtml" />
-    <Content Include="Views\Send\Delete.cshtml" />
+    <Content Include="Views\Transaction\Index.cshtml" />
+    <Content Include="Views\Transaction\Create.cshtml" />
+    <Content Include="Views\Transaction\Details.cshtml" />
+    <Content Include="Views\Transaction\Delete.cshtml" />
     <Content Include="Views\Wallet\Delete.cshtml" />
     <Content Include="Views\Shared\_RenderLayout.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Shared\_Sidebar.cshtml" />
     <Content Include="Views\Shared\_Content.cshtml" />
     <Content Include="Views\Shared\_BitcoinBalance.cshtml" />
+    <Content Include="Views\Address\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -16,10 +16,12 @@ namespace RedWallet.Models.WalletModels
         [Required, Display(Name = "Wallet Name")]
         public string WalletName { get; set; }
 
+        [Required]
+        [Display(Name = "Bitcoin Balance")]
+        public decimal LastestBalance { get; set; }
 
         [Required]
         [Display(Name = "Extended Public Key")]
-
         public string Xpub { get; set; }
 
     }
