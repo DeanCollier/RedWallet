@@ -13,7 +13,7 @@ namespace RedWallet.Data.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202112072205038_InitialCreate"; }
+            get { return "202201062211195_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

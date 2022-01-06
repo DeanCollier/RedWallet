@@ -15,7 +15,7 @@
                         PublicAddress = c.String(nullable: false),
                         WalletId = c.Int(nullable: false),
                         IsChange = c.Boolean(nullable: false),
-                        LatestBalance = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        LatestBalance = c.Decimal(nullable: false, precision: 16, scale: 8),
                         Created = c.DateTimeOffset(nullable: false, precision: 7),
                     })
                 .PrimaryKey(t => t.Id)
@@ -117,7 +117,7 @@
                         TransactionHash = c.String(nullable: false),
                         WalletId = c.Int(nullable: false),
                         IsSend = c.Boolean(nullable: false),
-                        TotalAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        TotalAmount = c.Decimal(nullable: false, precision: 16, scale: 8),
                         Created = c.DateTimeOffset(nullable: false, precision: 7),
                     })
                 .PrimaryKey(t => t.Id)

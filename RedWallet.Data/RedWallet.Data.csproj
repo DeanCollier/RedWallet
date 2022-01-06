@@ -96,21 +96,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IdentityModels.cs" />
-    <Compile Include="Migrations\202112072205038_InitialCreate.cs" />
-    <Compile Include="Migrations\202112072205038_InitialCreate.designer.cs">
-      <DependentUpon>202112072205038_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\202201062211195_InitialCreate.cs" />
+    <Compile Include="Migrations\202201062211195_InitialCreate.designer.cs">
+      <DependentUpon>202201062211195_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202112072206519_idfix.cs" />
-    <Compile Include="Migrations\202112072206519_idfix.designer.cs">
-      <DependentUpon>202112072206519_idfix.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112072207353_test.cs" />
-    <Compile Include="Migrations\202112072207353_test.designer.cs">
-      <DependentUpon>202112072207353_test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112101933187_decimalupdate.cs" />
-    <Compile Include="Migrations\202112101933187_decimalupdate.designer.cs">
-      <DependentUpon>202112101933187_decimalupdate.cs</DependentUpon>
+    <Compile Include="Migrations\202201062212123_init.cs" />
+    <Compile Include="Migrations\202201062212123_init.designer.cs">
+      <DependentUpon>202201062212123_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -123,17 +115,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202112072205038_InitialCreate.resx">
-      <DependentUpon>202112072205038_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202201062211195_InitialCreate.resx">
+      <DependentUpon>202201062211195_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112072206519_idfix.resx">
-      <DependentUpon>202112072206519_idfix.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112072207353_test.resx">
-      <DependentUpon>202112072207353_test.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112101933187_decimalupdate.resx">
-      <DependentUpon>202112101933187_decimalupdate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202201062212123_init.resx">
+      <DependentUpon>202201062212123_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
